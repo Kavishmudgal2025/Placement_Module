@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successfully Applied</title>
+    <link rel="stylesheet" href="{% static 'CSS/thankyou.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="thankyou-card">
+        <div class="thankyou-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Application Submitted!</h2>
+        <p>Thank you for applying for this job opportunity.</p>
+        <p>Your application has been received and is under review.</p>
+        <div class="next-steps">
+            <button title="Go to Home Page" onclick="closeWindow()">Return Home</button>
+        </div>
+
+        <script>
+        function closeWindow() {
+            window.open('', '_self'); // needed for some browsers
+            window.close();
+        }
+        </script>
+        <p class="best-wishes">Samatrix - Wishes you all the best in your career journey!</p>
+    </div>
+</body>
+</html>

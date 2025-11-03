@@ -1,0 +1,581 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.http import HttpResponse
+from .models import Student, StudentProfile , Job, JobApplication
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from django.contrib.auth import authenticate, login
+import csv
+from decimal import Decimal
+from datetime import date
+
+#Declare Global Varibales here.
+
+# Create your views here.
+
+def signin(request):
+    #return HttpResponse("hello")
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        student = Student.objects.filter(email=email).first()
+        if student:
+            if student.password == password:
+                request.session['student_id'] = student.sId
+                return redirect('profile/')
+            else:
+                return render(request,'index.html', {"ERROR":"Invalid Email ID or Password"})
+        else:
+            return render(request,'index.html', {"ERROR":"Invalid Email address or Password"})
+    
+
+    return render(request,'index.html')
+
+def signup(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        sId = request.POST.get("sId")
+        number = request.POST.get("phone")
+        gender = request.POST.get("gender")
+        course = request.POST.get("course")
+        passYear = request.POST.get("passYear")
+        university = request.POST.get("university")
+        specialization = request.POST.get("spec")
+        state = request.POST.get("state")
+        city = request.POST.get("city")
+        email = request.POST.get("email")
+        password1 = request.POST.get("password1")
+        password2 = request.POST.get("password2")
+
+        if len(number)!=10:
+            return render(request,"student_signup.html", {"ERROR":"Please enter a valid number"})
+        
+        if password1 != password2:
+            return render(request,"student_signup.html", {"ERROR":"Password do not match"})
+        
+        if Student.objects.filter(email=email).exists():
+            return render(request, "student_signup.html", {"ERROR": "Email already exists"})
+        
+        if Student.objects.filter(phone=number).exists():
+            return render(request, "student_signup.html", {"ERROR": "Phone number already exists"})
+        
+        if Student.objects.filter(sId=sId).exists():
+            return render(request, "student_signup.html", {"ERROR": "Student ID already exists"})
+        
+        if password1 == password2:  # check confirm password
+            student = Student(
+                name=name,
+                sId=sId,
+                phone=number,
+                gender=gender,
+                course=course,
+                passout_year = passYear,
+                university=university,
+                specialization=specialization,
+                university_state=state,
+                university_city=city,
+                email=email,
+                password=password1
+            )
+            student.save()
+            messages.success(request, "You're successfully registered, Please login")
+            return redirect("signup")  
+
+    return render(request, "student_signup.html")
+
+def student_profile(request):
+    student_id = request.session.get('student_id')   
+
+    if student_id:
+        studentDetails = Student.objects.get (sId = student_id)
+        profile = StudentProfile.objects.filter(student=studentDetails)
+        profile_obj = profile.first()
+        all_jobs = Job.objects.all()
+        eligible_jobs = []
+
+        for job_post in all_jobs:
+            if (studentDetails.passout_year == int(job_post.eligiblity_batch)):
+                if profile_obj:
+                    if (profile_obj.marks10 >= Decimal(job_post.eligiblity_10_marks) and profile_obj.marks12 >= Decimal(job_post.eligiblity_12_marks) and (profile_obj.graduation_marks is None or profile_obj.graduation_marks >= Decimal(job_post.eligiblity_college_marks))):
+                        eligible_jobs.append(job_post)
+        return render(request,'student_profile.html', {"student_data":studentDetails, 
+                                                                        "updated_data":profile,
+                                                                        "job_data":eligible_jobs} )
+    else: 
+        
+        return render(request,"home_login.html")
+
+def admin (request):
+    studentDetails = Student.objects.all()
+
+    if request.method =="POST":
+        username = request.POST ["username"]
+        password = request.POST ["password"]
+
+        user = authenticate(request,username=username, password=password)
+        if user is not None:
+            if user.is_staff or user.is_superuser:
+                login(request, user)
+                return redirect("admin_home")  # admin home 
+            else:
+                return render(request, "admin_login.html")
+        else:
+            return render(request, "admin_login.html", {'ERROR': " Invalid Email address or Password"})
+    
+    return render(request,"admin_login.html")
+
+def admin_home(request):
+    studentDetails = Student.objects.all()
+
+    # collect filters
+    filters = {
+        "name": request.GET.get("name"),
+        "sid": request.GET.get("ID"),
+        "email": request.GET.get("email"),
+        "course": request.GET.get("course"),
+        "university": request.GET.get("university"),
+        "city": request.GET.get("city"),
+        "state": request.GET.get("state"),
+        "phone": request.GET.get("phone"),
+        "gender": request.GET.get("gender"),
+        "passout_year": request.GET.get("passout_year"),
+    }
+
+    # check if any filters applied
+    applied = False
+
+    if filters["name"]:
+        studentDetails = studentDetails.filter(name__icontains=filters["name"])
+        applied = True
+    if filters["sid"]:
+        studentDetails = studentDetails.filter(sId__icontains=filters["sid"])
+        applied = True
+    if filters["email"]:
+        studentDetails = studentDetails.filter(email__icontains=filters["email"])
+        applied = True
+    if filters["course"]:
+        studentDetails = studentDetails.filter(course__icontains=filters["course"])
+        applied = True
+    if filters["university"]:
+        studentDetails = studentDetails.filter(university__icontains=filters["university"])
+        applied = True
+    if filters["city"]:
+        studentDetails = studentDetails.filter(city__icontains=filters["city"])
+        applied = True
+    if filters["state"]:
+        studentDetails = studentDetails.filter(state__icontains=filters["state"])
+        applied = True
+    if filters["phone"]:
+        studentDetails = studentDetails.filter(phone__icontains=filters["phone"])
+        applied = True
+    if filters["gender"]:
+        studentDetails = studentDetails.filter(gender__icontains=filters["gender"])
+        applied = True
+    if filters["passout_year"]:
+        studentDetails = studentDetails.filter(passout_year__icontains=filters["passout_year"])
+        applied = True
+
+    # if page reload has query params but no filters -> reset URL
+    if request.GET and not applied:
+        return redirect("admin_home")
+
+    return render(request, "admin_home.html", {"studentData": studentDetails})
+
+def export_students(request):
+    studentDetails = Student.objects.all()
+
+    # apply same filters as admin_home
+    filters = {
+        "name": request.GET.get("name"),
+        "sid": request.GET.get("ID"),
+        "email": request.GET.get("email"),
+        "course": request.GET.get("course"),
+        "university": request.GET.get("university"),
+        "city": request.GET.get("city"),
+        "state": request.GET.get("state"),
+        "phone": request.GET.get("phone"),
+        "gender": request.GET.get("gender"),
+        "passout_year": request.GET.get("passout_year"),
+    }
+
+    if filters["name"]:
+        studentDetails = studentDetails.filter(name__icontains=filters["name"])
+    if filters["sid"]:
+        studentDetails = studentDetails.filter(sId__icontains=filters["sid"])
+    if filters["email"]:
+        studentDetails = studentDetails.filter(email__icontains=filters["email"])
+    if filters["course"]:
+        studentDetails = studentDetails.filter(course__icontains=filters["course"])
+    if filters["university"]:
+        studentDetails = studentDetails.filter(university__icontains=filters["university"])
+    if filters["city"]:
+        studentDetails = studentDetails.filter(city__icontains=filters["city"])
+    if filters["state"]:
+        studentDetails = studentDetails.filter(state__icontains=filters["state"])
+    if filters["phone"]:
+        studentDetails = studentDetails.filter(phone__icontains=filters["phone"])
+    if filters["gender"]:
+        studentDetails = studentDetails.filter(gender__icontains=filters["gender"])
+    if filters["passout_year"]:
+        studentDetails = studentDetails.filter(passout_year__icontains=filters["passout_year"])
+
+    # create the HttpResponse object with CSV headers
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="students.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Name', 'Student ID', 'Gender', 'Course', 'University', 'Passout Year', 'State', 'City', 'Email', 'phone'])
+
+    for student in studentDetails:
+        writer.writerow([
+            student.name,
+            student.sId,
+            student.gender,
+            student.course,
+            student.university,
+            student.passout_year,
+            student.state,
+            student.city,
+            student.email,
+            student.phone,
+        ])
+
+    return response
+
+def updateProfile(request):
+    #return HttpResponse("update here")
+    
+    ID = request.session.get("student_id")  # fetch from session
+
+    if not ID:
+        return HttpResponse("No student_id found in session")  # debug message
+    try:
+        stu = Student.objects.get(sId=ID)   # or .get(id=ID) if using default pk
+    except Student.DoesNotExist:
+        return HttpResponse("Student not found")
+        
+    profile = StudentProfile.objects.filter(student=stu).first()
+
+    if request.method == "POST":
+        if not profile:
+            profile = StudentProfile(student=stu) 
+
+        profile.semester =request.POST.get("sem") 
+        profile.language =request.POST.get("language")
+        profile.tools =request.POST.get("tools")
+
+        profile.board10 =request.POST.get("board10")
+        profile.marks10 =request.POST.get("marks10")
+
+        profile.board12 =request.POST.get("board12")
+        profile.marks12 =request.POST.get("marks12")
+
+        profile.graduation_college =request.POST.get("graduation")
+        graduation_marks = request.POST.get("graduationMarks")
+        profile.graduation_marks = request.POST.get("graduationMarks") if graduation_marks else None
+
+        profile.post_graduation_college =request.POST.get("postGraduation")
+        post_graduation_marks = request.POST.get("postGraduationMarks")
+        profile.post_graduation_marks = request.POST.get("postGraduationMarks") if post_graduation_marks else None
+
+        internship = request.POST.get("internship")
+        profile.internship =request.POST.get("internship")
+        profile.company =request.POST.get("companyName").upper() if internship == "yes" else None
+        profile.duration =request.POST.get("duration") if internship == "yes" else None
+        stipend = request.POST.get("stipend")
+        profile.stipend = request.POST.get("stipend") if internship == "yes" and stipend else None
+        profile.skills_gained =request.POST.get("skill_gained") if internship == "yes" and profile.internship else None
+        
+        project = request.POST.get("project") 
+        profile.project = request.POST.get("project") 
+        profile.project_details =request.POST.get("projectDetails") if project == "yes" else None
+        profile.skills_learned =request.POST.get("learned_skills") if project == "yes" else None
+
+        job_location = request.POST.get("jobLocation") 
+        profile.job_location =request.POST.get("jobLocation")
+        profile.other_location =request.POST.get("locationInput") if job_location == 'Other' else None
+
+        profile.linkedin = request.POST.get("linkedin") or None
+        profile.github = request.POST.get("github") or None
+
+        if 'cv' in request.FILES:
+            profile.resume = request.FILES['cv']
+
+        profile.save()
+        return redirect("/profile")
+        #We should change it to new url when deployed
+
+    return render(request, "profile_update.html", {"info" : profile})
+
+@never_cache
+def job_post(request):
+
+    if request.method == "POST":
+        title = request.POST.get("title")
+        organization = request.POST.get("organization")
+        location = request.POST.get("location")
+
+        description = request.POST.get("description")
+
+        placement_type = request.POST.get("placement_type")
+        stipend = request.POST.get("stipend") or "N/A"
+        package = request.POST.get("package") or "N/A"
+
+        eligiblity_batch = request.POST.get("batch")
+        eligiblity_10_mark = request.POST.get("min_marks10")
+        eligiblity_12_mark = request.POST.get("min_marks12")
+        eligible_college_mark = request.POST.get("min_marks_college")
+        other_criteria = request.POST.get("Other_criteria") or "N/A"
+
+        deadline = request.POST.get("deadline")
+
+        question1 = request.POST.get("question1") or "N/A"
+        question2 = request.POST.get("question2") or "N/A"
+        question3 = request.POST.get("question3") or "N/A"
+        question4 = request.POST.get("question4") or "N/A"
+        question5 = request.POST.get("question5") or "N/A"
+        question6 = request.POST.get("question6") or "N/A"
+        question7 = request.POST.get("question7") or "N/A"
+        question8 = request.POST.get("question8") or "N/A"
+        question9 = request.POST.get("question9") or "N/A"
+        question10 = request.POST.get("question10") or "N/A"
+
+        type1 = request.POST.get("question1_type") or "N/A"
+        type2 = request.POST.get("question2_type") or "N/A"
+        type3 = request.POST.get("question3_type") or "N/A"
+        type4 = request.POST.get("question4_type") or "N/A"
+        type5 = request.POST.get("question5_type") or "N/A"
+        type6 = request.POST.get("question6_type") or "N/A"
+        type7 = request.POST.get("question7_type") or "N/A"
+        type8 = request.POST.get("question8_type") or "N/A"
+        type9 = request.POST.get("question9_type") or "N/A"
+        type10 = request.POST.get("question10_type") or "N/A"
+    
+# Validate numeric fields
+        if deadline:
+            today = date.today()
+            deadline_date = date.fromisoformat(deadline)
+            if deadline_date < today:
+                return render(request, "post_job.html", {"ERROR": "Deadline cannot be in the past"})
+            else:
+                deadline = deadline_date
+        job_field = Job(
+            title = title,
+            organization = organization,
+            location = location,
+
+            description = description,
+
+            placement_type = placement_type,
+            job_stipend = stipend,
+            package = package,
+
+            eligiblity_batch = eligiblity_batch,
+            eligiblity_10_marks = eligiblity_10_mark,
+            eligiblity_12_marks = eligiblity_12_mark,
+            eligiblity_college_marks = eligible_college_mark,
+            eligiblity_others = other_criteria,
+
+            application_deadline = deadline,
+
+            question1 = question1,
+            question2 = question2,
+            question3 = question3,
+            question4 = question4,
+            question5 = question5,
+            question6 = question6,
+            question7 = question7,
+            question8 = question8,
+            question9 = question9,
+            question10 = question10,
+
+            type1 = type1,
+            type2 = type2,
+            type3 = type3,
+            type4 = type4,
+            type5 = type5,
+            type6 = type6,
+            type7 = type7,
+            type8 = type8,
+            type9 = type9,
+            type10 = type10
+        )
+        job_field.save()
+        messages.success(request, "Job added successfully!")
+        return redirect('/thankyou/')  # Redirect to admin home after adding job
+    return render(request, "post_job.html")
+
+def job_post_thankyou(request):
+    return render(request, "job_post_thankyou.html")
+
+def view_jobs(request):
+    #return HttpResponse("view jobs here")
+    
+    job_list = Job.objects.all()   
+    return render(request, "view_jobs.html", {"job_list": job_list})
+
+def export_jobs(request):
+    job_list = Job.objects.all()
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="job_posts.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Job ID',
+                      'Title', 
+                      'Organization',
+                      'Job Location',
+                      'Placement Type', 
+                      'Stipend', 
+                      'Package (in LPA)', 
+                      'Eligibility Batch',
+                      'Application Deadline', 
+                      'Post Date'])
+
+    for job in job_list:
+        writer.writerow([
+            job.job_id,
+            job.title,
+            job.organization,
+            job.location,
+            job.placement_type,
+            job.job_stipend,
+            job.package,
+            job.eligiblity_batch,
+            job.application_deadline,
+            job.post_date,
+        ])
+
+    return response
+
+def job_application(request, job_id):
+    job = get_object_or_404(Job, job_id=job_id)
+    student_id = request.session.get("student_id")
+    student = get_object_or_404(Student, sId=student_id)
+    student_data = StudentProfile.objects.filter(student=student)
+
+    # Check if already applied
+    already_applied = JobApplication.objects.filter(job_id=job, sId=student).exists()
+    if already_applied:
+        return render(request, "already_applied.html", {"student": student})
+
+    if request.method == "POST":
+        answer1 = request.POST.get("ans1") or None
+        answer2 = request.POST.get("ans2") 
+        answer3 = request.POST.get("ans3")
+        answer4 = request.POST.get("ans4")
+        answer5 = request.POST.get("ans5")
+        answer6 = request.POST.get("ans6")
+        answer7 = request.POST.get("ans7")
+        answer8 = request.POST.get("ans8")
+        answer9 = request.POST.get("ans9")
+        answer10 = request.POST.get("ans10")
+
+        application_answer = JobApplication(
+            job_id=job,
+            sId=student,
+            answer1=answer1,
+            answer2=answer2,
+            answer3=answer3,
+            answer4=answer4,
+            answer5=answer5,
+            answer6=answer6,
+            answer7=answer7,
+            answer8=answer8,
+            answer9=answer9,
+            answer10=answer10
+        )
+        application_answer.save()
+        return render(request, "application_thankyou.html")
+
+    return render(request, "apply_job.html", {"the_job": job, "student": student, "data": student_data})
+
+def edit_job(request, job_id):
+    job = get_object_or_404(Job, job_id=job_id)
+    if request.method == "POST":
+        job.title = request.POST.get("title")
+        job.organization = request.POST.get("organization")
+        job.location = request.POST.get("location")
+
+        job.description = request.POST.get("description")
+
+        job.placement_type = request.POST.get("placement_type")
+        job.job_stipend = request.POST.get("stipend") or "N/A"
+        job.package = request.POST.get("package") or "N/A"
+
+        job.eligiblity_batch = request.POST.get("batch")
+        job.eligiblity_10_marks = request.POST.get("min_marks10")
+        job.eligiblity_12_marks = request.POST.get("min_marks12")
+        job.eligiblity_college_marks = request.POST.get("min_marks_college")
+        job.eligiblity_others = request.POST.get("Other_criteria") or "N/A"
+
+        job.application_deadline = request.POST.get("deadline")
+
+        job.question1 = request.POST.get("question1") or "N/A"
+        job.question2 = request.POST.get("question2") or "N/A"
+        job.question3 = request.POST.get("question3") or "N/A"
+        job.question4 = request.POST.get("question4") or "N/A"
+        job.question5 = request.POST.get("question5") or "N/A"
+        job.question6 = request.POST.get("question6") or "N/A"
+        job.question7 = request.POST.get("question7") or "N/A"
+        job.question8 = request.POST.get("question8") or "N/A"
+        job.question9 = request.POST.get("question9") or "N/A"
+        job.question10 = request.POST.get("question10") or "N/A"
+
+        job.type1 = request.POST.get("question1_type") or "N/A"
+        job.type2 = request.POST.get("question2_type") or "N/A"
+        job.type3 = request.POST.get("question3_type") or "N/A"
+        job.type4 = request.POST.get("question4_type") or "N/A"
+        job.type5 = request.POST.get("question5_type") or "N/A"
+        job.type6 = request.POST.get("question6_type") or "N/A"
+        job.type7 = request.POST.get("question7_type") or "N/A"
+        job.type8 = request.POST.get("question8_type") or "N/A"
+        job.type9 = request.POST.get("question9_type") or "N/A"
+        job.type10 = request.POST.get("question10_type") or "N/A"
+
+        job.update_date = date.today()
+
+        job.save()
+        messages.success(request, "Job Updates Successfully ")
+        return redirect("/admin_home/view_jobs/")
+    
+    return render(request,"edit_job.html", {"job":job})
+
+def applied_student_list(request, job_id):
+    # return HttpResponse("List of Students")
+
+    job = get_object_or_404(Job, job_id=job_id)
+    applications = JobApplication.objects.filter(job_id=job)
+
+    return render(request, "applied_students_list.html", {"job": job, "applications": applications})
+    
+def export_applied_students(request ,job_id):
+    application = JobApplication.objects.filter(job_id=job_id).select_related('sId', 'sId__studentprofile')
+
+    response = HttpResponse(content_type="text/csv")
+    response['Content-Disposition'] = f'attachment; filename= "applied_students_{job_id}.csv"'
+
+    writer = csv.writer(response)
+
+    writer.writerow(['Student ID',"Name","Email","Apply Date","Gender","Course","Semester","Passout Year","University","City","State"])
+    for i in application:
+        profile = getattr(i.sId,'studentprofile',None)
+        writer.writerow([
+            i.sId,
+            i.sId.name,
+            i.sId.email,
+            i.apply_date,
+            i.sId.gender,
+            i.sId.course,
+            profile.semester,
+            i.sId.passout_year,
+            i.sId.university,
+            i.sId.city ,
+            i.sId.state,
+        ])
+    return response
+
+def dashboard(request):
+    return render(request,'dashboard.html')
+

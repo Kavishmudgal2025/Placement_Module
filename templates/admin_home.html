@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home</title>
+    <link rel="stylesheet" href="{% static 'CSS/admin_home_page.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h1 id="heading">Admin Dashboard</h1>
+        
+        <!-- Search Form -->
+        <form class="search-form" method="GET" action="{% url 'admin_home' %}">
+            {% csrf_token %}
+            <div class="search-fields">
+                <input style="border: 1px solid #000000ff;" type="text" name="name" placeholder="Search by Name" value="{{ request.GET.name }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="ID" placeholder="Search by Student ID" value="{{ request.GET.ID }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="email" placeholder="Search by Email" value="{{ request.GET.email }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="course" placeholder="Search by Course" value="{{ request.GET.course }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="university" placeholder="Search by University" value="{{ request.GET.university }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="city" placeholder="Search by City" value="{{ request.GET.city }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="state" placeholder="Search by State" value="{{ request.GET.state }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="phone" placeholder="Search by Phone Number" value="{{ request.GET.phone }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="gender" placeholder="Search by Gender" value="{{ request.GET.gender }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="passout_year" placeholder="Search by Passout Year" value="{{ request.GET.passout_year }}">
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+                <a class="anchor-btn" href="{% url 'admin_home' %}">
+                    <button type="button" class="reset-btn"><i class="fas fa-redo"></i> Reset</button>
+                </a>
+            </div>
+        </form>
+        
+        <!-- Export Section -->
+        <form class="export-section" method="GET" action="{% url 'export_students' %}">
+            <!-- preserve filters while exporting -->
+            <input type="hidden" name="name" value="{{ request.GET.name }}">
+            <input type="hidden" name="ID" value="{{ request.GET.ID }}">
+            <input type="hidden" name="email" value="{{ request.GET.email }}">
+            <input type="hidden" name="course" value="{{ request.GET.course }}">
+            <input type="hidden" name="university" value="{{ request.GET.university }}">
+            <input type="hidden" name="city" value="{{ request.GET.city }}">
+            <input type="hidden" name="state" value="{{ request.GET.state }}">
+            <input type="hidden" name="phone" value="{{ request.GET.phone }}">
+            <input type="hidden" name="gender" value="{{ request.GET.gender }}">
+            <input type="hidden" name="passout_year" value="{{ request.GET.passout_year }}">
+            
+            <div class="export-container">
+                <div class="job-links">
+                    <a href="/admin_home/job_update" target="_blank"><i class="fas fa-plus-circle"></i> Post New Jobs</a>
+                    <a href="/admin_home/view_jobs" target="_blank"><i class="fas fa-briefcase"></i> View Posted Jobs</a>
+                </div>
+                <button class="export-btn" type="submit"><i class="fas fa-download"></i> Export CSV</button>
+            </div>
+        </form>
+        
+        <!-- Student Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Student ID</th>
+                        <th>Gender</th>
+                        <th>Course</th>
+                        <th>University</th>
+                        <th>Passout Year</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Email</th>
+                        <th>Mobile Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in studentData %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.sId }}</td>
+                        <td>{{ student.gender }}</td>
+                        <td>{{ student.course }}</td>
+                        <td>{{ student.university }}</td>
+                        <td>{{ student.passout_year }}</td>
+                        <td>{{ student.state }}</td>
+                        <td>{{ student.city }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.phone }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

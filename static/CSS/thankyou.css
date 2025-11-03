@@ -1,0 +1,39 @@
+body {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #333;
+    text-align: center;
+    padding: 60px 20px;
+}
+.thankyou-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    display: inline-block;
+    padding: 40px 30px;
+    margin-top: 40px;
+}
+.thankyou-icon {
+    font-size: 48px;
+    color: #4bb543;
+    margin-bottom: 20px;
+}
+h2 {
+    color: #4bb543;
+    margin-bottom: 12px;
+}
+p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.next-steps {
+    color: #555;
+    font-size: 16px;
+    margin-top: 18px;
+}
+.best-wishes {
+    margin-top: 24px;
+    color: #888;
+    font-style: italic;
+    font-size: 16px;
+}

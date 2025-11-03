@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successfully Posted</title>
+    <link rel="stylesheet" href="{% static 'CSS/thankyou.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="thankyou-card">
+        <div class="thankyou-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Job Posted!</h2>
+        <p>Thank you for posting this job opening.</p>
+        <p>Students will be seeing your post soon...</p>
+
+        <button title="Go to Home Page" onclick="closeWindow()">Return Home</button>
+        
+    <!-- This JS will help to close the current tab on the browser -->
+        <script>
+        function closeWindow() {
+            window.open('', '_self'); // needed for some browsers
+            window.close();
+        }
+        </script>
+
+</html>

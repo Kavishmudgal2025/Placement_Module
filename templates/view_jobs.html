@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job View Page</title>
+    <link rel="stylesheet" href="{% static 'CSS/view_jobs.css' %}">
+</head>
+<body class="job-view-body">
+
+    {% if messages %}
+    <div style="background-color: black; color: white; padding: 10px; margin: 10px 0; border-radius: 5px;">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h2 id="posted-jobs" align="center"> Posted Jobs</h2><br>
+    <button class='export-btn' type="submit"><a href="{% url 'export_jobs' %}">Export Job List</a></button>
+    {% if job_list %}
+        <table align="center" border="1" class="job-table">
+            <tr style="border: 1px solid #000000;">
+                <th>Sr. no.</th>
+                <th>Job Title</th>
+                <th>Organization</th>
+                <th>Job Location</th>
+                <th>Batch</th>
+                <th>Placement Type </th>
+                <th>Offer</th>
+                <th>Post Date</th>
+                <th>Update Date</th>
+                <th>Application Deadline</th>
+                <th>Edit Job</th>
+                <th>Applied Students</th>
+            </tr>
+            {% for job in job_list %}
+            <tr>
+                <!-- add for loop for serial number -->
+                <td>{{ forloop.counter }}</td>
+                <td>{{ job.title }}</td>
+                <td>{{ job.organization }}</td>
+                <td>{{ job.location }}</td>
+                <td>{{job.eligiblity_batch}}</td>
+                <td>{{ job.placement_type }}</td>
+                <td>
+                    {% if job.placement_type == "Internship" %}
+                        <strong>Stipend:</strong> {{ job.job_stipend }}
+                    {% elif job.placement_type == "Full-time" %}
+                        <strong>Package:</strong> {{ job.package }}
+                    {% elif job.placement_type == "Internship + PPO" %}
+                        <strong>Stipend:</strong> {{ job.job_stipend }}<br>
+                        <strong>Package(in LPA):</strong> {{ job.package }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ job.post_date }}</td>
+                <td>{{job.update_date}}</td>
+                <td>{{ job.application_deadline }}</td>
+                <td><a href="{% url 'edit_job' job.job_id %}">Edit</a></td>
+                <td><a href="{% url 'applied_student_list' job.job_id %}">View Students</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <p>No Jobs Available Yet</p>
+    {% endif %}
+</body>
+</html>

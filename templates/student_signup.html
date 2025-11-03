@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Register Page</title>
+    <link rel="stylesheet" href="{% static 'CSS/student_signup_page.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background-pattern"></div>
+    
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="form-header">
+                <div class="icon-wrapper">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Create Your Account</h1>
+                <p>Join our student community today</p>
+            </div>
+
+            <!-- Error Messages -->
+            {% if ERROR %}
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>{{ ERROR }}</span>
+                </div>
+            {% endif %}
+
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <i class="fas fa-info-circle"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="POST" action="/register/" class="registration-form">
+                {% csrf_token %}
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user" ></i>
+                            Full Name
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <input style="border: 1px solid #000000ff;" type="text" id="name" name="name" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sId">
+                            <i class="fas fa-id-card" ></i>
+                            Student ID
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <input style="border: 1px solid #000000ff;" type="text" id="sId" name="sId" placeholder="Enter student ID" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i>
+                            Phone Number
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <input style="border: 1px solid #000000ff;" type="tel" id="phone" name="phone" placeholder="8971xxxxxx" pattern="[6-9]{1}[0-9]{9}" required>
+                    </div>
+                    <!-- <div class="otp-section">
+                        <button type="button" class="verify">Verify</button><br><br>
+                        <label for="email_otp"> Enter OTP: </label>
+                        <input type="number" min="4" max="4" id="email_otp" name="email_otp" placeholder="Enter OTP" required>
+                        <button type="button" class="verify-otp">Submit OTP</button>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label for="gender">
+                            <i class="fas fa-venus-mars"></i>
+                            Gender
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <select style="border: 1px solid #000000ff;" id="gender" name="gender">
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course">
+                            <i class="fas fa-book"></i>
+                            Course
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <select style="border: 1px solid #000000ff;" id="course" name="course" required>
+                            <option value="" disabled selected>Select Course</option>
+                            <option value="b.tech">B.Tech</option>
+                            <option value="m.tech">M.Tech</option>
+                            <option value="bca">BCA</option>
+                            <option value="mca">MCA</option>
+                            <option value="bba">BBA</option>
+                            <option value="mba">MBA</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="spec">
+                            <i class="fas fa-cogs"></i>
+                            Specialization
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <select style="border: 1px solid #000000ff;" id="spec" name="spec" required>
+                            <option value="" disabled selected>Select Specialization</option>
+                            <option value="AIML">AIML</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Cyber Security">Cyber Security</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passYear">
+                            <i class="fas fa-calendar-alt"></i>
+                            Passout Year
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <select style="border: 1px solid #000000ff;" id="passYear" name="passYear" required>
+                            <option value="" disabled selected>Select Year</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="university">
+                            <i class="fas fa-university"></i>
+                            University Name
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <input style="border: 1px solid #000000ff;" type="text" id="university" name="university" placeholder="Enter university name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">
+                            <i class="fas fa-map-marker-alt"></i>
+                            University State
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <select style="border: 1px solid #000000ff;" id="state" name="state">
+                            
+                            <option value="" disabled selected>Select State</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">
+                            <i class="fas fa-city"></i>
+                            University City
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <input style="border: 1px solid #000000ff;" type="text" id="city" name="city" placeholder="Enter city name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <input style="border: 1px solid #000000ff;" type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <!-- <div class="otp-section">
+                        <button type="button" class="verify">Verify</button><br><br>
+                        <label for="email_otp"> Enter OTP: </label>
+                        <input type="number" min="4" max="4" id="email_otp" name="email_otp" placeholder="Enter OTP" required>
+                        <button type="button" class="verify-otp">Submit OTP</button>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label for="password1">
+                            <i class="fas fa-lock"></i>
+                            Password
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <input style="border: 1px solid #000000ff;" type="password" id="password1" name="password1" placeholder="Create a strong password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password2">
+                            <i class="fas fa-lock"></i>
+                            Confirm Password
+                            <span class="astrik" style="color:crimson">*</span>
+                        </label>
+                        <input style="border: 1px solid #000000ff;" type="password" id="password2" name="password2" placeholder="Confirm your password" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="register-btn">
+                        <i class="fas fa-user-plus"></i>
+                        Create Account
+                    </button>
+                </div>
+            </form>
+
+            <div class="form-footer">
+                <p>Already have an account? <a href="/">Sign in here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const statesUrl = "{% static 'JS/states.json' %}";
+    </script>
+    <script src="{% static 'Js/student_signup.js' %}"></script> 
+</body>
+</html>

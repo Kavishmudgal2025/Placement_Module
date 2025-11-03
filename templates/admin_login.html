@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login Page</title>
+    <link rel="stylesheet" href="{% static 'CSS/admin_login_page.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="admin-container">
+        <div class="admin-wrapper">
+            <div class="admin-header">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h1>Admin Login</h1> 
+            </div>
+
+            <!-- Error Messages -->
+            {% if ERROR %}
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>{{ ERROR }}</span>
+                </div>
+            {% endif %}
+
+            <form method="POST" class="admin-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user-tie"></i>
+                        Administrator Username
+                    </label>
+                    <div class="input-wrapper">
+                        <input style="border: 1px solid #000000ff;" type="text" id="username" name="username" placeholder="Enter admin username" required>
+                        <div class="input-line"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-key"></i>
+                        Secure Password
+                    </label>
+                    <div class="input-wrapper">
+                        <div class="password-input-container">
+                            <input style="border: 1px solid #000000ff;" type="password" id="password" name="password" placeholder="Enter secure password" required>
+                            <button type="button" class="password-toggle" onclick="toggleAdminPassword()">
+                                <i class="fas fa-eye" id="admin-password-eye"></i>
+                            </button>
+                        </div>
+                        <div class="input-line"></div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="admin-login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Secure Login</span>
+                        <div class="button-shine"></div>
+                    </button>
+                </div>
+            </form>
+
+            <div class="admin-footer">
+                <div class="footer-links">
+                    <p>Are you a student? <a href="/">Student Login</a></p>
+                </div>
+                {% comment %} <div class="admin-info">
+                    <p><i class="fas fa-info-circle"></i> For admin access issues, contact IT support</p>
+                </div> {% endcomment %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAdminPassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordEye = document.getElementById('admin-password-eye');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordEye.classList.remove('fa-eye');
+                passwordEye.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordEye.classList.remove('fa-eye-slash');
+                passwordEye.classList.add('fa-eye');
+            }
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

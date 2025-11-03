@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Update</title>
+    <link rel="stylesheet" href="{% static 'CSS/profile_update.css' %}">
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Update Your Profile</h2>
+
+        <!-- This will show the error message in red -->
+        {% if ERROR %}
+            <div class="error-message">{{ ERROR }}</div>
+        {% endif %}
+
+        <form method="POST" action="/profile/update/" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="section-title">Academic Information</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sem">Current Semester: <span class="astrik">*</span></label>
+                    <input type="number" id="sem" name="sem" min="1" max="8" step="1" value="{{info.semester|default:'' }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="language" title="Programming languages known, use ',' to separate">Language(s): <span class="astrik">*</span></label>
+                    <input type="text" id="language" name="language" placeholder="e.g., Java, Python, C++" value="{{info.language|default:'' }}" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="tools" title="Use ',' to separate multiple tools">Tools:<span class="astrik">*</span></label>
+                <input type="text" id="tools" name="tools" placeholder="e.g., VS Code, Git, Docker" value="{{info.tools|default:'' }}" required>
+            </div>
+            
+            <div class="section-title">Education Details</div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="board10">10th Board:<span class="astrik">*</span></label>
+                    <select id="board10" name="board10" required>
+                        <option value="" disabled {% if info.board10 %}selected{% endif %}>Select Board</option>
+                        <option value="CBSE" {% if info.board10 == "CBSE" %}selected{% endif %}>CBSE</option>
+                        <option value="ICSE" {% if info.board10 == "ICSE" %}selected{% endif %}>ICSE</option>
+                        <option value="State Board" {% if info.board10 == "State Board" %}selected{% endif %}>State Board</option>
+                        <option value="Other" {% if info.board10 == "Other" %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="marks10">10th Marks (%):<span class="astrik">*</span></label>
+                    <input type="text" id="marks10" name="marks10" value="{{info.marks10|default:'' }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="board12">12th Board: <span class="astrik">*</span></label>
+                    <select id="board12" name="board12" required>
+                        <option value="" disabled {% if info.board12 %}selected{% endif %}>Select Board</option>
+                        <option value="CBSE" {% if info.board12 == "CBSE" %}selected{% endif %}>CBSE</option>
+                        <option value="ICSE" {% if info.board12 == "ICSE" %}selected{% endif %}>ICSE</option>
+                        <option value="State Board" {% if info.board12 == "State Board" %}selected{% endif %}>State Board</option>
+                        <option value="Other"{% if info.board12 == "Other" %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="marks12">12th Marks (%): <span class="astrik">*</span></label>
+                    <input type="text" id="marks12" name="marks12" value="{{info.marks12|default:'' }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="graduation">Graduation College: <span class="astrik">*</span></label>
+                    <select id="graduation" name="graduation" required>
+                        <option value="college A" {% if info.graduation_college == "college A" %}selected{% endif %}>College A</option>
+                        <option value="college B" {% if info.graduation_college == "college B" %}selected{% endif %}>College B</option>
+                        <option value="college C" {% if info.graduation_college == "college C" %}selected{% endif %}>College C</option>    
+                        <option value="Other" {% if info.graduation_college == "Other" %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="graduationMarks">Graduation Marks Till Now (%): <span class="astrik">*</span></label>
+                    <input type="text" id="graduationMarks" name="graduationMarks" value="{{info.graduation_marks|default:'' }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="postGraduation">Post Graduation College:</label>
+                    <select id="postGraduation" name="postGraduation">
+                        <option value="NA" selected {% if info.post_graduation_college %}selected{% endif %} >Not Applicable</option>
+                        <option value="college A" {% if info.post_graduation_college == "college A" %}selected{% endif %}>College A</option>
+                        <option value="college B" {% if info.post_graduation_college == "college B" %}selected{% endif %}>College B</option>
+                        <option value="college C" {% if info.post_graduation_college == "college C" %}selected{% endif %}>College C</option>    
+                        <option value="Other" {% if info.post_graduation_college == "Other" %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="postGraduationMarks">Post Graduation Marks (%):</label>
+                    <input type="text" id="postGraduationMarks" name="postGraduationMarks" value="{{info.post_graduation_marks|default:'' }}">
+                </div>
+            </div>
+            
+            <div class="section-title">Experience & Projects</div>
+
+            <!-- Internship Details -->
+            <div class="form-group">
+                <label for="internship">Have you done any Internship? <span class="astrik">*</span></label>
+                <select id="internship" name="internship" required>
+                    <option value="" disabled {% if info.internship in None%}selected{% endif %}>Select Option</option>
+                    <option value="yes" {% if info.internship == "yes" %}selected{% endif %}>Yes</option>
+                    <option value="no" {% if info.internship == "no" %}selected{% endif %}>No</option>
+                </select>
+            </div>
+            
+            <div id="internshipDetails" class="dynamic-content">
+                <div class="form-group">
+                    <label for="companyName">Name of Organization:</label>
+                    <input type="text" id="companyName" name="companyName" value="{{info.company|default:'' }}">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="duration">Duration:</label>
+                        <select id="duration" name="duration">
+                            <option value="" {% if info.duration %}selected{% endif %}>Select Duration</option>
+                            <option value="45 days" {% if info.duration == "45 days" %}selected{% endif %}>45 days</option>
+                            <option value="90 days" {% if info.duration == "90 days" %}selected{% endif %}>90 days</option>
+                            <option value="3-6 months" {% if info.duration == "3-6 months" %}selected{% endif %}>3-6 months</option>
+                            <option value="Currently Working" {% if info.duration == "Currently Working" %}selected{% endif %}>Currently Working</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="stipend" title="Amount received during internship per month">Stipend earned (INR):</label>
+                        <input type="text" id="stipend" name="stipend" placeholder="Amount in INR" value="{{info.stipend|default:'' }}">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="skill_gained" title="Skills acquired during the internship">Skills Gained:</label>
+                    <input type="text" id="skill_gained" name="skill_gained" placeholder="List skills gained" value="{{info.skills_gained|default:'' }}">
+                </div>
+            </div>
+            <!-- internship end -->
+
+            <!-- project Details -->
+            <div class="form-group">
+                <label for="project">Have you done any Project? <span class="astrik">*</span></label>
+                <select id="project" name="project" required>
+                    <option value="" disabled {% if info.project in None %}selected{% endif %}>Select Option</option>
+                    <option value="yes" {% if info.project == "yes" %}selected{% endif %}>Yes</option>
+                    <option value="no" {% if info.project == "no" %}selected{% endif %}>No</option>
+                </select>
+            </div>
+            <div id="projectHide" class="dynamic-content">
+            <div class="form-group">
+                <label for="projectDetails" title="Provide the name and a overview of your project">Project Name and Description:</label>
+                <textarea id="projectDetails" name="projectDetails" rows="4" placeholder="Describe your project..." >{{info.project_details|default:'' }}</textarea>
+            </div>
+            
+            
+            <div class="form-group" border>
+                <label for="learned_skills">Skills Learned from the Project:</label>
+                <textarea id="learned_skills" name="learned_skills" rows="2" placeholder="List skills learned..." >{{info.skills_learned|default:'' }}</textarea>
+            </div>
+
+            </div>
+            <!-- Project  End-->
+
+            <div class="section-title">Location Preferences</div>
+            
+            <div class="form-group">
+                <label>Preferred Job Location: <span class="astrik">*</span></label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="PANLocation" name="jobLocation" value="PAN INDIA" required
+                         {% if info.job_location == "PAN INDIA" %}checked{% endif %} required>
+                        <label for="PANLocation">PAN INDIA</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="otherLocation" name="jobLocation" value="Other"
+                         {% if info.job_location == "Other" %}checked{% endif %} required>
+                        <label for="otherLocation">Other</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="locationInputContainer" class="dynamic-content" style="display: none;">
+                <div class="form-group">
+                    <label for="locationInput">Enter Preferred Location (if Others):</label>
+                    <input type="text" id="locationInput" name="locationInput" value="{{info.other_location|default:'' }}">
+                </div>
+            </div>
+            
+            <div class="section-title">Social Profiles</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn Profile URL:</label>
+                    <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                </div>
+                
+                <div class="form-group">
+                    <label for="github">GitHub Profile URL:</label>
+                    <input type="url" id="github" name="github" placeholder="https://github.com/yourusername">
+                </div>
+            </div>
+
+<!-- Resume upload button -->
+            <div>
+                <label for="cv">Upload your Resume here (pdf only):<span class="astrik">*</span></label>
+                <input type="file" id="cv" name="cv" accept=".pdf" required>
+            </div>
+            
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+
+    <script src="{% static 'JS/profile_update.js' %}">
+        
+    </script>
+</body>
+</html>

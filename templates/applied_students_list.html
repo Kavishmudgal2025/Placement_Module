@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Student List</title>
+    <link rel="stylesheet" href="{% static 'CSS/applied_student_list.css' %}">
+</head>
+<body>
+    <h3>List of Students who applied in {{job.organization}} for {{job.title}}</h3><br>
+    {% if applications %}
+        <div>
+            <a href="{% url 'export_applied_students' job.job_id %}" class="btn">Export CSV</a>
+        </div><br><br>
+        <table border="1">
+            <tr>
+                <th>student ID</th>
+                <th>Name</th>
+                <th>E-Mail</th>
+                <th>Apply Date</th>
+                <th>Gender</th>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Passout Year</th>
+                <th>University</th>
+                <th>University City & State</th>
+
+            </tr>
+            {% for data in applications %}
+                <tr>
+                    <td>{{data.sId}}</td>
+                    <td>{{data.sId.name}}</td>
+                    <td>{{data.sId.email}}</td>
+                    <td>{{data.apply_date}}</td>
+                    <td>{{data.sId.gender}}</td>
+                    <td>{{data.sId.course}}</td>
+                    <td>{{data.sId.studentprofile.semester}}</td>
+                    <td>{{data.sId.passout_year}}</td>
+                    <td>{{data.sId.university}}</td>
+                    <td>{{data.sId.university_city}} , {{data.sId.university_state}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <p>No student has applied yet.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Here</title>
+    <link rel="stylesheet" href="{% static 'CSS/apply_job.css' %}">
+    
+</head>
+<body>  
+    <h3 align="center">Job Details</h3>
+    <table border="1">
+        <tr><th>Job Title</th><td style="color: #000000ff;">{{the_job.title}}</td></tr>
+        <tr><th>Organization</th><td style="color: #000000ff;">{{the_job.organization}}</td></tr>
+        <tr><th>Location</th><td style="color: #000000ff;">{{the_job.location}}</td></tr>
+        <tr><th title="The type of placement (Internship/Full-time etc.)">Placement Type</th><td style="color: #000000ff;">{{the_job.placement_type}}</td></tr>
+        <tr><th title="The job offer details">Offer</th><td style="color: #000000ff;">
+            {% if the_job.placement_type == "Internship" %}
+                <strong>Stipend:</strong> {{ the_job.job_stipend }}
+            {% elif the_job.placement_type == "Full-time" %}
+                <strong>Package:</strong> {{ the_job.package }}
+            {% elif the_job.placement_type == "Internship + PPO" %}
+                <strong>Stipend:</strong> {{ the_job.job_stipend }}<br>
+                <strong>Package(in LPA):</strong> {{ the_job.package }}
+            {% else %}
+                N/A
+            {% endif %}</td>
+        </tr>
+        <tr><th>Description</th><td style="color: #000000ff;">{{the_job.description|linebreaksbr}}</td></tr>
+    </table><br>
+
+    <h3>Please confirm your details {{student.name}}</h3>
+    <table border="1">
+        {% for i in data %}
+            <tr><th>Semester</th> <td style="color: #000000ff;">{{i.semester}}</td></tr>
+            <tr><th>Prefered Location</th> <td style="color: #000000ff;">{{i.job_location}}</td></tr>
+            <tr><th>Other Location</th> <td style="color: #000000ff;">{{i.other_location}}</td></tr>
+        {% endfor %}
+    </table><br><br>
+
+    {% if the_job.question1 != "N/A" or the_job.question2 != "N/A" or the_job.question3 != "N/A" or the_job.question4 != "N/A" or the_job.question5 != "N/A" or the_job.question6 != "N/A" or the_job.question7 != "N/A" or the_job.question8 != "N/A" or the_job.question9 != "N/A" or the_job.question10 != "N/A" %}
+        <h3>Here are a few questions to answer before applying </h3>
+    {% endif %}
+
+    <form method="POST">
+    {% csrf_token %}
+
+        <!-- Question1 -->
+        {% if the_job.question1 != "N/A" %}
+            <label for="ans1">{{ the_job.question1 }}</label><br>
+        {% endif %}
+        {% if the_job.type1 == "descriptive" %}
+            <textarea id="ans1" name="ans1" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type1 == "yes or no" %}
+            <select id="ans1" name="ans1">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type1 == "rating" %}
+            <input type="number" id="ans1" name="ans1" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type1 == "problem question" %}
+            <input type="text" id="ans1" name="ans1"><br><br>
+        {% endif %}
+
+        <!-- Question2 -->
+        {% if the_job.question2 != "N/A" %}
+            <label for="ans2">{{ the_job.question2 }}</label><br>
+        {% endif %}
+        {% if the_job.type2 == "descriptive" %}
+            <textarea id="ans2" name="ans2" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type2 == "yes or no" %}
+            <select id="ans2" name="ans2">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type2 == "rating" %}
+            <input type="number" id="ans2" name="ans2" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type2 == "problem question" %}
+            <input type="text" id="ans2" name="ans2"><br><br>
+        {% endif %}
+
+        <!-- Question3 -->
+        {% if the_job.question3 != "N/A" %}
+            <label for="ans3">{{ the_job.question3 }}</label><br>
+        {% endif %}
+        {% if the_job.type3 == "descriptive" %}
+            <textarea id="ans3" name="ans3" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type3 == "yes or no" %}
+            <select id="ans3" name="ans3">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type3 == "rating" %}
+            <input type="number" id="ans3" name="ans3" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type3 == "problem question" %}
+            <input type="text" id="ans3" name="ans3"><br><br>
+        {% endif %}
+
+        <!-- Question4 -->
+        {% if the_job.question4 != "N/A" %}
+            <label for="ans4">{{ the_job.question4 }}</label><br>
+        {% endif %}
+        {% if the_job.type4 == "descriptive" %}
+            <textarea id="ans4" name="ans4" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type4 == "yes or no" %}
+            <select id="ans4" name="ans4">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type4 == "rating" %}
+            <input type="number" id="ans4" name="ans4" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type4 == "problem question" %}
+            <input type="text" id="ans4" name="ans4"><br><br>
+        {% endif %}
+
+        <!-- Question5 -->
+        {% if the_job.question5 != "N/A" %}
+            <label for="ans5">{{ the_job.question5 }}</label><br>
+        {% endif %}
+        {% if the_job.type5 == "descriptive" %}
+            <textarea id="ans5" name="ans5" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type5 == "yes or no" %}
+            <select id="ans5" name="ans5">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type5 == "rating" %}
+            <input type="number" id="ans5" name="ans5" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type5 == "problem question" %}
+            <input type="text" id="ans5" name="ans5"><br><br>
+        {% endif %}
+
+        <!-- Question6 -->
+        {% if the_job.question6 != "N/A" %}
+            <label for="ans6">{{ the_job.question6 }}</label><br>
+        {% endif %}
+        {% if the_job.type6 == "descriptive" %}
+            <textarea id="ans6" name="ans6" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type6 == "yes or no" %}
+            <select id="ans6" name="ans6">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type6 == "rating" %}
+            <input type="number" id="ans6" name="ans6" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type6 == "problem question" %}
+            <input type="text" id="ans6" name="ans6"><br><br>
+        {% endif %}
+
+        <!-- Question7 -->
+        {% if the_job.question7 != "N/A" %}
+            <label for="ans7">{{ the_job.question7 }}</label><br>
+        {% endif %}
+        {% if the_job.type7 == "descriptive" %}
+            <textarea id="ans7" name="ans7" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type7 == "yes or no" %}
+            <select id="ans7" name="ans7">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type7 == "rating" %}
+            <input type="number" id="ans7" name="ans7" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type7 == "problem question" %}
+            <input type="text" id="ans7" name="ans7"><br><br>
+        {% endif %}
+
+        <!-- Question8 -->
+        {% if the_job.question8 != "N/A" %}
+            <label for="ans8">{{ the_job.question8 }}</label><br>
+        {% endif %}
+        {% if the_job.type8 == "descriptive" %}
+            <textarea id="ans8" name="ans8" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type8 == "yes or no" %}
+            <select id="ans8" name="ans8">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type8 == "rating" %}
+            <input type="number" id="ans8" name="ans8" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type8 == "problem question" %}
+            <input type="text" id="ans8" name="ans8"><br><br>
+        {% endif %}
+
+        <!-- Question9 -->
+        {% if the_job.question9 != "N/A" %}
+            <label for="ans9">{{ the_job.question9 }}</label><br>
+        {% endif %}
+        {% if the_job.type9 == "descriptive" %}
+            <textarea id="ans9" name="ans9" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type9 == "yes or no" %}
+            <select id="ans9" name="ans9">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type9 == "rating" %}
+            <input type="number" id="ans9" name="ans9" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type9 == "problem question" %}
+            <input type="text" id="ans9" name="ans9"><br><br>
+        {% endif %}
+
+        <!-- Question10 -->
+        {% if the_job.question10 != "N/A" %}
+            <label for="ans10">{{ the_job.question10 }}</label><br>
+        {% endif %}
+        {% if the_job.type10 == "descriptive" %}
+            <textarea id="ans10" name="ans10" rows="4" cols="50" required></textarea><br><br>
+        {% elif the_job.type10 == "yes or no" %}
+            <select id="ans10" name="ans10">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><br>
+        {% elif the_job.type10 == "rating" %}
+            <input type="number" id="ans10" name="ans10" min="0" max="5" step="0.5"><br><br>
+        {% elif the_job.type10 == "problem question" %}
+            <input type="text" id="ans10" name="ans10"><br><br>
+        {% endif %}
+
+    <button type="submit">Apply</button>
+</form>
+
+</body>
+</html>
