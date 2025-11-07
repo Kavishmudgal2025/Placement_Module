@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Student, StudentProfile, Job, JobApplication
+from .models import Student, StudentProfile, Job, JobApplication, ApplicationStatus
 
 # Register your models here.
 
@@ -22,3 +22,5 @@ class JobApplicationAdmin(admin.ModelAdmin):
 
     def job(self, obj):
         return obj.job_id.title   # or add more details if you like
+    
+admin.site.register(ApplicationStatus)

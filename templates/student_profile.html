@@ -76,7 +76,7 @@
       {% for data in updated_data %}
         <tr><th>Project</th><td>{{data.project}}</td></tr>
         {% if data.project == "yes" %}
-          <tr><th>Project Title & Description</th><td>{{data.project_details}}</td></tr>
+          <tr><th>Project Title & Description</th><td>{{data.project_details|linebreaksbr }}</td></tr>
           <tr><th>Skills Learned during Project</th><td>{{data.skills_learned}}</td></tr>
         {% endif %}
       {% endfor %}

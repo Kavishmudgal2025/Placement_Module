@@ -35,7 +35,10 @@
         {% for i in data %}
             <tr><th>Semester</th> <td style="color: #000000ff;">{{i.semester}}</td></tr>
             <tr><th>Prefered Location</th> <td style="color: #000000ff;">{{i.job_location}}</td></tr>
-            <tr><th>Other Location</th> <td style="color: #000000ff;">{{i.other_location}}</td></tr>
+            {% if i.job_location == "Other" %}
+                <tr><th>Other Location</th> <td style="color: #000000ff;">{{i.other_location}}</td></tr>
+            {% endif %}
+            <tr><th>Resume</th> <td style="color: #000000ff;"><a href="{{ i.resume.url }}" target="_blank">View Resume</a></td></tr>
         {% endfor %}
     </table><br><br>
 
@@ -46,7 +49,7 @@
     <form method="POST">
     {% csrf_token %}
 
-        <!-- Question1 -->
+<!-- QUESTIONS -->
         {% if the_job.question1 != "N/A" %}
             <label for="ans1">{{ the_job.question1 }}</label><br>
         {% endif %}
@@ -63,7 +66,7 @@
             <input type="text" id="ans1" name="ans1"><br><br>
         {% endif %}
 
-        <!-- Question2 -->
+        
         {% if the_job.question2 != "N/A" %}
             <label for="ans2">{{ the_job.question2 }}</label><br>
         {% endif %}
@@ -80,7 +83,7 @@
             <input type="text" id="ans2" name="ans2"><br><br>
         {% endif %}
 
-        <!-- Question3 -->
+        
         {% if the_job.question3 != "N/A" %}
             <label for="ans3">{{ the_job.question3 }}</label><br>
         {% endif %}
@@ -97,7 +100,7 @@
             <input type="text" id="ans3" name="ans3"><br><br>
         {% endif %}
 
-        <!-- Question4 -->
+        
         {% if the_job.question4 != "N/A" %}
             <label for="ans4">{{ the_job.question4 }}</label><br>
         {% endif %}
@@ -114,7 +117,7 @@
             <input type="text" id="ans4" name="ans4"><br><br>
         {% endif %}
 
-        <!-- Question5 -->
+        
         {% if the_job.question5 != "N/A" %}
             <label for="ans5">{{ the_job.question5 }}</label><br>
         {% endif %}
@@ -131,7 +134,8 @@
             <input type="text" id="ans5" name="ans5"><br><br>
         {% endif %}
 
-        <!-- Question6 -->
+        
+
         {% if the_job.question6 != "N/A" %}
             <label for="ans6">{{ the_job.question6 }}</label><br>
         {% endif %}
@@ -148,7 +152,8 @@
             <input type="text" id="ans6" name="ans6"><br><br>
         {% endif %}
 
-        <!-- Question7 -->
+        
+
         {% if the_job.question7 != "N/A" %}
             <label for="ans7">{{ the_job.question7 }}</label><br>
         {% endif %}
@@ -165,7 +170,8 @@
             <input type="text" id="ans7" name="ans7"><br><br>
         {% endif %}
 
-        <!-- Question8 -->
+        
+
         {% if the_job.question8 != "N/A" %}
             <label for="ans8">{{ the_job.question8 }}</label><br>
         {% endif %}
@@ -182,7 +188,8 @@
             <input type="text" id="ans8" name="ans8"><br><br>
         {% endif %}
 
-        <!-- Question9 -->
+        
+
         {% if the_job.question9 != "N/A" %}
             <label for="ans9">{{ the_job.question9 }}</label><br>
         {% endif %}
@@ -199,7 +206,8 @@
             <input type="text" id="ans9" name="ans9"><br><br>
         {% endif %}
 
-        <!-- Question10 -->
+        
+
         {% if the_job.question10 != "N/A" %}
             <label for="ans10">{{ the_job.question10 }}</label><br>
         {% endif %}

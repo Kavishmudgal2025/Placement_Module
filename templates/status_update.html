@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/status_update.css' %}">
+    <title>Status Update</title>
+</head>
+<body>
+    <h2>Student Information</h2>
+    <table border="1" cellpadding="5" cellspacing="2">
+        <tr><th>Job Title</th><td>{{ job.title }}</td></tr>
+        <tr><th>Organization</th><td>{{ job.organization }}</td></tr>
+        <tr><th>Student Name</th><td>{{ application.sId.name }}</td></tr>
+        <tr><th>Student ID</th><td>{{ application.sId.sId }}</td></tr>
+        <tr><th>Course</th><td>{{ application.sId.course }}</td></tr>
+        <tr><th>Passout Year</th><td>{{ application.sId.passout_year }}</td></tr>
+        <tr><th>Applied Date</th><td>{{ application.apply_date }}</td></tr>
+    </table>
+<br><br>
+
+<!-- Status Update Form -->
+    <h2>Status Update</h2>
+    <form method="POST">
+        {% csrf_token %}
+        
+    <!-- Round 1 -->
+        <label>Introduction Round:</label><br>
+        <input type="radio" name="round1" value="qualified" {% if status.round1 == "qualified" %}checked{% endif %}> Qualified
+        <input type="radio" name="round1" value="disqualified" {% if status.round1 == "disqualified" %}checked{% endif %}> Disqualified
+    <br>
+        <label>Description:</label>
+        <input type="text" name="des1" value="{{ status.reason1|default:'' }}">
+    <br><br>
+
+    <!-- Round 2 -->
+        <label>Group Discussion:</label><br>
+        <input type="radio" name="round2" value="qualified" {% if status.round2 == "qualified" %}checked{% endif %}> Qualified
+        <input type="radio" name="round2" value="disqualified" {% if status.round2 == "disqualified" %}checked{% endif %}> Disqualified
+    <br>
+        <label>Description:</label>
+        <input type="text" name="des2" value="{{ status.reason2|default:'' }}">
+    <br><br>
+
+    <!-- Round 3 -->
+        <label>Technical Round:</label><br>
+        <input type="radio" name="round3" value="qualified" {% if status.round3 == "qualified" %}checked{% endif %}> Qualified
+        <input type="radio" name="round3" value="disqualified" {% if status.round3 == "disqualified" %}checked{% endif %}> Disqualified
+    <br>
+        <label>Description:</label>
+        <input type="text" name="des3" value="{{ status.reason3|default:'' }}">
+    <br><br>
+
+    <!-- Round 4 -->
+        <label>HR Interview:</label><br>
+        <input type="radio" name="round4" value="qualified" {% if status.round4 == "qualified" %}checked{% endif %}> Qualified
+        <input type="radio" name="round4" value="disqualified" {% if status.round4 == "disqualified" %}checked{% endif %}> Disqualified
+    <br>
+        <label>Description:</label>
+        <input type="text" name="des4" value="{{ status.reason4|default:'' }}">
+    <br><br>
+
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

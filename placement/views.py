@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-from .models import Student, StudentProfile , Job, JobApplication
+from .models import Student, StudentProfile , Job, JobApplication, ApplicationStatus
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.contrib.auth import authenticate, login
@@ -558,9 +558,11 @@ def export_applied_students(request ,job_id):
 
     writer = csv.writer(response)
 
-    writer.writerow(['Student ID',"Name","Email","Apply Date","Gender","Course","Semester","Passout Year","University","City","State"])
+    writer.writerow(['Student ID',"Name","Email","Apply Date","Gender","Course","Semester","Passout Year","University","University City & State"])
     for i in application:
         profile = getattr(i.sId,'studentprofile',None)
+        city_state = f"{i.sId.university_city}, {i.sId.university_state}" if i.sId.university_city and i.sId.university_state else ""
+
         writer.writerow([
             i.sId,
             i.sId.name,
@@ -571,11 +573,32 @@ def export_applied_students(request ,job_id):
             profile.semester,
             i.sId.passout_year,
             i.sId.university,
-            i.sId.city ,
-            i.sId.state,
+            city_state,
+            
         ])
     return response
 
 def dashboard(request):
     return render(request,'dashboard.html')
+
+def status_update(request, job_id, application_id):
+    job = Job.objects.get(job_id=job_id)
+    application = JobApplication.objects.get(application_id=application_id)
+    status, created = ApplicationStatus.objects.get_or_create(student=application.sId, application=application)
+
+    if request.method == "POST":
+        status.round1 = request.POST.get('round1')
+        status.round2 = request.POST.get('round2')
+        status.round3 = request.POST.get('round3')
+        status.round4 = request.POST.get('round4')
+
+        status.reason1 = request.POST.get('des1') or None
+        status.reason2 = request.POST.get('des2') or None
+        status.reason3 = request.POST.get('des3') or None  
+        status.reason4 = request.POST.get('des4') or None
+
+        status.save()
+        return redirect('applied_student_list', job_id=job_id)
+
+    return render(request, "status_update.html",{"job":job, "application":application, "status":status})
 

@@ -90,6 +90,7 @@ class Job(models.Model):
     eligiblity_college_marks = models.DecimalField(max_digits=5, decimal_places=2)
     eligiblity_others = models.TextField()
     application_deadline = models.DateField()
+
     question1 = models.CharField(max_length=200, blank=True, null=True)
     question2 = models.CharField(max_length=200, blank=True, null=True)
     question3 = models.CharField(max_length=200, blank=True, null=True)
@@ -137,3 +138,22 @@ class JobApplication(models.Model):
     def __str__(self):
         return str(self.application_id)
 
+class ApplicationStatus(models.Model):
+    StatusChoices = [("Qualified", "Qualified"),
+                     ("Disqualified", "Disqualified"),
+                     ]
+    application = models.OneToOneField(JobApplication, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    round1 = models.CharField(max_length=20, choices = StatusChoices, null=True, blank=True)
+    round2 = models.CharField(max_length=20, choices = StatusChoices, null=True, blank=True)
+    round3 = models.CharField(max_length=20, choices = StatusChoices, null=True, blank=True)
+    round4 = models.CharField(max_length=20, choices = StatusChoices, null=True, blank=True)
+    
+    reason1= models.CharField(max_length=200, null=True, blank=True)
+    reason2= models.CharField(max_length=200, null=True, blank=True)
+    reason3= models.CharField(max_length=200, null=True, blank=True)
+    reason4= models.CharField(max_length=200, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Status of {self.application.application_id}: {self.student.name}"

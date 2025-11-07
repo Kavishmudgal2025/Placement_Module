@@ -30,6 +30,8 @@ urlpatterns = [
 
     path('admin_home/view_jobs/applied_student_list/<uuid:job_id>/', views.applied_student_list, name="applied_student_list"),
 
+    path('admin_home/view_jobs/applied_student_list/<uuid:job_id>/status_update/<uuid:application_id>/', views.status_update, name="status_update"),
+
     path('admin_home/view_jobs/applied_student_list/export/<uuid:job_id>/', views.export_applied_students, name="export_applied_students"),
     
     path('design/', views.dashboard, name="dashboard")

@@ -4,47 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applied Student List</title>
+    <title>Student List for - {{ job.title }}</title>
     <link rel="stylesheet" href="{% static 'CSS/applied_student_list.css' %}">
 </head>
-<body>
-    <h3>List of Students who applied in {{job.organization}} for {{job.title}}</h3><br>
+<body class="applied-student-body">
+
+    <div class="page-header">
+        <h2>Applied Students List for </h2>
+        <p class="org-name">{{ job.title }} at {{ job.organization }}</p>
+    </div>
+
     {% if applications %}
-        <div>
-            <a href="{% url 'export_applied_students' job.job_id %}" class="btn">Export CSV</a>
-        </div><br><br>
-        <table border="1">
-            <tr>
-                <th>student ID</th>
-                <th>Name</th>
-                <th>E-Mail</th>
-                <th>Apply Date</th>
-                <th>Gender</th>
-                <th>Course</th>
-                <th>Semester</th>
-                <th>Passout Year</th>
-                <th>University</th>
-                <th>University City & State</th>
+        <div class="export-container">
+            <a href="{% url 'export_applied_students' job.job_id %}" class="export-btn">
+                <i class="fas fa-file-csv"></i> Export CSV
+            </a>
+        </div>
 
-            </tr>
-            {% for data in applications %}
-                <tr>
-                    <td>{{data.sId}}</td>
-                    <td>{{data.sId.name}}</td>
-                    <td>{{data.sId.email}}</td>
-                    <td>{{data.apply_date}}</td>
-                    <td>{{data.sId.gender}}</td>
-                    <td>{{data.sId.course}}</td>
-                    <td>{{data.sId.studentprofile.semester}}</td>
-                    <td>{{data.sId.passout_year}}</td>
-                    <td>{{data.sId.university}}</td>
-                    <td>{{data.sId.university_city}} , {{data.sId.university_state}}</td>
-                </tr>
-            {% endfor %}
-        </table>
-
+        <div class="table-container">
+            <table class="student-table">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Applied On</th>
+                        <th>Gender</th>
+                        <th>Course</th>
+                        <th>Semester</th>
+                        <th>Passout Year</th>
+                        <th>University</th>
+                        <th>University City & State</th>
+                        <th>Status</th>
+                        <th>Update Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in applications %}
+                        <tr>
+                            <td>{{ data.sId }}</td>
+                            <td>{{ data.sId.name }}</td>
+                            <td>{{ data.sId.email }}</td>
+                            <td>{{ data.apply_date }}</td>
+                            <td>{{ data.sId.gender }}</td>
+                            <td>{{ data.sId.course }}</td>
+                            <td>{{ data.sId.studentprofile.semester }}</td>
+                            <td>{{ data.sId.passout_year }}</td>
+                            <td>{{ data.sId.university }}</td>
+                            <td>{{ data.sId.university_city }}, {{ data.sId.university_state }}</td>
+                            <td><!-- {{ data.status }} --></td>
+                            <td><a href="{% url 'status_update' job.job_id data.application_id %}">Update</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
-        <p>No student has applied yet.</p>
+        <p class="no-data">No student has applied yet.</p>
     {% endif %}
 </body>
 </html>
