@@ -52,7 +52,24 @@
                             <td>{{ data.sId.passout_year }}</td>
                             <td>{{ data.sId.university }}</td>
                             <td>{{ data.sId.university_city }}, {{ data.sId.university_state }}</td>
-                            <td><!-- {{ data.status }} --></td>
+                            <td>
+                            {% if data.status %}
+                                {% if data.status.round1 == "qualified" %}
+                                    ✅
+                                {% endif %}
+                                {% if data.status.round2 == "qualified" %}
+                                    ✅
+                                {% endif %}
+                                {% if data.status.round3 == "qualified" %}
+                                    ✅
+                                {% endif %}
+                                {% if data.status.round4 == "qualified" %}
+                                    ✅
+                                {% endif %}
+                            {% else %}
+                                Not Updated
+                            {% endif %}
+                            </td>
                             <td><a href="{% url 'status_update' job.job_id data.application_id %}">Update</a></td>
                         </tr>
                     {% endfor %}

@@ -13,9 +13,7 @@ internshipSelect.addEventListener("change", function () {
 // Toggle location input
 const panIndiaRadio = document.getElementById("PANLocation");
 const otherLocationRadio = document.getElementById("otherLocation");
-const locationInputContainer = document.getElementById(
-  "locationInputContainer"
-);
+const locationInputContainer = document.getElementById("locationInputContainer");
 
 panIndiaRadio.addEventListener("change", function () {
   if (this.checked) {

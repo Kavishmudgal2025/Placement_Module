@@ -26,42 +26,70 @@
         {% csrf_token %}
         
     <!-- Round 1 -->
-        <label>Introduction Round:</label><br>
-        <input type="radio" name="round1" value="qualified" {% if status.round1 == "qualified" %}checked{% endif %}> Qualified
-        <input type="radio" name="round1" value="disqualified" {% if status.round1 == "disqualified" %}checked{% endif %}> Disqualified
-    <br>
-        <label>Description:</label>
+        <div class="round-system1">
+        <label>Introduction Round:</label>
+        <label class="switch">
+            <input type="checkbox" name="round1" value="qualified" {% if status.round1 == "qualified" %}checked{% endif %}>
+            <span class="slider"></span>
+        </label>
+        <input type="hidden" name="round1_hidden" value="disqualified">
+        
+    <br><br>
+        <label>Reason (if any):</label>
         <input type="text" name="des1" value="{{ status.reason1|default:'' }}">
-    <br><br>
+        </div>
 
+    <br><br><br>
+        
     <!-- Round 2 -->
-        <label>Group Discussion:</label><br>
-        <input type="radio" name="round2" value="qualified" {% if status.round2 == "qualified" %}checked{% endif %}> Qualified
-        <input type="radio" name="round2" value="disqualified" {% if status.round2 == "disqualified" %}checked{% endif %}> Disqualified
-    <br>
-        <label>Description:</label>
-        <input type="text" name="des2" value="{{ status.reason2|default:'' }}">
+        <div class="round-system2">
+        <label>Technical Round:</label>
+        <label class="switch">
+            <input type="checkbox" name="round2" value="qualified" {% if status.round1 == "qualified" %}checked{% endif %}>
+            <span class="slider"></span>
+        </label>
+        <input type="hidden" name="round2_hidden" value="disqualified">
+        
     <br><br>
+        <label>Reason (if any):</label>
+        <input type="text" name="des2" value="{{ status.reason2|default:'' }}">
+        </div>
+    <br><br><br>
 
     <!-- Round 3 -->
-        <label>Technical Round:</label><br>
-        <input type="radio" name="round3" value="qualified" {% if status.round3 == "qualified" %}checked{% endif %}> Qualified
-        <input type="radio" name="round3" value="disqualified" {% if status.round3 == "disqualified" %}checked{% endif %}> Disqualified
-    <br>
-        <label>Description:</label>
-        <input type="text" name="des3" value="{{ status.reason3|default:'' }}">
+        <div class="round-system3">
+        <label>Soft-skill Round:</label>
+        <label class="switch">
+            <input type="checkbox" name="round3" value="qualified" {% if status.round3 == "qualified" %}checked{% endif %}>
+            <span class="slider"></span>
+        </label>
+        <input type="hidden" name="round3_hidden" value="disqualified">
+
     <br><br>
+        <label>Reason (if any):</label>
+        <input type="text" name="des3" value="{{ status.reason3|default:'' }}">
+        </div>
+    <br><br><br>
 
     <!-- Round 4 -->
-        <label>HR Interview:</label><br>
-        <input type="radio" name="round4" value="qualified" {% if status.round4 == "qualified" %}checked{% endif %}> Qualified
-        <input type="radio" name="round4" value="disqualified" {% if status.round4 == "disqualified" %}checked{% endif %}> Disqualified
-    <br>
-        <label>Description:</label>
-        <input type="text" name="des4" value="{{ status.reason4|default:'' }}">
+        <div class="round-system4">
+        <label>HR Interview:</label>
+        <label class="switch">
+            <input type="checkbox" name="round4" value="qualified" {% if status.round4 == "qualified" %}checked{% endif %}>
+            <span class="slider"></span>
+        </label>
+        <input type="hidden" name="round4_hidden" value="disqualified">
+
     <br><br>
+        <label>Reason (if any):</label>
+        <input type="text" name="des4" value="{{ status.reason4|default:'' }}">
+        </div>
+    <br><br><br>
 
         <button type="submit">Update</button>
     </form>
+        <script src="{% static 'JS/status_update.js' %}">
+        
+    </script>
 </body>
 </html>

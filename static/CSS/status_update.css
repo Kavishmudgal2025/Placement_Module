@@ -1,0 +1,171 @@
+/* ===== Global ===== */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #8cbdf3, #c6e2ff);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    color: #222;
+}
+
+/* ===== Header ===== */
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #1c1c1c;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ===== Student Info Table ===== */
+table {
+    width: 80%;
+    margin: 0 auto 30px;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
+}
+
+th {
+    background-color: #1e90ff;
+    color: #fff;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f1f8ff;
+    transition: background-color 0.3s ease;
+}
+
+/* ===== Form Container ===== */
+form {
+    width: 80%;
+    margin: 30px auto;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 25px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+}
+
+/* ===== Section Boxes (Rounds) ===== */
+.round-system1,
+.round-system2,
+.round-system3,
+.round-system4 {
+    border: 1px solid #b5c8e6;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #f9fbff;
+}
+
+label {
+    font-weight: 600;
+    color: #1c1c1c;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+/* ===== Input Field ===== */
+input[type="text"] {
+    width: 95%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #1e90ff;
+}
+
+/* ===== Switch Button ===== */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 26px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #1e90ff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* ===== Submit Button ===== */
+button[type="submit"] {
+    display: block;
+    margin: 25px auto 0;
+    padding: 10px 25px;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+button[type="submit"]:hover {
+    background-color: #0c70d4;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    table, form {
+        width: 95%;
+    }
+
+    th, td {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+    }
+}

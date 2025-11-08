@@ -548,8 +548,14 @@ def applied_student_list(request, job_id):
     job = get_object_or_404(Job, job_id=job_id)
     applications = JobApplication.objects.filter(job_id=job)
 
-    return render(request, "applied_students_list.html", {"job": job, "applications": applications})
+    status = ApplicationStatus.objects.filter(application__in=applications).select_related('application')
+    status_dict = {s.application.application_id: s for s in status}
     
+    for app in applications:
+        app.status = status_dict.get(app.application_id)
+
+    return render(request, "applied_students_list.html", {"job": job, "applications": applications})
+
 def export_applied_students(request ,job_id):
     application = JobApplication.objects.filter(job_id=job_id).select_related('sId', 'sId__studentprofile')
 

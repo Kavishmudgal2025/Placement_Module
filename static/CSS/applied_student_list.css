@@ -77,10 +77,9 @@
     text-align: left;
 }
 
-.student-table th, 
-.student-table td {
+.student-table th, .student-table td {
     padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #4f4d4b;
 }
 
 .student-table tbody tr:hover {
