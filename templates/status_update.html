@@ -86,6 +86,13 @@
         </div>
     <br><br><br>
 
+    <!-- Review -->
+        <div class="review-section">
+        <label>Feedback for Student:</label>
+        <textarea name="review" rows="4" cols="50" class="text-area">{{ status.review|default:'' }}</textarea>
+        </div>
+    <br><br><br>    
+
         <button type="submit">Update</button>
     </form>
         <script src="{% static 'JS/status_update.js' %}">

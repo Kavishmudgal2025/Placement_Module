@@ -9,13 +9,15 @@
 </head>
 <body>
 
-  <h2 style="color: #000000ff;">Hello {{ student_data.name }}, here is your profile</h2>
-  <!-- <h4 style="color: #000000ff;">Update your profile to see the Eligible Jobs for You</h4> -->
-    <h4 style="color: #212121;">(Make sure to update your profile before applying for any jobs)</h4>
+  <div>
+    <h2 style="color: #000000ff;">Hello {{ student_data.name }}, here is your profile</h2>
+    <button onclick="location.href='logout/'" id="logout-link"> <strong>Logout</strong></button>
+  </div>
+  <h4 style="color: #212121;">(Make sure to update your profile before applying for any jobs)</h4>
 
 
   <div class="update-link">
-  <button onclick="location.href='update/'" class="btn"> <strong>Update Profile</strong></button>
+    <button onclick="location.href='update/'" class="btn"> <strong>Update Profile</strong></button>
 </div>
 
 <!-- Basic Student Data -->
@@ -96,7 +98,7 @@
       {% endfor %}
   </table>
 
-<!-- Social Media -->
+<!-- Social Media & Resume -->
   <table>
     <h4>Social Media</h4>
       {% for data in updated_data %}

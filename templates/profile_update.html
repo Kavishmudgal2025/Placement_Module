@@ -219,9 +219,13 @@
 
 <!-- Resume upload button -->
             <div>
-                <label for="cv">Upload your Resume here (pdf only):<span class="astrik">*</span></label>
-                <input type="file" id="cv" name="cv" accept=".pdf" required>
+                <label for="cv">Upload your Resume here (PDF only): <span class="astrik">*</span></label>
+                <input type="file" id="cv" name="cv" accept=".pdf">
+                {% if info.resume %}
+                    <p>Resume is already uploaded</p>
+                {% endif %}
             </div>
+
             
             <button type="submit">Update Profile</button>
         </form>

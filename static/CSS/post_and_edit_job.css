@@ -255,3 +255,21 @@ select.form-control {
         font-size: 14px;
     }
 }
+
+#add_button{
+    padding: 10px;
+    border-radius: 20px;
+    background-color:#8efaaf;
+    font-weight: bold;
+    color: #383737;
+}
+
+.question_type{
+    margin-bottom: 30px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size:15px;
+    font-style:oblique;
+    font-weight:500;
+}
+

@@ -5,7 +5,7 @@ from .models import Student, StudentProfile , Job, JobApplication, ApplicationSt
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.contrib.auth import authenticate, login
-import csv
+import csv, os
 from decimal import Decimal
 from datetime import date
 
@@ -105,6 +105,13 @@ def student_profile(request):
     else: 
         
         return render(request,"home_login.html")
+
+def user_logout(request):
+    try:
+        del request.session['student_id']
+    except KeyError:
+        pass
+    return redirect('/')
 
 def admin (request):
     studentDetails = Student.objects.all()
@@ -454,6 +461,7 @@ def job_application(request, job_id):
     student_id = request.session.get("student_id")
     student = get_object_or_404(Student, sId=student_id)
     student_data = StudentProfile.objects.filter(student=student)
+    status = ApplicationStatus.object.get(student=student)
 
     # Check if already applied
     already_applied = JobApplication.objects.filter(job_id=job, sId=student).exists()
@@ -487,7 +495,7 @@ def job_application(request, job_id):
             answer10=answer10
         )
         application_answer.save()
-        return render(request, "application_thankyou.html")
+        return render(request, "application_thankyou.html",{"status":status})
 
     return render(request, "apply_job.html", {"the_job": job, "student": student, "data": student_data})
 
@@ -598,10 +606,15 @@ def status_update(request, job_id, application_id):
         status.round3 = request.POST.get('round3')
         status.round4 = request.POST.get('round4')
 
-        status.reason1 = request.POST.get('des1') or None
-        status.reason2 = request.POST.get('des2') or None
-        status.reason3 = request.POST.get('des3') or None  
-        status.reason4 = request.POST.get('des4') or None
+        round1= request.POST.get('round1')
+        round2= request.POST.get('round2')
+        round3= request.POST.get('round3')
+        round4= request.POST.get('round4')
+
+        status.reason1 = request.POST.get('des1') if round1 == "qualified" else None
+        status.reason2 = request.POST.get('des2') if round2 == "qualified" else None
+        status.reason3 = request.POST.get('des3') if round3 == "qualified" else None  
+        status.reason4 = request.POST.get('des4') if round4 == "qualified" else None
 
         status.save()
         return redirect('applied_student_list', job_id=job_id)

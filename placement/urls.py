@@ -20,6 +20,8 @@ urlpatterns = [
 
     path('profile/update/', views.updateProfile, name='updateProfile'),
 
+    path('profile/logout/', views.user_logout, name='logout'),
+
     path('admin_home/job_update/', views.job_post, name='job_update'),
     path('admin_home/view_jobs/', views.view_jobs, name='view_jobs'),
     path('export_jobs/', views.export_jobs, name='export_jobs'),

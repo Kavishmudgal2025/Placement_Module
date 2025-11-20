@@ -118,12 +118,14 @@
                         <i class="fas fa-question-circle"></i> Screening Questions
                     </div>
                     
-                    <div class="form-group full-width">
-                        <label for="question1"><i class="fas fa-1"></i> Question 1:</label>
+
+<!-- Questions -->
+                    <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question1"> Question 1:</label>
                         <input type="text" class="form-control" id="question1" name="question1" value="{{job.question1}}">
 
                         <label for="question1_type">Question Type</i></label>
-                        <select id="question1_type" name="question1_type">
+                        <select class="question_type" id="question1_type" name="question1_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type1 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type1 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -132,12 +134,12 @@
                         </select>
                     </div>
                     
-                    <div class="form-group full-width">
-                        <label for="question2"><i class="fas fa-2"></i> Question 2:</label>
+                    <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question2"> Question 2:</label>
                         <input type="text" class="form-control" id="question2" name="question2" value="{{job.question2}}">
 
                         <label for="question2_type">Question Type</i></label>
-                        <select id="question2_type" name="question2_type">
+                        <select class="question_type" id="question2_type" name="question2_type">
                             <option value="" {% if job.type2 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type2 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type2 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -146,12 +148,12 @@
                         </select>
                     </div>
                     
-                    <div class="form-group full-width">
-                        <label for="question3"><i class="fas fa-3"></i> Question 3:</label>
+                    <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question3"> Question 3:</label>
                         <input type="text" class="form-control" id="question3" name="question3" value="{{job.question3}}">
 
                         <label for="question3_type">Question Type</i></label>
-                        <select id="question3_type" name="question3_type">
+                        <select class="question_type" id="question3_type" name="question3_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type3 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type3 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -160,12 +162,12 @@
                         </select>
                     </div>
                     
-                    <div class="form-group full-width">
-                        <label for="question4"><i class="fas fa-4"></i> Question 4:</label>
+                    <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question4"> Question 4:</label>
                         <input type="text" class="form-control" id="question4" name="question4" value="{{job.question4}}">
 
                         <label for="question4_type">Question Type</i></label>
-                        <select id="question4_type" name="question4_type">
+                        <select class="question_type" id="question4_type" name="question4_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type4 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type4 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -174,12 +176,12 @@
                         </select>
                     </div>
                     
-                    <div class="form-group full-width">
-                        <label for="question5"><i class="fas fa-5"></i> Question 5:</label>
+                    <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question5"> Question 5:</label>
                         <input type="text" class="form-control" id="question5" name="question5" value="{{job.question5}}">
 
                         <label for="question5_type">Question Type</i></label>
-                        <select id="question5_type" name="question5_type">
+                        <select class="question_type" id="question5_type" name="question5_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type5 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type5 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -188,12 +190,12 @@
                         </select>
                     </div>
                     
-                    <div class="form-group full-width">
-                        <label for="question6"><i class="fas fa-5"></i> Question 6:</label>
+                    <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question6"></label> Question 6:</label>
                         <input type="text" class="form-control" id="question6" name="question6" value="{{job.question6}}">
 
                         <label for="question6_type">Question Type</i></label>
-                        <select id="question6_type" name="question6_type">
+                        <select class="question_type" id="question6_type" name="question6_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type6 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type6 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -202,12 +204,12 @@
                         </select>
                     </div>
 
-                <div class="form-group full-width">
-                        <label for="question7"><i class="fas fa-5"></i> Question 7:</label>
+                <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question7"> Question 7:</label>
                         <input type="text" class="form-control" id="question7" name="question7" value="{{job.question7}}">
 
                         <label for="question7_type">Question Type</i></label>
-                        <select id="question7_type" name="question7_type">
+                        <select class="question_type" id="question7_type" name="question7_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type7 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type7 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -216,12 +218,12 @@
                         </select>
                     </div>
 
-                <div class="form-group full-width">
-                        <label for="question8"><i class="fas fa-5"></i> Question 8:</label>
+                <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question8"> Question 8:</label>
                         <input type="text" class="form-control" id="question8" name="question8" value="{{job.question8}}">
 
                         <label for="question8_type">Question Type</i></label>
-                        <select id="question8_type" name="question8_type">
+                        <select class="question_type" id="question8_type" name="question8_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type8 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type8 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -230,12 +232,12 @@
                         </select>
                     </div>
 
-                <div class="form-group full-width">
-                        <label for="question9"><i class="fas fa-5"></i> Question 9:</label>
+                <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question9"> Question 9:</label>
                         <input type="text" class="form-control" id="question9" name="question9" value="{{job.question9}}">
 
                         <label for="question9_type">Question Type</i></label>
-                        <select id="question9_type" name="question9_type">
+                        <select class="question_type" id="question9_type" name="question9_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type9 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type9 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -244,12 +246,12 @@
                         </select>
                     </div>
 
-                <div class="form-group full-width">
-                        <label for="question10"><i class="fas fa-5"></i> Question 10:</label>
+                <div class="form-group full-width question-block" style="display:none;">
+                        <label for="question10"> Question 10:</label>
                         <input type="text" class="form-control" id="question10" name="question10" value="{{job.question10}}">
 
                         <label for="question10_type">Question Type</i></label>
-                        <select id="question10_type" name="question10_type">
+                        <select class="question_type" id="question10_type" name="question10_type">
                             <option value="" {% if job.type1 %}selected{% endif %}>Select type</option>
                             <option value="rating" {% if job.type10 == "rating" %}selected{% endif %}>Rating</option>
                             <option value="yes or no" {% if job.type10 == "yes or no" %}selected{% endif %}>Yes OR No</option>
@@ -258,52 +260,13 @@
                         </select>
                     </div>
                 </div>
-                
+
+                <button type="button" id="add_button">Add Question</button>
                 <button type="submit" class="btn">Save and Post</button>
     
             </form>
         </div>
     </div>
-    <script>
-        // Add animation to form elements when they come into focus
-        document.querySelectorAll('.form-control').forEach(control => {
-            control.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'scale(1.02)';
-                this.parentElement.style.transition = 'transform 0.3s ease';
-            });
-            
-            control.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'scale(1)';
-            });
-        });
-        
-        // Add date validation for deadline
-        const deadlineField = document.getElementById('deadline');
-        if(deadlineField) {
-            const today = new Date().toISOString().split('T')[0];
-            deadlineField.setAttribute('min', today);
-        }
-
-        // Improve mobile experience
-        document.addEventListener('touchstart', function() {
-            // Add touch-specific improvements if needed
-        }, false);
-        
-        // Prevent zoom on input focus for mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            let viewport = document.querySelector('meta[name="viewport"]');
-            if (viewport) {
-                function preventZoom(e) {
-                    if (e.touches.length > 1) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                }
-                
-                document.addEventListener('touchstart', preventZoom, { passive: false });
-                document.addEventListener('touchmove', preventZoom, { passive: false });
-            }
-        });
-    </script>
+    <script src="{% static 'Js/edit_job.js' %}"class="question_type"></script>
 </body>
 </html>

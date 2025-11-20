@@ -154,6 +154,8 @@ class ApplicationStatus(models.Model):
     reason3= models.CharField(max_length=200, null=True, blank=True)
     reason4= models.CharField(max_length=200, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
+    feedback = models.TextField(null=True, blank=True)
 
+ 
     def __str__(self):
         return f"Status of {self.application.application_id}: {self.student.name}"
