@@ -461,7 +461,7 @@ def job_application(request, job_id):
     student_id = request.session.get("student_id")
     student = get_object_or_404(Student, sId=student_id)
     student_data = StudentProfile.objects.filter(student=student)
-    status = ApplicationStatus.object.get(student=student)
+    
 
     # Check if already applied
     already_applied = JobApplication.objects.filter(job_id=job, sId=student).exists()
@@ -495,7 +495,7 @@ def job_application(request, job_id):
             answer10=answer10
         )
         application_answer.save()
-        return render(request, "application_thankyou.html",{"status":status})
+        return render(request, "application_thankyou.html")
 
     return render(request, "apply_job.html", {"the_job": job, "student": student, "data": student_data})
 
