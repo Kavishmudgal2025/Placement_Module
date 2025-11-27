@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    z-index: 10;
+}
+
+.logo img {
+    width: 250px;
+}
+
+body {
+    height: 100vh;
+    background: #f0f4ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    background-color: #1e3c72;
+    color:white;
+    padding:20px;
+    border-radius: 15px;
+    text-align: center;
+
+}
+
+p {
+    color:#1e3c72;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    font-size: 1.2rem;
+}
+
+.btn-box {
+    text-align: center;
+    margin: 20px 15px;
+}
+
+.btn {
+    background-color:#3374b4;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: #1e3c72;
+    transform: translateY(-4px);
+}
+
+/* ===== Waves ===== */
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 180px;
+    background-repeat: repeat no-repeat;
+    background-position: bottom;
+    transform: translate3d(0, 0, 0);
+    animation: waveMove 12s linear infinite;
+}
+
+.wave1 {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%232a5298' d='M0,224L48,218.7C96,213,192,203,288,176C384,149,480,107,576,112C672,117,768,171,864,208C960,245,1056,267,1152,261.3C1248,256,1344,224,1392,208L1440,192V320H0Z'></path></svg>");
+    animation-duration: 18s;
+}
+
+.wave2 {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%231e3c72' fill-opacity='0.8' d='M0,288L60,245.3C120,203,240,117,360,122.7C480,128,600,224,720,240C840,256,960,192,1080,186.7C1200,181,1320,235,1380,261.3L1440,288V320H0Z'></path></svg>");
+    animation-duration: 18s;
+    opacity: 0.8;
+}
+
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}

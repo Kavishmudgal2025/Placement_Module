@@ -16,15 +16,12 @@
         <h2>Job Posted!</h2>
         <p>Thank you for posting this job opening.</p>
         <p>Students will be seeing your post soon...</p>
+        <div class="return-home-btn">
+            <button id ="btn" title="Go to Home Page" onclick="closeWindow()">Return Home</button>
+        </div>
+    </div>
 
-        <button title="Go to Home Page" onclick="closeWindow()">Return Home</button>
-        
-    <!-- This JS will help to close the current tab on the browser -->
-        <script>
-        function closeWindow() {
-            window.open('', '_self'); // needed for some browsers
-            window.close();
-        }
-        </script>
+    <script src="{% static 'Js/thankyou.js' %}"> </script>
 
+</body>
 </html>

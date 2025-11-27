@@ -6,11 +6,12 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('',views.signin, name='index'),
+    path('',views.switch_profile, name='profileswitch'),
 
-    path('profile/',views.student_profile, name='profile'),
-
+    path('login/',views.signin, name='signin'),
     path('register/',views.signup, name='signup'),
+
+    path('login/profile/',views.student_profile, name='profile'),
 
     path('thankyou/', views.job_post_thankyou, name='thankyou'),
 
@@ -18,9 +19,11 @@ urlpatterns = [
     path('admin_home/', views.admin_home, name='admin_home'),
     path('export_students/', views.export_students, name='export_students'),
 
+    path('login/profile/update/', views.updateProfile, name='updateProfile'),
     path('profile/update/', views.updateProfile, name='updateProfile'),
 
-    path('profile/logout/', views.user_logout, name='logout'),
+    path('login/profile/logout/', views.student_logout, name='logout_student'),
+    path('admin_home/logout/', views.admin_logout, name='logout_admin'),
 
     path('admin_home/job_update/', views.job_post, name='job_update'),
     path('admin_home/view_jobs/', views.view_jobs, name='view_jobs'),

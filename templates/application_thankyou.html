@@ -16,17 +16,12 @@
         <h2>Application Submitted!</h2>
         <p>Thank you for applying for this job opportunity.</p>
         <p>Your application has been received and is under review.</p>
-        <div class="next-steps">
-            <button title="Go to Home Page" onclick="closeWindow()">Return Home</button>
+        <div class="return-home-btn">
+            <button id="btn"title="Go to Home Page" onclick="closeWindow()">Return Home</button>
         </div>
-
-        <script>
-        function closeWindow() {
-            window.open('', '_self'); // needed for some browsers
-            window.close();
-        }
-        </script>
-        <p class="best-wishes">Samatrix - Wishes you all the best in your career journey!</p>
     </div>
+
+    <script src="{% static 'Js/thankyou.js' %}"> </script>
+
 </body>
 </html>

@@ -1,0 +1,31 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Placement Portal</title>
+    <link rel="stylesheet" href="{% static 'CSS/switch_profile.css' %}" />
+</head>
+<body>
+    <div class="logo">
+        <img src="{% static 'Samatrix_logo_NoBG.png' %}" alt="Company Logo">
+    </div>
+
+    <div class="container">
+        <h1>Welcome to Placement Module</h1>
+        <p>Select your access type to continue</p>
+
+        <div class="btn-box">
+            <a href="/admin_login/" class="btn">Admin Login</a>
+            <a href="/login/" class="btn">Student Login</a>
+        </div>
+    </div>
+
+    <!-- SVG Waves -->
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+
+    <script src="{% static 'Js/switch_profile.js' %}"></script>
+</body>
+</html>

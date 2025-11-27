@@ -8,12 +8,58 @@
     <title>Already applied</title>
 </head>
 <body>
-    <div class="container">
-    <h2>Hello {{ student.name }}</h2>
+<div class="container">
+    <h2>Hey {{ student.name|upper }}</h2>
+
     <div class="message-box">
         <h4>You have already applied for this job.</h4>
     </div>
-    <div class="status-indicator">Application Submitted</div>
+<!-- button -->
+    <div class="status-button">
+        <button onclick="status_view()" id="check_status">Check Status</button>
+    </div>
+
+    <div class="status">
+        {% if status %}
+            {% if status.round1 == "qualified" or status.round1 == "disqualified" %}
+                <p>Round 1: {{ status.round1|upper }}</p>
+                {% if status.reason1 %}
+                    <p>Note: {{status.reason1}}</p>
+                {% endif %}
+            {% endif %}
+
+            {% if status.round2 == "qualified" or status.round2 == "disqualified" %}
+                <p>Round 2: {{ status.round2|upper }}</p>
+                {% if status.reason2 %}
+                    <p>Note: {{status.reason2}}</p>
+                {% endif %}
+            {% endif %}
+
+            {% if status.round3 == "qualified" or status.round3 == "disqualified" %}
+                <p>Round 3: {{ status.round3|upper }}</p>
+                {% if status.reason3 %}
+                    <p>Note: {{status.reason3}}</p>
+                {% endif %}
+            {% endif %}
+
+            {% if status.round4 == "qualified" or status.round4 == "disqualified" %}
+                <p>Round 4: {{ status.round4|upper }}</p>
+                {% if status.reason4 %}
+                    <p>Note: {{status.reason4}}</p>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <p>Status Not Updated Yet</p>
+        {% endif %}
+
+        <div class="feedback">
+            {% if status.feedback %}
+                <p>Feedback: {{ status.feedback }}</p>
+            {% endif %}
+        </div>
+
+    </div>
 </div>
+    <script src="{% static 'Js/already_applied.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+function toggleAdminPassword() {
+    const passwordInput = document.getElementById('password');
+    const passwordEye = document.getElementById('admin-password-eye');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordEye.classList.remove('fa-eye');
+        passwordEye.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        passwordEye.classList.remove('fa-eye-slash');
+        passwordEye.classList.add('fa-eye');
+    }
+};

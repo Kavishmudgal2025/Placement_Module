@@ -1,14 +1,15 @@
 body {
-    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-    font-family: 'Segoe UI', Arial, sans-serif;
-    color: #333;
-    text-align: center;
-    padding: 60px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .thankyou-card {
     background: #fff;
     border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.08);
     display: inline-block;
     padding: 40px 30px;
     margin-top: 40px;
@@ -36,4 +37,19 @@ p {
     color: #888;
     font-style: italic;
     font-size: 16px;
+}
+
+.return-home-btn{
+    
+    border: none;
+    padding:10px;
+}
+#btn{
+    padding:15px;
+    border: none;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 15px;
+    color: white;
+    background-color: #d07b03;
+    border-radius:15px;
 }

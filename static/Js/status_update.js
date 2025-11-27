@@ -1,41 +1,104 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Get all round containers
-    const round1 = document.querySelector(".round-system1");
-    const round2 = document.querySelector(".round-system2");
-    const round3 = document.querySelector(".round-system3");
-    const round4 = document.querySelector(".round-system4");
 
-    const rounds = [round1, round2, round3, round4];
+    // For each 3-state switch box
+    document.querySelectorAll(".three-state-switch").forEach(box => {
+        
+        // All 3 radio buttons inside this switch
+        const buttons = box.querySelectorAll(".button");
 
-    // Initially hide all except round 1
+        // Smooth background animation
+        box.style.transition = "background 0.5s ease";
+
+        // Add change listener for each radio
+        buttons.forEach(btn => {
+            btn.addEventListener("change", () => {
+
+                if (btn.value === "none") {
+                    box.style.backgroundColor = "white";
+                } 
+                else if (btn.value === "disqualified") {
+                    box.style.backgroundColor = "crimson";
+                } 
+                else if (btn.value === "qualified") {
+                    box.style.backgroundColor = "rgba(30, 223, 88, 1)";
+                }
+            });
+        });
+
+        // Run once on page load to set correct color
+        const checked = box.querySelector("input:checked");
+        if (checked) {
+            checked.dispatchEvent(new Event("change"));
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const rounds = document.querySelectorAll(".round");
+
+    // Hide all rounds except round 1
     for (let i = 1; i < rounds.length; i++) {
         rounds[i].style.display = "none";
     }
 
+    // Add functionality for each three-state switch
+    document.querySelectorAll(".three-state-switch").forEach(box => {
+
+        const radios = box.querySelectorAll(".button");
+        box.style.transition = "background 0.4s ease";
+
+        radios.forEach(radio => {
+            radio.addEventListener("change", () => {
+
+                // Set the color of the switch
+                if (radio.value === "none") {
+                    box.style.backgroundColor = "white";
+                } else if (radio.value === "disqualified") {
+                    box.style.backgroundColor = "crimson";
+                } else {
+                    box.style.backgroundColor = "rgba(30, 223, 88, 1)";
+                }
+
+                updateRounds();
+            });
+        });
+
+        // Apply stored selection on page load
+        const checked = box.querySelector("input:checked");
+        if (checked) checked.dispatchEvent(new Event("change"));
+    });
+
+    // Logic to display next round only if previous is qualified
     function updateRounds() {
+
         for (let i = 0; i < rounds.length - 1; i++) {
-            const checkbox = rounds[i].querySelector('input[type="checkbox"]');
+
+            const selected = rounds[i].querySelector(".three-state-switch input:checked");
             const nextRound = rounds[i + 1];
-            if (checkbox.checked) {
+
+            if (!selected) continue;
+
+            if (selected.value === "qualified") {
                 nextRound.style.display = "block";
             } else {
-                // Hide next and all rounds after it
+                // Hide all subsequent rounds + reset them
                 for (let j = i + 1; j < rounds.length; j++) {
                     rounds[j].style.display = "none";
-                    const cb = rounds[j].querySelector('input[type="checkbox"]');
-                    cb.checked = false; // reset switch
+
+                    // reset radios
+                    const radios = rounds[j].querySelectorAll(".button");
+                    radios.forEach(r => r.checked = false);
+
+                    // reset background color
+                    const box = rounds[j].querySelector(".three-state-switch");
+                    if (box) box.style.backgroundColor = "white";
                 }
                 break;
             }
         }
     }
 
-    // Attach event listeners
-    rounds.forEach((r) => {
-        const checkbox = r.querySelector('input[type="checkbox"]');
-        checkbox.addEventListener("change", updateRounds);
-    });
-
-    // Run once on load (in case some are pre-qualified)
+    // Handle initial visibility on page load
     updateRounds();
 });

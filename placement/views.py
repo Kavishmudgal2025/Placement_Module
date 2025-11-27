@@ -8,10 +8,28 @@ from django.contrib.auth import authenticate, login
 import csv, os
 from decimal import Decimal
 from datetime import date
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from functools import wraps
+
+
 
 #Declare Global Varibales here.
 
 # Create your views here.
+
+def student_login_required(view_func):
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        if 'student_id' not in request.session:
+            return redirect('/login/')   # student login page
+        return view_func(request, *args, **kwargs)
+    return wrapper
+
+
+def switch_profile(request):
+    return render(request, 'switch_profile.html')
+
 
 def signin(request):
     #return HttpResponse("hello")
@@ -25,12 +43,13 @@ def signin(request):
                 request.session['student_id'] = student.sId
                 return redirect('profile/')
             else:
-                return render(request,'index.html', {"ERROR":"Invalid Email ID or Password"})
+                return render(request,'student_login.html', {"ERROR":"Invalid Email ID or Password"})
         else:
-            return render(request,'index.html', {"ERROR":"Invalid Email address or Password"})
+            return render(request,'student_login.html', {"ERROR":"Invalid Email address or Password"})
     
 
-    return render(request,'index.html')
+    return render(request,'student_login.html')
+
 
 def signup(request):
     if request.method == "POST":
@@ -84,6 +103,7 @@ def signup(request):
 
     return render(request, "student_signup.html")
 
+@student_login_required
 def student_profile(request):
     student_id = request.session.get('student_id')   
 
@@ -106,12 +126,14 @@ def student_profile(request):
         
         return render(request,"home_login.html")
 
-def user_logout(request):
+
+def student_logout(request):
     try:
         del request.session['student_id']
     except KeyError:
         pass
-    return redirect('/')
+    return redirect('/login/')
+
 
 def admin (request):
     studentDetails = Student.objects.all()
@@ -132,6 +154,8 @@ def admin (request):
     
     return render(request,"admin_login.html")
 
+
+@login_required(login_url='/admin_login/')
 def admin_home(request):
     studentDetails = Student.objects.all()
 
@@ -189,6 +213,13 @@ def admin_home(request):
 
     return render(request, "admin_home.html", {"studentData": studentDetails})
 
+
+def admin_logout(request):
+    logout(request)
+    return redirect('/admin_login/')
+
+
+@login_required(login_url='/admin_login/')
 def export_students(request):
     studentDetails = Student.objects.all()
 
@@ -250,6 +281,7 @@ def export_students(request):
 
     return response
 
+@student_login_required
 def updateProfile(request):
     #return HttpResponse("update here")
     
@@ -310,12 +342,13 @@ def updateProfile(request):
             profile.resume = request.FILES['cv']
 
         profile.save()
-        return redirect("/profile")
+        return redirect("/login/profile/")
         #We should change it to new url when deployed
 
     return render(request, "profile_update.html", {"info" : profile})
 
-@never_cache
+
+@login_required(login_url='/admin_login/')
 def job_post(request):
 
     if request.method == "POST":
@@ -413,15 +446,21 @@ def job_post(request):
         return redirect('/thankyou/')  # Redirect to admin home after adding job
     return render(request, "post_job.html")
 
+
+@login_required(login_url='/admin_login/')
 def job_post_thankyou(request):
     return render(request, "job_post_thankyou.html")
 
+
+@login_required(login_url='/admin_login/')
 def view_jobs(request):
     #return HttpResponse("view jobs here")
     
     job_list = Job.objects.all()   
     return render(request, "view_jobs.html", {"job_list": job_list})
 
+
+@login_required(login_url='/admin_login/')
 def export_jobs(request):
     job_list = Job.objects.all()
 
@@ -456,29 +495,31 @@ def export_jobs(request):
 
     return response
 
+@student_login_required
 def job_application(request, job_id):
     job = get_object_or_404(Job, job_id=job_id)
     student_id = request.session.get("student_id")
     student = get_object_or_404(Student, sId=student_id)
     student_data = StudentProfile.objects.filter(student=student)
-    
+    application = JobApplication.objects.filter(job_id=job, sId=student).first()
+    status = ApplicationStatus.objects.filter(application=application, student=student).first()
 
     # Check if already applied
     already_applied = JobApplication.objects.filter(job_id=job, sId=student).exists()
     if already_applied:
-        return render(request, "already_applied.html", {"student": student})
+        return render(request, "already_applied.html", {"student": student, "status":status})
 
     if request.method == "POST":
         answer1 = request.POST.get("ans1") or None
-        answer2 = request.POST.get("ans2") 
-        answer3 = request.POST.get("ans3")
-        answer4 = request.POST.get("ans4")
-        answer5 = request.POST.get("ans5")
-        answer6 = request.POST.get("ans6")
-        answer7 = request.POST.get("ans7")
-        answer8 = request.POST.get("ans8")
-        answer9 = request.POST.get("ans9")
-        answer10 = request.POST.get("ans10")
+        answer2 = request.POST.get("ans2") or None
+        answer3 = request.POST.get("ans3") or None
+        answer4 = request.POST.get("ans4") or None
+        answer5 = request.POST.get("ans5") or None
+        answer6 = request.POST.get("ans6") or None
+        answer7 = request.POST.get("ans7") or None
+        answer8 = request.POST.get("ans8") or None
+        answer9 = request.POST.get("ans9") or None
+        answer10 = request.POST.get("ans10") or None
 
         application_answer = JobApplication(
             job_id=job,
@@ -499,6 +540,8 @@ def job_application(request, job_id):
 
     return render(request, "apply_job.html", {"the_job": job, "student": student, "data": student_data})
 
+
+@login_required(login_url='/admin_login/')
 def edit_job(request, job_id):
     job = get_object_or_404(Job, job_id=job_id)
     if request.method == "POST":
@@ -550,6 +593,8 @@ def edit_job(request, job_id):
     
     return render(request,"edit_job.html", {"job":job})
 
+
+@login_required(login_url='/admin_login/')
 def applied_student_list(request, job_id):
     # return HttpResponse("List of Students")
 
@@ -564,6 +609,8 @@ def applied_student_list(request, job_id):
 
     return render(request, "applied_students_list.html", {"job": job, "applications": applications})
 
+
+@login_required(login_url='/admin_login/')
 def export_applied_students(request ,job_id):
     application = JobApplication.objects.filter(job_id=job_id).select_related('sId', 'sId__studentprofile')
 
@@ -592,9 +639,13 @@ def export_applied_students(request ,job_id):
         ])
     return response
 
+
+@login_required(login_url='/admin_login/')
 def dashboard(request):
     return render(request,'dashboard.html')
 
+
+@login_required(login_url='/admin_login/')
 def status_update(request, job_id, application_id):
     job = Job.objects.get(job_id=job_id)
     application = JobApplication.objects.get(application_id=application_id)
@@ -606,15 +657,13 @@ def status_update(request, job_id, application_id):
         status.round3 = request.POST.get('round3')
         status.round4 = request.POST.get('round4')
 
-        round1= request.POST.get('round1')
-        round2= request.POST.get('round2')
-        round3= request.POST.get('round3')
-        round4= request.POST.get('round4')
 
-        status.reason1 = request.POST.get('des1') if round1 == "qualified" else None
-        status.reason2 = request.POST.get('des2') if round2 == "qualified" else None
-        status.reason3 = request.POST.get('des3') if round3 == "qualified" else None  
-        status.reason4 = request.POST.get('des4') if round4 == "qualified" else None
+        status.reason1 = request.POST.get('des1')
+        status.reason2 = request.POST.get('des2')
+        status.reason3 = request.POST.get('des3')  
+        status.reason4 = request.POST.get('des4')
+
+        status.feedback = request.POST.get('review') or None
 
         status.save()
         return redirect('applied_student_list', job_id=job_id)

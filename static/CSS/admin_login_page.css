@@ -250,7 +250,7 @@ body {
 .input-wrapper input {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid #e8ecf0;
+    border: none;
     border-radius: 10px;
     font-size: 0.95rem;
     background: rgba(255, 255, 255, 0.9);

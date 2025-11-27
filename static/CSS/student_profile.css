@@ -87,14 +87,16 @@
   }
 
   #logout-link {
-    background-color:crimson;
-    color:#fafafa;
-    text-align: left;
-    padding:10px 20px;
-    margin-bottom: 20px;
-    margin-right: 10%;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 15px;
     border: none;
-    border-radius: 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s;
   }
 
   .btn {

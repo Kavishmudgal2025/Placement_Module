@@ -175,6 +175,7 @@
                 <input type="text" id="ans7" name="ans7"><br><br>
             {% endif %}
         {% endif %}
+        
 <!-- QUESTION 8 -->        
         {% if the_job.question8 != "N/A" %}
             <label for="ans8" class="question-block">Q8. {{ the_job.question8 }}</label><br>
@@ -233,6 +234,6 @@
     <button type="submit">Apply</button>
     </form>
 </div>
-
+    <script src="{% static 'JS/apply_job.js' %}"></script>
 </body>
 </html>

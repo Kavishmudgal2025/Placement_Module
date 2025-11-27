@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Login Page</title>
-    <link rel="stylesheet" href="{% static 'CSS/index_page.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/student_login.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -74,26 +74,10 @@
 
             <div class="login-footer">
                 <p>Don't have an account? <a href="/register/">Create here</a></p>
-                <p class="admin-link">Are you an admin? <a href="/admin_login/">Admin Login</a></p>
             </div>
         </div>
     </div>
 
-    <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const passwordEye = document.getElementById('password-eye');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                passwordEye.classList.remove('fa-eye');
-                passwordEye.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                passwordEye.classList.remove('fa-eye-slash');
-                passwordEye.classList.add('fa-eye');
-            }
-        }
-    </script>
+    <script src ="{% static 'Js/student_login.js' %}"></script>
 </body>
 </html>

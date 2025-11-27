@@ -139,20 +139,18 @@ class JobApplication(models.Model):
         return str(self.application_id)
 
 class ApplicationStatus(models.Model):
-    StatusChoices = [("Qualified", "Qualified"),
-                     ("Disqualified", "Disqualified"),
-                     ]
     application = models.OneToOneField(JobApplication, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    round1 = models.CharField(max_length=20, choices = StatusChoices, null=True, blank=True)
-    round2 = models.CharField(max_length=20, choices = StatusChoices, null=True, blank=True)
-    round3 = models.CharField(max_length=20, choices = StatusChoices, null=True, blank=True)
-    round4 = models.CharField(max_length=20, choices = StatusChoices, null=True, blank=True)
+    round1 = models.CharField(max_length=20, null=True, blank=True)
+    round2 = models.CharField(max_length=20, null=True, blank=True)
+    round3 = models.CharField(max_length=20, null=True, blank=True)
+    round4 = models.CharField(max_length=20, null=True, blank=True)
     
     reason1= models.CharField(max_length=200, null=True, blank=True)
     reason2= models.CharField(max_length=200, null=True, blank=True)
     reason3= models.CharField(max_length=200, null=True, blank=True)
     reason4= models.CharField(max_length=200, null=True, blank=True)
+
     updated_at = models.DateTimeField(auto_now=True)
     feedback = models.TextField(null=True, blank=True)
 

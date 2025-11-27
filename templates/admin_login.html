@@ -67,9 +67,6 @@
             </form>
 
             <div class="admin-footer">
-                <div class="footer-links">
-                    <p>Are you a student? <a href="/">Student Login</a></p>
-                </div>
                 {% comment %} <div class="admin-info">
                     <p><i class="fas fa-info-circle"></i> For admin access issues, contact IT support</p>
                 </div> {% endcomment %}
@@ -77,37 +74,7 @@
         </div>
     </div>
 
-    <script>
-        function toggleAdminPassword() {
-            const passwordInput = document.getElementById('password');
-            const passwordEye = document.getElementById('admin-password-eye');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                passwordEye.classList.remove('fa-eye');
-                passwordEye.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                passwordEye.classList.remove('fa-eye-slash');
-                passwordEye.classList.add('fa-eye');
-            }
-        }
+    <script src="{% static 'Js/admin_login.js' %}"> </script>
 
-        // Add some interactive effects
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.classList.add('focused');
-                });
-                
-                input.addEventListener('blur', function() {
-                    if (!this.value) {
-                        this.parentElement.classList.remove('focused');
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>

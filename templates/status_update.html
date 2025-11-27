@@ -25,78 +25,77 @@
     <form method="POST">
         {% csrf_token %}
         
-    <!-- Round 1 -->
-        <div class="round-system1">
-        <label>Introduction Round:</label>
-        <label class="switch">
-            <input type="checkbox" name="round1" value="qualified" {% if status.round1 == "qualified" %}checked{% endif %}>
-            <span class="slider"></span>
-        </label>
-        <input type="hidden" name="round1_hidden" value="disqualified">
-        
+<!-- Round 1 -->
+        <div class="round" id="round1">
+            <label>Introduction Round:</label>
+            <div class="three-state-switch">
+                <input type="radio" name="round1" class="button" value="none" {% if status.round1 == "none" %}checked{% endif %}>
+                <input type="radio" name="round1" class="button" value="disqualified" {% if status.round1 == "disqualified" %}checked{% endif %}>
+                <input type="radio" name="round1" class="button" value="qualified" {% if status.round1 == "qualified" %}checked{% endif %}>
+            </div>
     <br><br>
-        <label>Reason (if any):</label>
-        <input type="text" name="des1" value="{{ status.reason1|default:'' }}">
+            <label>Reason (if any):</label>
+            <input type="text" name="des1" value="{{ status.reason1|default:'' }}">
         </div>
 
     <br><br><br>
         
     <!-- Round 2 -->
-        <div class="round-system2">
-        <label>Technical Round:</label>
-        <label class="switch">
-            <input type="checkbox" name="round2" value="qualified" {% if status.round1 == "qualified" %}checked{% endif %}>
-            <span class="slider"></span>
-        </label>
-        <input type="hidden" name="round2_hidden" value="disqualified">
+        <div class="round" id="round2">
+            <label>Technical Round:</label>
+            <div class="three-state-switch">
+                <input type="radio" name="round2" class="button" value="none" {% if status.round2 == "none" %}checked{% endif %}>
+                <input type="radio" name="round2" class="button" value="disqualified" {% if status.round2 == "disqualified" %}checked{% endif %}>
+                <input type="radio" name="round2" class="button" value="qualified" {% if status.round2 == "qualified" %}checked{% endif %}>
+            </div>
         
     <br><br>
-        <label>Reason (if any):</label>
-        <input type="text" name="des2" value="{{ status.reason2|default:'' }}">
+            <label>Reason (if any):</label>
+            <input type="text" name="des2" value="{{ status.reason2|default:'' }}">
         </div>
+
     <br><br><br>
 
     <!-- Round 3 -->
-        <div class="round-system3">
-        <label>Soft-skill Round:</label>
-        <label class="switch">
-            <input type="checkbox" name="round3" value="qualified" {% if status.round3 == "qualified" %}checked{% endif %}>
-            <span class="slider"></span>
-        </label>
-        <input type="hidden" name="round3_hidden" value="disqualified">
+        <div class="round" id="round3">
+            <label> Soft-skill round:</label>
+            <div class="three-state-switch">
+                <input type="radio" name="round3" class="button" value="none" {% if status.round3 == "none" %}checked{% endif %}>
+                <input type="radio" name="round3" class="button" value="disqualified" {% if status.round3 == "disqualified" %}checked{% endif %}>
+                <input type="radio" name="round3" class="button" value="qualified" {% if status.round3 == "qualified" %}checked{% endif %}>
+            </div>
 
     <br><br>
-        <label>Reason (if any):</label>
-        <input type="text" name="des3" value="{{ status.reason3|default:'' }}">
+            <label>Reason (if any):</label>
+            <input type="text" name="des3" value="{{ status.reason3|default:'' }}">
         </div>
     <br><br><br>
 
     <!-- Round 4 -->
-        <div class="round-system4">
-        <label>HR Interview:</label>
-        <label class="switch">
-            <input type="checkbox" name="round4" value="qualified" {% if status.round4 == "qualified" %}checked{% endif %}>
-            <span class="slider"></span>
-        </label>
-        <input type="hidden" name="round4_hidden" value="disqualified">
-
+        <div class="round" id="round4">
+            <label>HR Interview:</label>
+            <div class="three-state-switch">
+                <input type="radio" name="round4" class="button" value="none" {% if status.round4 == "none" %}checked{% endif %}>
+                <input type="radio" name="round4" class="button" value="disqualified" {% if status.round4 == "disqualified" %}checked{% endif %}>
+                <input type="radio" name="round4" class="button" value="qualified" {% if status.round4 == "qualified" %}checked{% endif %}>
+            </div>
+        
     <br><br>
-        <label>Reason (if any):</label>
-        <input type="text" name="des4" value="{{ status.reason4|default:'' }}">
+            <label>Reason (if any):</label>
+            <input type="text" name="des4" value="{{ status.reason4|default:'' }}">
         </div>
     <br><br><br>
 
     <!-- Review -->
         <div class="review-section">
-        <label>Feedback for Student:</label>
-        <textarea name="review" rows="4" cols="50" class="text-area">{{ status.review|default:'' }}</textarea>
+            <label>Feedback for Student:</label>
+            <textarea name="review" rows="4" cols="50" class="text-area">{{ status.feedback|default:'' }}</textarea>
         </div>
+
     <br><br><br>    
 
         <button type="submit">Update</button>
     </form>
-        <script src="{% static 'JS/status_update.js' %}">
-        
-    </script>
+        <script src="{% static 'JS/status_update.js' %}"> </script>
 </body>
 </html>

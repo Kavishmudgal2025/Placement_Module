@@ -186,3 +186,31 @@ button[type="submit"]:hover {
         width: 100%;
     }
 }
+
+.three-state-switch {
+    display:inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 120px;
+    border: 2px solid black;
+    border-radius: 50px;
+    padding: 5px;
+    
+}
+
+.button {
+    width: 30px;
+    height: 30px;
+    appearance: none;
+    margin: 5px;
+    background: rgba(14, 12, 12, 0.15);
+    border-radius: 50%;
+    cursor:auto;
+    transition: transform 1s ease, background 1s ease;
+}
+
+/* slightly enlarge selected one – feels like a switch */
+.button:checked {
+    transform: scale(1.25);
+    background: rgb(53, 51, 51);
+}
