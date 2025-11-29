@@ -18,6 +18,14 @@
       margin-bottom: 30px;
       font-size: 2rem;
     }
+
+    .tick{
+      color: white;
+      background-color: green;
+      padding:0px 10px;
+      border-radius: 30px;
+    }
+
     h4{
       text-align: center;
       color: #c34b35;

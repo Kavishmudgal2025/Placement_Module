@@ -9,14 +9,19 @@
 </head>
 <body>
 
-  <div>
+  <div class="greetings">
     <button onclick="location.href='logout/'" id="logout-link"> <strong>Logout</strong></button>
-    <h2 style="color: #000000ff;">Hello {{ student_data.name }}, here is your profile</h2>
+    <h2 style="color: #000000ff;">Welcome {{ student_data.name|upper }} {% if student_data.verification_status == True %} <span class="tick">&#10004;</span> {% endif %}</h2>
+      
+        
+      
   </div>
   <h4 style="color: #212121;">(Make sure to update your profile before applying for any jobs)</h4>
 
-
+  
   <div class="update-link">
+    <button onclick="location.href='student_verification/'" class="btn"> <strong>Verify account</strong></button>
+    
     <button onclick="location.href='update/'" class="btn"> <strong>Update Profile</strong></button>
 </div>
 

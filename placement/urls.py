@@ -11,6 +11,9 @@ urlpatterns = [
     path('login/',views.signin, name='signin'),
     path('register/',views.signup, name='signup'),
 
+    path('login/profile/student_verification/',views.verify_student, name="verification"),
+    path('send_otp/', views.send_otp, name='send_otp'),
+
     path('login/profile/',views.student_profile, name='profile'),
 
     path('thankyou/', views.job_post_thankyou, name='thankyou'),

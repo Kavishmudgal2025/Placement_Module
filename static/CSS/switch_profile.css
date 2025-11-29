@@ -80,7 +80,7 @@ p {
 
 .wave1 {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%232a5298' d='M0,224L48,218.7C96,213,192,203,288,176C384,149,480,107,576,112C672,117,768,171,864,208C960,245,1056,267,1152,261.3C1248,256,1344,224,1392,208L1440,192V320H0Z'></path></svg>");
-    animation-duration: 18s;
+    animation-duration: 20s;
 }
 
 .wave2 {

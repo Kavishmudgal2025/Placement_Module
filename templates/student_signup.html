@@ -40,6 +40,7 @@
                 </div>
             {% endif %}
 
+<!-- Form Starts -->
             <form method="POST" action="/register/" class="registration-form">
                 {% csrf_token %}
 
@@ -47,7 +48,7 @@
                     <div class="form-group">
                         <label for="name">
                             <i class="fas fa-user" ></i>
-                            Full Name
+                                Full Name
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
                         <input style="border: 1px solid #000000ff;" type="text" id="name" name="name" placeholder="Enter your full name" required>
@@ -62,6 +63,7 @@
                         <input style="border: 1px solid #000000ff;" type="text" id="sId" name="sId" placeholder="Enter student ID" required>
                     </div>
 
+<!-- Mobile Number -->
                     <div class="form-group">
                         <label for="phone">
                             <i class="fas fa-phone"></i>
@@ -91,6 +93,7 @@
                         </select>
                     </div>
 
+<!-- Course Details -->
                     <div class="form-group">
                         <label for="course">
                             <i class="fas fa-book"></i>
@@ -136,13 +139,17 @@
                         </select>
                     </div>
 
+<!-- University and address -->
                     <div class="form-group">
                         <label for="university">
                             <i class="fas fa-university"></i>
                             University Name
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
-                        <input style="border: 1px solid #000000ff;" type="text" id="university" name="university" placeholder="Enter university name" required>
+
+                        <select id="university" name="university" required style="border: 1px solid #000000ff;">
+                            <option value="">Select University</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -151,8 +158,8 @@
                             University State
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
+
                         <select style="border: 1px solid #000000ff;" id="state" name="state">
-                            
                             <option value="" disabled selected>Select State</option>
                         </select>
                     </div>
@@ -166,6 +173,7 @@
                         <input style="border: 1px solid #000000ff;" type="text" id="city" name="city" placeholder="Enter city name" required>
                     </div>
 
+<!-- Email & Password -->
                     <div class="form-group">
                         <label for="email">
                             <i class="fas fa-envelope"></i>
@@ -174,12 +182,6 @@
                         </label>
                         <input style="border: 1px solid #000000ff;" type="email" id="email" name="email" placeholder="Enter your email" required>
                     </div>
-                    <!-- <div class="otp-section">
-                        <button type="button" class="verify">Verify</button><br><br>
-                        <label for="email_otp"> Enter OTP: </label>
-                        <input type="number" min="4" max="4" id="email_otp" name="email_otp" placeholder="Enter OTP" required>
-                        <button type="button" class="verify-otp">Submit OTP</button>
-                    </div> -->
 
                     <div class="form-group">
                         <label for="password1">
@@ -200,6 +202,7 @@
                     </div>
                 </div>
 
+<!-- Submit Button -->
                 <div class="form-actions">
                     <button type="submit" class="register-btn">
                         <i class="fas fa-user-plus"></i>
@@ -215,7 +218,8 @@
     </div>
 
     <script>
-        const statesUrl = "{% static 'JS/states.json' %}";
+        const universitiesUrl = "{% static 'Json/universities.json' %}";
+        const statesUrl = "{% static 'Json/states.json' %}";
     </script>
     <script src="{% static 'Js/student_signup.js' %}"></script> 
 </body>

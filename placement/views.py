@@ -5,13 +5,13 @@ from .models import Student, StudentProfile , Job, JobApplication, ApplicationSt
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.contrib.auth import authenticate, login
-import csv, os
+import csv,random
 from decimal import Decimal
 from datetime import date
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from functools import wraps
-
+from .utils import send_email_for_verification
 
 
 #Declare Global Varibales here.
@@ -99,9 +99,40 @@ def signup(request):
             )
             student.save()
             messages.success(request, "You're successfully registered, Please login")
+
             return redirect("signup")  
 
     return render(request, "student_signup.html")
+
+@student_login_required
+def verify_student(request):
+    student_id = request.session.get('student_id')
+    studentDetails = Student.objects.get(sId=student_id)
+
+    if request.method == "POST":
+        entered_otp = request.POST.get('otp')
+        actual_otp = request.session.get('mail_otp')
+        
+        if str(entered_otp) == str(actual_otp):
+            del request.session['mail_otp']
+            studentDetails.verification_status = True
+            studentDetails.save()
+            return redirect('/login/profile/')
+        else:
+            return render(request, "student_verification.html", {"student_data":studentDetails, "ERROR":"Invalid OTP. Please try again!"} )
+    
+    return render(request, "student_verification.html", {"student_data":studentDetails} )
+
+
+def send_otp(request):
+    student= request.session.get('student_id')
+    student_data = Student.objects.get(sId=student)
+    otp = random.randint(100000,999999)
+    request.session['mail_otp'] = otp
+    send_email_for_verification(otp, student_data.email)
+    
+    return redirect('/login/profile/student_verification/')
+
 
 @student_login_required
 def student_profile(request):

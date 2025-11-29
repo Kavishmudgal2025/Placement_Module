@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Page</title>
+    <link rel="stylesheet" href="{% static 'CSS/student_verification.css' %}">
+</head>
+<body>
+<!-- Error Messages -->
+    {% if ERROR %}
+        <div class="alert alert-error">
+            <i class="fas fa-exclamation-triangle"></i><span>{{ ERROR }}</span>
+        </div>
+    {% endif %}
+
+<h2>Verification Page</h2>
+
+<div class="card">
+    <div class="details">
+        <p>Your email: </p>
+        <p>{{ student_data.email }}</p>
+    </div>
+
+<!-- SEND OTP BUTTON -->
+    <div class="otp">
+        <button type="button" onclick="window.location.href='{% url 'send_otp' %}'" class="otp-btn"> Send OTP </button>
+    </div>
+<br>
+
+<!-- VERIFY OTP FORM -->
+    <form method="POST">
+        {% csrf_token %}
+        <div class="enter-otp">
+            <label for="otp">Enter OTP:</label><br>
+            <input type="text" id="otp" name="otp" maxlength="6" required>
+            <button type="submit" class="verify-btn">Verify</button>
+        </div>
+    </form>
+
+    <br><br>
+
+    <!-- Phone Number Verification -->
+    <div class="details">
+        <p>Your Phone Number: </p>
+        <p>{{ student_data.phone }}</p>
+    </div>
+</div>
+<script src="{% static 'Js/student_verification.js' %}"></script>
+</body>
+</html>
