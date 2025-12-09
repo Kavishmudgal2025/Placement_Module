@@ -130,7 +130,7 @@ def send_otp(request):
     student_data = Student.objects.get(sId=student)
     otp = random.randint(100000,999999)
     request.session['mail_otp'] = otp
-    send_email_for_verification(otp, student_data.email)
+    send_email_for_verification(otp, student_data.name, student_data.email)
     
     return redirect('/login/profile/student_verification/')
 

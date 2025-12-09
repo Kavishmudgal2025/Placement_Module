@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Box</title>
+    <style>
+        body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #fafafa; /* White background */
+    }
+
+    .container {
+        /* The striped border effect is achieved using background-image gradient on a larger container */
+        width: 500px;
+        height: 300px;
+        padding: 20px; /* Space between the outer edge and the inner box */
+        box-sizing: border-box;
+        background-image: repeating-linear-gradient(45deg, #0648b1, #0648b1 10px, #fafafa 10px, #fafafa 20px);
+    }
+
+    .content-box {
+        /* The main lime green box inside the container */
+        width: 100%;
+        height: 100%;
+        background-color: #fafafa;
+    }
+    .name{
+        text-align: center;
+        padding:20px;
+        font-size:18px;
+    }
+    .name strong{
+        font-size: 25px;
+    }
+
+    .mess-box{
+        padding:10px;
+        font-size:15px;
+        margin-left:20px;
+        margin-right:20px;
+        color: #181818;
+    }
+    #otp{
+        text-align: center;
+        font-size: 20px;
+        color:black;
+    }
+    #mess-5{
+        padding-left:30px;
+        padding-right: 30px;
+        margin-top:20px;
+        margin-bottom: 50px;
+        font-size: 14px;
+        color: #3e3e3e;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="content-box">
+        <div class="name">
+            Please Verify Your Identity, <strong>{{name}}</strong>
+        </div>
+        <div class="mess-box">
+            <div id="mess-1">Here is your Samatrix Verification code: </div>
+            <div id="otp"><strong>{{otp}}</strong></div><br>
+            <div id="mess-2"><strong>Please don't share this code with anyone:</strong> we'll never ask for it on the phone or via email.</div><br>
+            <div id="mess-3">Thanks,</div>
+            <div id="mess-4">The Samatrix Team</div>
+        </div>
+        <div id="mess-5">You're receiving this email because a verification code was requested for your GitHub account. If this wasn't you, please ignore this email.</div>
+    </div>
+
+</body>
+</html>
