@@ -4,80 +4,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student List for - {{ job.title }}</title>
+    <title>Student applied for - {{ job.title }}</title>
     <link rel="stylesheet" href="{% static 'CSS/applied_student_list.css' %}">
 </head>
-<body class="applied-student-body">
+<body>
 
-    <div class="page-header">
-        <h2>Applied Students List for </h2>
-        <p class="org-name">{{ job.title }} at {{ job.organization }}</p>
+<div class="page-header">
+    <h2>List of Students Who Applied for </h2>
+    <p class="org-name">{{ job.title }} at {{ job.organization }}</p>
+</div>
+{% if applications %}
+    <div class="export-container">
+        <button class="export-btn" onclick="window.location.href='{% url 'export_applied_students' job.job_id %}'"> Export CSV </button>
     </div>
-
-    {% if applications %}
-        <div class="export-container">
-            <a href="{% url 'export_applied_students' job.job_id %}" class="export-btn">
-                <i class="fas fa-file-csv"></i> Export CSV
-            </a>
-        </div>
-
-        <div class="table-container">
-            <table class="student-table">
-                <thead>
-                    <tr>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Applied On</th>
-                        <th>Gender</th>
-                        <th>Course</th>
-                        <th>Semester</th>
-                        <th>Passout Year</th>
-                        <th>University</th>
-                        <th>University City & State</th>
-                        <th>Status</th>
-                        <th>Update Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for data in applications %}
-                        <tr>
-                            <td>{{ data.sId }}</td>
-                            <td>{{ data.sId.name }}</td>
-                            <td>{{ data.sId.email }}</td>
-                            <td>{{ data.apply_date }}</td>
-                            <td>{{ data.sId.gender }}</td>
-                            <td>{{ data.sId.course }}</td>
-                            <td>{{ data.sId.studentprofile.semester }}</td>
-                            <td>{{ data.sId.passout_year }}</td>
-                            <td>{{ data.sId.university }}</td>
-                            <td>{{ data.sId.university_city }}, {{ data.sId.university_state }}</td>
-                            <td>
-                            {% if data.status %}
-                                {% if data.status.round1 == "qualified" %}
-                                    ✅
-                                {% endif %}
-                                {% if data.status.round2 == "qualified" %}
-                                    ✅
-                                {% endif %}
-                                {% if data.status.round3 == "qualified" %}
-                                    ✅
-                                {% endif %}
-                                {% if data.status.round4 == "qualified" %}
-                                    ✅
-                                {% endif %}
-                            {% else %}
-                                Not Updated
-                            {% endif %}
-                            </td>
-                            <td><a href="{% url 'status_update' job.job_id data.application_id %}">Update</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <p class="no-data">No student has applied yet.</p>
-    {% endif %}
+    <table border="1" class="student-table">
+        <tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Applied On</th>
+            <th>Gender</th>
+            <th>Course</th>
+            <th>Semester</th>
+            <th>Passout Year</th>
+            <th>University</th>
+            <th>University City & State</th>
+            <th>Status</th>
+            <th>Update Status</th>
+        </tr>
+        {% for data in applications %}
+        <tr>
+            <td>{{ data.sId }}</td>
+            <td>{{ data.sId.name }}</td>
+            <td>{{ data.sId.email }}</td>
+            <td>{{ data.apply_date }}</td>
+            <td>{{ data.sId.gender }}</td>
+            <td>{{ data.sId.course }}</td>
+            <td>{{ data.sId.studentprofile.semester }}</td>
+            <td>{{ data.sId.passout_year }}</td>
+            <td>{{ data.sId.university }}</td>
+            <td>{{ data.sId.university_city }}, {{ data.sId.university_state }}</td>
+            <td>
+            {% if data.status %}
+                {% if data.status.round1 == "qualified" %}
+                    ✅
+                {% elif data.status.round1 == "disqualified" %}
+                    ❌
+                {% endif %}
+                {% if data.status.round2 == "qualified" %}
+                    ✅
+                {% elif data.status.round2 == "disqualified" %}
+                    ❌
+                {% endif %}
+                {% if data.status.round3 == "qualified" %}
+                    ✅
+                {% elif data.status.round3 == "disqualified" %}
+                    ❌
+                {% endif %}
+                {% if data.status.round4 == "qualified" %}
+                    ✅
+                {% elif data.status.round4 == "disqualified" %}
+                    ❌
+                {% endif %}
+            {% else %}
+                Not Updated
+            {% endif %}
+            </td>
+            <td><a href="{% url 'status_update' job.job_id data.application_id %}">Update</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+{% else %}
+    <p class="no-data">No student has applied yet.</p>
+{% endif %}
 </body>
 </html>

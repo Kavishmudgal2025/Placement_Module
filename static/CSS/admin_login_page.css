@@ -39,6 +39,25 @@ body {
     100% { transform: translateX(-40px) translateY(-40px); }
 }
 
+.home-btn{
+    background-color: crimson;
+    align-self:flex-start;
+    margin:30px 80px;
+    padding:10px 15px;
+    border-radius:10px;
+    text-align: center;
+    box-shadow: 2px 2px 5px black;
+}
+#home{
+    color:#fafafa;
+    text-decoration: none;
+}
+.home-btn:hover{
+    background-color: rgb(145, 11, 38);
+    font-size:15px;
+    box-shadow: none;
+}
+
 .admin-container {
     width: 100%;
     max-width: 380px;

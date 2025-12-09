@@ -17,10 +17,11 @@
     </div>
     {% endif %}
 
-    <h2 id="posted-jobs" align="center"> Posted Jobs</h2><br>
-    <button class='export-btn' type="submit"><a href="{% url 'export_jobs' %}">Export Job List</a></button>
+    <h2 id="posted-jobs" > Posted Jobs</h2><br>
+    <button class="export-btn" onclick="window.location.href='{% url 'export_jobs' %}'"> Export Job List </button>
+
     {% if job_list %}
-        <table align="center" border="1" class="job-table">
+        <table border="1" class="job-table">
             <tr style="border: 1px solid #000000;">
                 <th>Sr. no.</th>
                 <th>Job Title</th>
@@ -32,6 +33,7 @@
                 <th>Post Date</th>
                 <th>Update Date</th>
                 <th>Application Deadline</th>
+                <th>Status</th>
                 <th>Edit Job</th>
                 <th>Applied Students</th>
             </tr>
@@ -48,10 +50,10 @@
                     {% if job.placement_type == "Internship" %}
                         <strong>Stipend:</strong> {{ job.job_stipend }}
                     {% elif job.placement_type == "Full-time" %}
-                        <strong>Package:</strong> {{ job.package }}
+                        <strong>Package:</strong> {{ job.package }} LPA
                     {% elif job.placement_type == "Internship + PPO" %}
                         <strong>Stipend:</strong> {{ job.job_stipend }}<br>
-                        <strong>Package(in LPA):</strong> {{ job.package }}
+                        <strong>PPO:</strong> {{ job.package }} LPA
                     {% else %}
                         N/A
                     {% endif %}
@@ -59,6 +61,7 @@
                 <td>{{ job.post_date }}</td>
                 <td>{{job.update_date}}</td>
                 <td>{{ job.application_deadline }}</td>
+                <td style="font-style: italic;">coming soon...</td>
                 <td><a href="{% url 'edit_job' job.job_id %}">Edit</a></td>
                 <td><a href="{% url 'applied_student_list' job.job_id %}">View Students</a></td>
             </tr>

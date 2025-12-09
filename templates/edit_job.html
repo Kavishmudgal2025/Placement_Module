@@ -10,13 +10,10 @@
     
 </head>
 <body>
-    {% if messages %}
-    <div id="pop-up" style="background-color: chartreuse; color: chocolate; padding: 10px; margin: 10px 0; border-radius: 5px;">
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    </div>
-    {% endif %}
+    {% for message in messages %}
+        <p class="message {{ message.tags }}">{{ message }}</p>
+
+    {% endfor %}
     
     <div class="container">
         <div class="header">
@@ -25,13 +22,6 @@
         </div>
 
         <div class="form-container">
-            <!-- This will show the error message in red -->
-            {% if ERROR %}
-                <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i> {{ ERROR }}
-                </div>
-            {% endif %}
-            
             <form method="POST">
                 {% csrf_token %}
                 

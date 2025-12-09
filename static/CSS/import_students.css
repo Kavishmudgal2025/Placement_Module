@@ -1,0 +1,191 @@
+/* Page Background + Layout */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #506888, #6b9dd4);
+    margin: 0;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+/* Page Heading */
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #1c1c1c;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+    margin-bottom: 10px;
+}
+
+#line {
+    margin-top:80px;
+    font-size: 1rem;
+    font-style: italic;
+    color: #1c1c1c;
+    text-align: center;
+}
+
+.message{
+    background: rgb(235, 175, 175);
+    padding:10px;
+    text-align:center;
+    border-radius:5px;
+    font-weight:bold;
+    color:crimson;
+}
+
+.message {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    font-weight: 500;
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.message.success{
+    color:green;
+    background-color: rgb(166, 249, 166);
+}
+.message.error{
+    color: crimson;
+    background: rgb(235, 175, 175);
+}
+
+.message.show {
+    top: 5px;
+    opacity: 1;
+}
+
+
+/* Toggle Format Button */
+.btn {
+    padding: 1px;
+    font-size: 15px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #1a4f8a;
+    color: #fff;
+    box-shadow: none;
+}
+
+/* Format Table Section */
+.format {
+    width: 90%;
+    margin:20px auto;
+    padding: 10px;
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+    display:none;
+}
+
+.format.show {
+    display: block;
+}
+
+.format table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.format th {
+    background-color: #1870c8;
+    color: #ffffff;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.format td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    background: rgba(255,255,255,0.85);
+}
+
+.format-download{
+    margin:10px auto;
+}
+
+.format-download button{
+    padding:5px 10px;
+    border-radius: 5px;
+    border:1px solid black;
+}
+
+.format-download button:hover{
+    padding:5px 10px;
+    border-radius: 5px;
+    font-size:13px;
+    background-color: #81bafa;
+    border:1px solid black;
+}
+
+/* File Upload Form */
+form {
+    width: 45%;
+    margin:0px auto;
+    padding: 20px;
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 10px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+}
+
+label {
+    font-weight: 600;
+}
+
+#line2{
+    font-size:12.5px;
+    font-style: italic;
+    margin-top:0px;
+}
+
+input[type="file"] {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="submit"] {
+    background: #284767;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: bolder;
+    border-radius: 10px;
+    font-size: 14px;
+    box-shadow: 2px 2px 6px black;
+    transition: 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background: #bfd7f8;
+    color: #284767;
+    font-size:13.5px;
+    margin-bottom:15px;
+    box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+        font-size: 0.9rem;
+    }
+
+    .format {
+        width: 95%;
+    }
+}

@@ -1,7 +1,7 @@
 /* ===== Global ===== */
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #8cbdf3, #c6e2ff);
+    background: linear-gradient(135deg, #64a0e0, #6d8db0);
     margin: 0;
     padding: 20px;
     min-height: 100vh;
@@ -22,9 +22,9 @@ table {
     width: 80%;
     margin: 0 auto 30px;
     border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.95);
+    background: #fafafa;
     border-radius: 10px;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+    border: 1px solid black;
     overflow: hidden;
 }
 
@@ -36,13 +36,13 @@ th, td {
 }
 
 th {
-    background-color: #1e90ff;
+    background-color: #2379d0;
     color: #fff;
     font-weight: 600;
 }
 
 tr:hover {
-    background-color: #f1f8ff;
+    background-color: #cfe7ff;
     transition: background-color 0.3s ease;
 }
 
@@ -50,23 +50,13 @@ tr:hover {
 form {
     width: 80%;
     margin: 30px auto;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.998);
     padding: 25px 40px;
     border-radius: 10px;
     box-shadow: 0 4px 25px rgba(0,0,0,0.15);
 }
 
 /* ===== Section Boxes (Rounds) ===== */
-.round-system1,
-.round-system2,
-.round-system3,
-.round-system4 {
-    border: 1px solid #b5c8e6;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background: #f9fbff;
-}
 
 label {
     font-weight: 600;

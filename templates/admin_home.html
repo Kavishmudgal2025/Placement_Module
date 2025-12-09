@@ -14,7 +14,7 @@
         <button onclick="location.href='logout/'" id="logout-link"> <strong>Logout</strong></button>
         <h1 id="heading">ADMIN DASHBOARD</h1>
         
-        <!-- Search Form -->
+<!-- Filter Search -->
         <form class="search-form" method="GET" action="{% url 'admin_home' %}">
             {% csrf_token %}
             <div class="search-fields">
@@ -38,9 +38,10 @@
             </div>
         </form>
         
-        <!-- Export Section -->
+<!-- Export Section -->
         <form class="export-section" method="GET" action="{% url 'export_students' %}">
-            <!-- preserve filters while exporting -->
+
+<!-- preserve filters while exporting -->
             <input type="hidden" name="name" value="{{ request.GET.name }}">
             <input type="hidden" name="ID" value="{{ request.GET.ID }}">
             <input type="hidden" name="email" value="{{ request.GET.email }}">
@@ -57,44 +58,42 @@
                     <a href="/admin_home/job_update" target="_blank"><i class="fas fa-plus-circle"></i> Post New Jobs</a>
                     <a href="/admin_home/view_jobs" target="_blank"><i class="fas fa-briefcase"></i> View Posted Jobs</a>
                 </div>
+                <a class="import" href="/admin_home/import_students" target="_blank">Import Students </a>
                 <button class="export-btn" type="submit"><i class="fas fa-download"></i> Export CSV</button>
             </div>
         </form>
         
-        <!-- Student Table -->
+<!-- Student Table -->
         <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Student ID</th>
-                        <th>Gender</th>
-                        <th>Course</th>
-                        <th>Passout Year</th>
-                        <th>University</th>
-                        <th>University City</th>
-                        <th>University State</th>
-                        <th>Email</th>
-                        <th>Mobile Number</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for student in studentData %}
-                    <tr>
-                        <td>{{ student.name }}</td>
-                        <td>{{ student.sId }}</td>
-                        <td>{{ student.gender }}</td>
-                        <td>{{ student.course }}</td>
-                        <td>{{ student.passout_year }}</td>
-                        <td>{{ student.university }}</td>
-                        <td>{{ student.university_city }}</td>
-                        <td>{{ student.university_state }}</td>
-                        <td>{{ student.email }}</td>
-                        <td>{{ student.phone }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Student ID</th>
+                <th>Gender</th>
+                <th>Course</th>
+                <th>Passout Year</th>
+                <th>University</th>
+                <th>University City</th>
+                <th>University State</th>
+                <th>Email</th>
+                <th>Mobile Number</th>
+            </tr>
+        
+            {% for student in studentData %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.sId }}</td>
+                <td>{{ student.gender }}</td>
+                <td>{{ student.course }}</td>
+                <td>{{ student.passout_year }}</td>
+                <td>{{ student.university }}</td>
+                <td>{{ student.university_city }}</td>
+                <td>{{ student.university_state }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.phone }}</td>
+            </tr>
+            {% endfor %}
+        </table>
         </div>
     </div>
 </body>

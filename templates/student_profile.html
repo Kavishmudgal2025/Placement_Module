@@ -9,27 +9,22 @@
 </head>
 <body>
 
-  <div class="greetings">
-    <button onclick="location.href='logout/'" id="logout-link"> <strong>Logout</strong></button>
-    <h2 style="color: #000000ff;">Welcome {{ student_data.name|upper }} {% if student_data.verification_status == True %} <span class="tick">&#10004;</span> {% endif %}</h2>
-      
-        
-      
-  </div>
-  <h4 style="color: #212121;">(Make sure to update your profile before applying for any jobs)</h4>
-
+<div class="greetings">
+  <button onclick="location.href='logout/'" id="logout-link"> <strong>Logout</strong></button>
+  <h2 >Welcome, {{ student_data.name|upper }} {% if student_data.verification_status == True %} <span><img class="tick" src="{% static 'check.png' %}" height="40" width="40"></span> {% endif %}</h2>
+</div>
   
-  <div class="update-link">
+<div class="update-link">
     <button onclick="location.href='student_verification/'" class="btn"> <strong>Verify account</strong></button>
     
     <button onclick="location.href='update/'" class="btn"> <strong>Update Profile</strong></button>
 </div>
 
 <!-- Basic Student Data -->
-  <div class="profile-card">
+<div class="profile-card">
   <table>
-    <h4>Personal Details</h4>
-      <tr><th>Name</th><td>{{ student_data.name }}</td></tr>
+    <h4>PERSONAL DETAILS</h4>
+      <tr><th>Name</th><td>{{ student_data.name|upper }}</td></tr>
       <tr><th>Student ID</th><td>{{ student_data.sId }}</td></tr>
       <tr><th>Phone No.</th><td>{{ student_data.phone }}</td></tr>
       <tr><th>Email</th><td>{{ student_data.email }}</td></tr>
@@ -37,36 +32,38 @@
   </table>
 
 <!-- Academic Details -->
-  <table>
-    <h4>Academic Details</h4>
-    {% for data in updated_data %}
-      <tr><th>Course</th><td>{{ student_data.course }}</td></tr>
-      <tr><th>Specialization</th><td>{{ student_data.specialization }}</td></tr>
-      <tr><th>Current Semester</th><td>{{data.semester}}</td></tr>
-      <tr><th>Passout Year</th><td>{{ student_data.passout_year }}</td></tr>
-      <tr><th>University</th><td>{{ student_data.university }}</td></tr>
-      <tr><th>University City</th><td>{{ student_data.university_city }}</td></tr>
-      <tr><th>University State</th><td>{{ student_data.university_state }}</td></tr>
-      <tr><th>Language</th><td>{{data.language}}</td></tr>
-      <tr><th>Tools</th><td>{{data.tools}}</td></tr>
-      <tr><th>Board of class 10</th><td>{{data.board10}}</td></tr>
-      <tr><th>Marks in class 10</th><td>{{data.marks10}}</td></tr>
-      <tr><th>Board of class 12</th><td>{{data.board12}}</td></tr>
-      <tr><th>Marks in class 12</th><td>{{data.marks12}}</td></tr>
+  {% if updated_data %}
+    <table>
+      <h4>ACEDEMIN DETAILS</h4>
+      {% for data in updated_data %}
+        <tr><th>Course</th><td>{{ student_data.course }}</td></tr>
+        <tr><th>Specialization</th><td>{{ student_data.specialization }}</td></tr>
+        <tr><th>Current Semester</th><td>{{data.semester}}</td></tr>
+        <tr><th>Passout Year</th><td>{{ student_data.passout_year }}</td></tr>
+        <tr><th>University</th><td>{{ student_data.university }}</td></tr>
+        <tr><th>University City</th><td>{{ student_data.university_city }}</td></tr>
+        <tr><th>University State</th><td>{{ student_data.university_state }}</td></tr>
+        <tr><th>Language</th><td>{{data.language}}</td></tr>
+        <tr><th>Tools</th><td>{{data.tools}}</td></tr>
 
-      <tr><th>Graduation College</th><td>{{data.graduation_college}}</td></tr>
-      <tr><th>Marks in College</th><td>{{data.graduation_marks}}</td></tr>
+        <tr><th>Board of class 10</th><td>{{data.board10}}</td></tr>
+        <tr><th>Marks in class 10</th><td>{{data.marks10}}</td></tr>
+        <tr><th>Board of class 12</th><td>{{data.board12}}</td></tr>
+        <tr><th>Marks in class 12</th><td>{{data.marks12}}</td></tr>
 
-      {% if data.post_graduation_college != "NA" %}
-        <tr><th>Post Graduation College</th><td>{{data.post_graduation_college}}</td></tr>
-        <tr><th>Post Graduation Marks</th><td>{{data.post_graduation_marks}}</td></tr>
-      {% endif %}
-    {% endfor %}
-  </table>
+        <tr><th>Graduation College</th><td>{{data.graduation_college}}</td></tr>
+        <tr><th>Marks in College</th><td>{{data.graduation_marks}}</td></tr>
+        {% if data.post_graduation_college != "NA" %}
+          <tr><th>Post Graduation College</th><td>{{data.post_graduation_college}}</td></tr>
+          <tr><th>Post Graduation Marks</th><td>{{data.post_graduation_marks}}</td></tr>
+        {% endif %}
+
+        {% endfor %}
+    </table>
 
 <!-- Intership Details -->
-  <table>
-    <h4>Internship Details</h4>
+    <table>
+      <h4>INTERNSHIP DETAILS</h4>
       {% for data in updated_data %}
         <tr><th>Internship</th><td>{{data.internship}}</td></tr>
         {% if data.internship == "yes"%}
@@ -75,11 +72,11 @@
           <tr><th>Skills Gained</th><td>{{data.skills_gained}}</td></tr>
         {% endif %}
       {% endfor %}
-  </table>
+    </table>
 
 <!-- Project Details -->
-  <table>
-    <h4>Project Details</h4>
+    <table>
+      <h4>PROJECT DETAILS</h4>
       {% for data in updated_data %}
         <tr><th>Project</th><td>{{data.project}}</td></tr>
         {% if data.project == "yes" %}
@@ -87,25 +84,24 @@
           <tr><th>Skills Learned during Project</th><td>{{data.skills_learned}}</td></tr>
         {% endif %}
       {% endfor %}
-  </table>
+    </table>
 
 <!-- Location Prefrences -->
-  <table>
-    <h4>Location Prefrences</h4>
+    <table>
+      <h4>LOCATION PREFRENCE</h4>
       {% for data in updated_data %}
         {% if data.job_location == "PAN INDIA" %}
           <tr><th>Prefered Location</th><td>{{data.job_location}}</td></tr>
         {% endif %}
-
         {% if data.job_location == "Other" %}
-          <tr><th>Prefered Location</th><td>{{data.other_location}}</td></tr>
+          <tr><th>Prefered Locatio  n</th><td>{{data.other_location}}</td></tr>
         {% endif %}
       {% endfor %}
-  </table>
+    </table>
 
 <!-- Social Media & Resume -->
-  <table>
-    <h4>Social Media</h4>
+    <table>
+      <h4>SOCIAL MEDIA & RESUME</h4>
       {% for data in updated_data %}
         <tr><th>LinkedIn</th><td><a href="{{data.linkedin}}" target="_blank">{{data.linkedin}}</a></td></tr>
         <tr><th>GitHub</th><td><a href="{{data.github}}" target="_blank">{{data.github}}</a></td></tr>
@@ -117,49 +113,62 @@
             {% endif %} </td>
       {% endfor %}
     </table>
-  </div>
+  {% else %}
+    <div class="empty-spc">
+      <p>You Don't Have a Profile Yet!</p>
+    </div>
+  {% endif %}
+</div>
 
 <!-- Eligible Jobs Table -->
-  <h2 style="color: #000000ff;" title="Make sure to update your profile before applying for any jobs.">Jobs you are eligible for</h2>
+  <h2  title="Make sure to update your profile before applying for any jobs.">Jobs you are eligible for</h2>
+  {% if student_data.verification_status == False %}
+    <h3 title="Verify your account to apply for jobs.">Your account is not verified. Please verify your account to apply for jobs.</h3>
+  
+  {% elif not updated_data %}
+    <h3 title="Update your profile to view eligible jobs.">Please update your profile to view eligible jobs.</h3>
+
+  {% else %}
     {% if job_data %}
-    <table border="1">
-      <tr>
-        <th title="The title of the job position">Title</th>
-        <th title="The organization offering the job">Organization</th>
-        <th title="The location of the job">Location</th>
-        <th title="Batch eligible for the job">Batch</th>
-        <th title="The type of placement (Internship/Full-time etc.)">Placement Type</th>
-        <th title="The job offer details">Offer</th>
-        <th title="The date the job was posted">Post Date</th>
-        <th title="The application deadline for the job">Deadline</th>
-        <th title="The link to apply for job">Apply link</th>
-      </tr>
-      {% for job in job_data %}
-      <tr>
-        <td>{{ job.title }}</td>
-        <td>{{ job.organization }}</td>
-        <td>{{ job.location }}</td>
-        <td>{{job.eligiblity_batch}}</td>
-        <td>{{ job.placement_type }}</td>
-        <td>
-          {% if job.placement_type == "Internship" %}
-            <strong>Stipend:</strong> {{ job.job_stipend }}
-          {% elif job.placement_type == "Full-time" %}
-            <strong>Package:</strong> {{ job.package }}
-          {% elif job.placement_type == "Internship + PPO" %}
-            <strong>Stipend:</strong> {{ job.job_stipend }}<br>
-            <strong>Package(in LPA):</strong> {{ job.package }}
-          {% else %}
-            N/A
-          {% endif %} </td>
-        <td>{{ job.post_date }}</td>
-        <td>{{ job.application_deadline }}</td>
-        <td><a href="{% url 'apply_job' job.job_id %}" target="_blank">Apply Here</a></td>
-      </tr>
-      {% endfor %}
-    </table>
+      <table border="1">
+        <tr>
+          <th title="The title of the job position">Title</th>
+          <th title="The organization offering the job">Organization</th>
+          <th title="The location of the job">Location</th>
+          <th title="Batch eligible for the job">Batch</th>
+          <th title="The type of placement (Internship/Full-time etc.)">Placement Type</th>
+          <th title="The job offer details">Offer</th>
+          <th title="The date the job was posted">Post Date</th>
+          <th title="The application deadline for the job">Deadline</th>
+          <th title="The link to apply for job">Apply link</th>
+        </tr>
+        {% for job in job_data %}
+        <tr>
+          <td>{{ job.title }}</td>
+          <td>{{ job.organization }}</td>
+          <td>{{ job.location }}</td>
+          <td>{{job.eligiblity_batch}}</td>
+          <td>{{ job.placement_type }}</td>
+          <td>
+            {% if job.placement_type == "Internship" %}
+              <strong>Stipend:</strong> {{ job.job_stipend }}
+            {% elif job.placement_type == "Full-time" %}
+              <strong>Package:</strong> {{ job.package }} LPA
+            {% elif job.placement_type == "Internship + PPO" %}
+              <strong>Stipend:</strong> {{ job.job_stipend }}<br>
+              <strong>PPO:</strong> {{ job.package }} LPA
+            {% else %}
+              N/A
+            {% endif %} </td>
+          <td>{{ job.post_date }}</td>
+          <td>{{ job.application_deadline }}</td>
+          <td><a href="{% url 'apply_job' job.job_id %}" target="_blank">Apply Here</a></td>
+        </tr>
+        {% endfor %}
+      </table>
     {% else %}
     <h5 title="Keep your eyes on mail for latest job updates.">No jobs are available for you right now.</h5>
     {% endif %}
+  {% endif %}
   </body>
 </html>

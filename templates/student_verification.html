@@ -9,18 +9,19 @@
 </head>
 <body>
 <!-- Error Messages -->
-    {% if ERROR %}
-        <div class="alert alert-error">
-            <i class="fas fa-exclamation-triangle"></i><span>{{ ERROR }}</span>
-        </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endif %}
 
 <h2>Verification Page</h2>
 
 <div class="card">
     <div class="details">
-        <p>Your email: </p>
-        <p>{{ student_data.email }}</p>
+        <p>Your email: <strong>{{ student_data.email }}</strong></p>
     </div>
 
 <!-- SEND OTP BUTTON -->
@@ -41,10 +42,9 @@
 
     <br><br>
 
-    <!-- Phone Number Verification -->
+<!-- Phone Number Verification -->
     <div class="details">
-        <p>Your Phone Number: </p>
-        <p>{{ student_data.phone }}</p>
+        <p>Your Phone Number: <strong>{{ student_data.phone }}</strong></p>
     </div>
 </div>
 <script src="{% static 'Js/student_verification.js' %}"></script>

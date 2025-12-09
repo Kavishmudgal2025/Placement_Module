@@ -12,7 +12,7 @@
     <table border="1" cellpadding="5" cellspacing="2">
         <tr><th>Job Title</th><td>{{ job.title }}</td></tr>
         <tr><th>Organization</th><td>{{ job.organization }}</td></tr>
-        <tr><th>Student Name</th><td>{{ application.sId.name }}</td></tr>
+        <tr><th>Student Name</th><td>{{ application.sId.name|upper }}</td></tr>
         <tr><th>Student ID</th><td>{{ application.sId.sId }}</td></tr>
         <tr><th>Course</th><td>{{ application.sId.course }}</td></tr>
         <tr><th>Passout Year</th><td>{{ application.sId.passout_year }}</td></tr>

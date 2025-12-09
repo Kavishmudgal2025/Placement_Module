@@ -20,6 +20,9 @@ urlpatterns = [
 
     path ('admin_login/', views.admin, name='admin_login'),
     path('admin_home/', views.admin_home, name='admin_home'),
+
+    path('admin_home/import_students/', views.import_students, name='import_students'),
+    path('admin_home/import_students/student_upload/',views.student_upload, name="student_upload"),
     path('export_students/', views.export_students, name='export_students'),
 
     path('login/profile/update/', views.updateProfile, name='updateProfile'),
@@ -42,7 +45,9 @@ urlpatterns = [
 
     path('admin_home/view_jobs/applied_student_list/export/<uuid:job_id>/', views.export_applied_students, name="export_applied_students"),
     
-    path('design/', views.dashboard, name="dashboard")
+    path('design/', views.dashboard, name="dashboard"),
+
+    path('download_table/', views.table_download, name="table_download" ),
 ]
 
 if settings.DEBUG:

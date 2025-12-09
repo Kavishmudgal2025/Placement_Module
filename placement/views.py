@@ -101,7 +101,6 @@ def signup(request):
             messages.success(request, "You're successfully registered, Please login")
 
             return redirect("signup")  
-
     return render(request, "student_signup.html")
 
 @student_login_required
@@ -117,9 +116,11 @@ def verify_student(request):
             del request.session['mail_otp']
             studentDetails.verification_status = True
             studentDetails.save()
-            return redirect('/login/profile/')
+            messages.success(request, "Email verified ")
+            return redirect('/login/profile/student_verification/')
         else:
-            return render(request, "student_verification.html", {"student_data":studentDetails, "ERROR":"Invalid OTP. Please try again!"} )
+            messages.error(request, "Invalid OTP. Please try again!")
+            return render(request, "student_verification.html", {"student_data":studentDetails} )
     
     return render(request, "student_verification.html", {"student_data":studentDetails} )
 
@@ -248,6 +249,71 @@ def admin_home(request):
 def admin_logout(request):
     logout(request)
     return redirect('/admin_login/')
+
+@login_required(login_url='/admin_login/')
+def import_students(request):
+    return render(request, "import_students.html")
+
+
+def student_upload(request):
+    if request.method == "POST":
+        
+        uploaded_file = request.FILES.get("user_file")
+
+        if not uploaded_file:
+            messages.error(request, "No file selected")
+            return redirect("student_upload")
+
+        if not uploaded_file.name.endswith('.csv'):
+            messages.error(request, "Only CSV files are allowed")
+            return redirect("student_upload")
+
+        file_data = uploaded_file.read().decode("utf-8").splitlines()
+        reader = csv.reader(file_data)
+
+        next(reader) #To skip the first ROW (table heading row) in the sheet
+
+        success_count = 0
+        error_count = 0
+
+        for row in reader:
+            try:
+                Name = row[0]
+                Student_ID = row[1]
+                Phone_number = row[2]
+                Gender = row[3]
+                Course = row[4]
+                Passout_year = row[5]
+                University = row[6]
+                Specialization = row[7]
+                University_state = row[8]
+                University_city = row[9]
+                Email = row[10]
+                Password = row[11]
+
+                Student.objects.create(
+                    name = Name,
+                    sId = Student_ID,
+                    phone = Phone_number,
+                    gender = Gender,
+                    course = Course,
+                    passout_year = Passout_year,
+                    university = University,
+                    specialization = Specialization,
+                    university_state = University_state,
+                    university_city = University_city,
+                    email = Email,
+                    password = Password
+                )
+                success_count += 1
+            except Exception:
+                error_count += 1
+                continue
+
+        messages.success(request, f"Import completed: {success_count} records added, {error_count} failed.")
+        return redirect("student_upload")
+
+    return render(request, "import_students.html")
 
 
 @login_required(login_url='/admin_login/')
@@ -643,22 +709,34 @@ def applied_student_list(request, job_id):
 
 @login_required(login_url='/admin_login/')
 def export_applied_students(request ,job_id):
+    job = Job.objects.get(job_id=job_id)
     application = JobApplication.objects.filter(job_id=job_id).select_related('sId', 'sId__studentprofile')
 
     response = HttpResponse(content_type="text/csv")
-    response['Content-Disposition'] = f'attachment; filename= "applied_students_{job_id}.csv"'
+    response['Content-Disposition'] = f'attachment; filename= "student_list _for_{job.title} at {job.organization}.csv"'
 
     writer = csv.writer(response)
 
-    writer.writerow(['Student ID',"Name","Email","Apply Date","Gender","Course","Semester","Passout Year","University","University City & State"])
+    writer.writerow(['Student ID',"Name","Email","Job title","organization","Placement type","CTC","Apply Date","Gender","Course","Semester","Passout Year","University","University City & State"])
     for i in application:
         profile = getattr(i.sId,'studentprofile',None)
         city_state = f"{i.sId.university_city}, {i.sId.university_state}" if i.sId.university_city and i.sId.university_state else ""
+        
+        if job.placement_type == "Internship":
+            placement_info = f"Stipend: {job.job_stipend}"
+        elif job.placement_type == "Full-time":
+            placement_info = f"Package: {job.package} LPA"
+        else:
+            placement_info = f"Stipend: {job.job_stipend}, PPO: {job.package} LPA"
 
         writer.writerow([
             i.sId,
             i.sId.name,
             i.sId.email,
+            job.title,
+            job.organization,
+            job.placement_type,
+            placement_info,
             i.apply_date,
             i.sId.gender,
             i.sId.course,
@@ -701,3 +779,14 @@ def status_update(request, job_id, application_id):
 
     return render(request, "status_update.html",{"job":job, "application":application, "status":status})
 
+
+@login_required(login_url='/admin_login/')
+def table_download(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="student_upload_format.csv"'
+
+    writer = csv.writer(response)
+
+    # CSV header row
+    writer.writerow(["Name", "Student_ID", "Phone_number", "Gender", "Course", "Passout_year", "University", "Specialization", "University_state", "University_city", "Email", "Password"])
+    return response

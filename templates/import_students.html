@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/import_students.css' %}">
+    <title>Student Upload Page</title>
+</head>
+<body>
+{% for message in messages %}
+    <p class="message {{ message.tags }}">{{ message }}</p>
+{% endfor %}
+    <h1>Upload The Student File</h1>
+    <p id="line">click the arrow to see the format <button type="button" class="btn">➡️</button></p>
+    <div class="format">
+        <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Student_ID</th>
+            <th>Phone_number</th>
+            <th>Gender</th>
+            <th>Course</th>
+            <th>Passout_year</th>
+            <th>University</th>
+            <th>Specialization</th>
+            <th>University_state</th>
+            <th>University_city  </th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </table>
+        <div class="format-download">
+            <a href="/download_table/"> <button type="button">Download Format</button></a>
+        </div>
+    </div>
+<br><br>
+
+    <form action="{% url 'student_upload' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label for="file_upload">Select a file from your device</label>
+        <p id="line2">(only .csv files are accepted)</p>    
+        <input type="file" id="file_upload" name="user_file">
+<br>
+        <input type="submit" value="Upload File">   
+    </form>
+
+    <script src="{% static 'Js/import_students.js' %}"></script>
+</body>
+</html>

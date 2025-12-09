@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Register Page</title>
-    <link rel="stylesheet" href="{% static 'CSS/student_signup_page.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/student_signup.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -40,7 +40,7 @@
                 </div>
             {% endif %}
 
-<!-- Form Starts -->
+<!-- Form Start -->
             <form method="POST" action="/register/" class="registration-form">
                 {% csrf_token %}
 
@@ -72,12 +72,6 @@
                         </label>
                         <input style="border: 1px solid #000000ff;" type="tel" id="phone" name="phone" placeholder="8971xxxxxx" pattern="[6-9]{1}[0-9]{9}" required>
                     </div>
-                    <!-- <div class="otp-section">
-                        <button type="button" class="verify">Verify</button><br><br>
-                        <label for="email_otp"> Enter OTP: </label>
-                        <input type="number" min="4" max="4" id="email_otp" name="email_otp" placeholder="Enter OTP" required>
-                        <button type="button" class="verify-otp">Submit OTP</button>
-                    </div> -->
 
                     <div class="form-group">
                         <label for="gender">
@@ -85,7 +79,7 @@
                             Gender
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
-                        <select style="border: 1px solid #000000ff;" id="gender" name="gender">
+                        <select class="dropdown" style="border: 1px solid #000000ff;" id="gender" name="gender">
                             <option value="" disabled selected>Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -100,10 +94,9 @@
                             Course
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
-                        <select style="border: 1px solid #000000ff;" id="course" name="course" required>
+                        <select class="dropdown" style="border: 1px solid #000000ff;" id="course" name="course" required>
                             <option value="" disabled selected>Select Course</option>
                             <option value="b.tech">B.Tech</option>
-                            <option value="m.tech">M.Tech</option>
                             <option value="bca">BCA</option>
                             <option value="mca">MCA</option>
                             <option value="bba">BBA</option>
@@ -117,11 +110,8 @@
                             Specialization
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
-                        <select style="border: 1px solid #000000ff;" id="spec" name="spec" required>
-                            <option value="" disabled selected>Select Specialization</option>
-                            <option value="AIML">AIML</option>
-                            <option value="Data Science">Data Science</option>
-                            <option value="Cyber Security">Cyber Security</option>
+                        <select class="dropdown" style="border: 1px solid #000000ff;" id="spec" name="spec" required>
+                            <option value="">Select specialization</option>
                         </select>
                     </div>
 
@@ -131,7 +121,7 @@
                             Passout Year
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
-                        <select style="border: 1px solid #000000ff;" id="passYear" name="passYear" required>
+                        <select class="dropdown" style="border: 1px solid #000000ff;" id="passYear" name="passYear" required>
                             <option value="" disabled selected>Select Year</option>
                             <option value="2025">2025</option>
                             <option value="2026">2026</option>
@@ -147,7 +137,7 @@
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
 
-                        <select id="university" name="university" required style="border: 1px solid #000000ff;">
+                        <select class="dropdown" id="university" name="university" required style="border: 1px solid #000000ff;">
                             <option value="">Select University</option>
                         </select>
                     </div>
@@ -159,7 +149,7 @@
                             <span class="astrik" style="color:crimson">*</span>
                         </label>
 
-                        <select style="border: 1px solid #000000ff;" id="state" name="state">
+                        <select class="dropdown" style="border: 1px solid #000000ff;" id="state" name="state">
                             <option value="" disabled selected>Select State</option>
                         </select>
                     </div>
@@ -218,6 +208,7 @@
     </div>
 
     <script>
+        const specializationsUrl = "{% static 'Json/specializations.json' %}";
         const universitiesUrl = "{% static 'Json/universities.json' %}";
         const statesUrl = "{% static 'Json/states.json' %}";
     </script>

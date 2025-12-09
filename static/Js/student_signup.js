@@ -27,4 +27,18 @@ fetch("/static/Json/universities.json")
     })
     .catch(error => console.error("Error loading university list:", error));
 
+// Load Specializations
+fetch(specializationsUrl)
+    .then(res => res.json())
+    .then(data => {
+        const specDropdown = document.getElementById("spec");
+
+        data.forEach(spec => {
+            let option = document.createElement("option");
+            option.value = spec;
+            option.textContent = spec;
+            specDropdown.appendChild(option);
+        });
+    })
+    .catch(err => console.error("Error loading Specialization JSON:", err));
 

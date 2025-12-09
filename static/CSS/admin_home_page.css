@@ -36,7 +36,11 @@ body {
     padding: 10px 15px;
     border-radius: 6px;
     font-weight: 500;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+}
+
+#logout-link:hover{
+    background-color: #ce4232;
 }
 
 /* Form Styles */
@@ -158,6 +162,28 @@ button.reset-btn:hover {
 .export-btn:hover {
     background-color: #219653;
 }
+
+.import{
+    text-decoration: none;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    align-items: center;
+    margin-left:550px;
+    transition: all 0.3s;
+}
+
+.import:hover {
+    background-color: #219653;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 
 /* Table Styles */
 .table-container {

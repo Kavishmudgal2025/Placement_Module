@@ -34,3 +34,51 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const messages = document.querySelectorAll(".message");
+
+    messages.forEach((msg) => {
+        // show animation
+        setTimeout(() => {
+            msg.style.opacity = "1";
+            msg.style.transform = "translateY(0)";
+        }, 100);
+
+        // hide after 3 seconds
+        setTimeout(() => {
+            msg.style.opacity = "0";
+            msg.style.transform = "translateY(-20px)";
+        }, 3000);
+
+        // remove from DOM after animation (optional)
+        setTimeout(() => {
+            msg.remove();
+        }, 3600);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const messages = document.querySelectorAll(".message");
+
+    messages.forEach(message => {
+        // Show animation
+        setTimeout(() => {
+            message.style.opacity = "1";
+            message.style.transform = "translateY(0)";
+        }, 100); // slight delay so animation plays
+
+        // Hide after 3 seconds
+        setTimeout(() => {
+            message.style.opacity = "0";
+            message.style.transform = "translateY(-20px)";
+        }, 3000);
+
+        // Remove from DOM after animation
+        setTimeout(() => {
+            message.remove();
+        }, 3600);
+    });
+});
+
+

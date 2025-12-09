@@ -1,10 +1,9 @@
-.applied-student-body {
+body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #8cbdf3, #c6e2ff);
-    margin: 0;
-    padding: 20px;
+    background: linear-gradient(135deg, #4775a5, #c6e2ff);
+    margin: 0px;
+    padding: 50px;
     min-height: 100vh;
-    color: #222;
 }
 
 /* Header Styling */
@@ -33,66 +32,64 @@
 /* Export Button */
 .export-container {
     text-align: right;
-    margin: 10px 60px 25px 0;
+    margin-bottom: 20px;
 }
 
 .export-btn {
-    background-color: #ffffff;
-    color: #1c1c1c;
-    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #284767;
+    border: none;
+    margin-bottom:5px;
     padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
+    border-radius: 10px;
+    font-weight: bolder;
+    font-size: 13px;
+    box-shadow: 2px 2px 5px black;
+    transition: 0.5s ease;
 }
 
 .export-btn:hover {
-    background-color: #1e90ff;
+    background-color: #284767;
     color: #fff;
-    box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+    box-shadow: none;
+    font-weight: bolder;
+    font-size: 12.5px;
+    margin-bottom: 6px;
+    
 }
 
 /* Table */
 .table-container {
     width: 90%;
     margin: auto;
-    overflow-x: auto;
     background-color: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
-    padding: 15px;
 }
 
 .student-table {
     width: 100%;
     border-collapse: collapse;
+    border: 1px solid black;
     font-size: 0.95rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow:hidden;
 }
 
-.student-table thead {
-    background-color: #1e90ff;
+.student-table th{
+    background-color: #1870c8;
     color: #fff;
     text-align: left;
-}
-
-.student-table th, .student-table td {
     padding: 12px 15px;
-    border-bottom: 1px solid #4f4d4b;
 }
 
-.student-table tbody tr:hover {
-    background-color: #f1f8ff;
-    transition: background-color 0.3s ease;
+.student-table td {
+    padding: 12px 15px;
 }
 
-.no-data {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #333;
-    margin-top: 40px;
-    font-style: italic;
+a{
+    text-decoration: none;
 }
 
 /* Responsive */
