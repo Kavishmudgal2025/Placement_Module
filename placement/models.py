@@ -116,6 +116,7 @@ class Job(models.Model):
 
     post_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(blank=True, null=True)
+    active_status = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.job_id)

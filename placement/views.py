@@ -198,8 +198,8 @@ def admin_home(request):
         "email": request.GET.get("email"),
         "course": request.GET.get("course"),
         "university": request.GET.get("university"),
-        "city": request.GET.get("city"),
-        "state": request.GET.get("state"),
+        "university_city": request.GET.get("university_city"),
+        "university_state": request.GET.get("university_state"),
         "phone": request.GET.get("phone"),
         "gender": request.GET.get("gender"),
         "passout_year": request.GET.get("passout_year"),
@@ -223,11 +223,11 @@ def admin_home(request):
     if filters["university"]:
         studentDetails = studentDetails.filter(university__icontains=filters["university"])
         applied = True
-    if filters["city"]:
-        studentDetails = studentDetails.filter(city__icontains=filters["city"])
+    if filters["university_city"]:
+        studentDetails = studentDetails.filter(university_city__icontains=filters["university_city"])
         applied = True
-    if filters["state"]:
-        studentDetails = studentDetails.filter(state__icontains=filters["state"])
+    if filters["university_state"]:
+        studentDetails = studentDetails.filter(university_state__icontains=filters["university_state"])
         applied = True
     if filters["phone"]:
         studentDetails = studentDetails.filter(phone__icontains=filters["phone"])
@@ -327,8 +327,8 @@ def export_students(request):
         "email": request.GET.get("email"),
         "course": request.GET.get("course"),
         "university": request.GET.get("university"),
-        "city": request.GET.get("city"),
-        "state": request.GET.get("state"),
+        "university_city": request.GET.get("university_city"),
+        "university_state": request.GET.get("university_state"),
         "phone": request.GET.get("phone"),
         "gender": request.GET.get("gender"),
         "passout_year": request.GET.get("passout_year"),
@@ -344,10 +344,10 @@ def export_students(request):
         studentDetails = studentDetails.filter(course__icontains=filters["course"])
     if filters["university"]:
         studentDetails = studentDetails.filter(university__icontains=filters["university"])
-    if filters["city"]:
-        studentDetails = studentDetails.filter(city__icontains=filters["city"])
-    if filters["state"]:
-        studentDetails = studentDetails.filter(state__icontains=filters["state"])
+    if filters["university_city"]:
+        studentDetails = studentDetails.filter(university_city__icontains=filters["university_city"])
+    if filters["university_state"]:
+        studentDetails = studentDetails.filter(university_state__icontains=filters["university_state"])
     if filters["phone"]:
         studentDetails = studentDetails.filter(phone__icontains=filters["phone"])
     if filters["gender"]:
@@ -370,8 +370,8 @@ def export_students(request):
             student.course,
             student.university,
             student.passout_year,
-            student.state,
-            student.city,
+            student.university_state,
+            student.university_city,
             student.email,
             student.phone,
         ])

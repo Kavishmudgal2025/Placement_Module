@@ -62,7 +62,6 @@ h1 {
 }
 
 
-/* Toggle Format Button */
 .btn {
     padding: 1px;
     font-size: 15px;
@@ -126,8 +125,7 @@ h1 {
 .format-download button:hover{
     padding:5px 10px;
     border-radius: 5px;
-    font-size:13px;
-    background-color: #81bafa;
+    background-color: #d8d8d8;
     border:1px solid black;
 }
 

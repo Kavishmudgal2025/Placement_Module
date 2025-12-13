@@ -23,8 +23,8 @@
                 <input style="border: 1px solid #000000ff;" type="text" name="email" placeholder="Search by Email" value="{{ request.GET.email }}">
                 <input style="border: 1px solid #000000ff;" type="text" name="course" placeholder="Search by Course" value="{{ request.GET.course }}">
                 <input style="border: 1px solid #000000ff;" type="text" name="university" placeholder="Search by University" value="{{ request.GET.university }}">
-                <input style="border: 1px solid #000000ff;" type="text" name="city" placeholder="Search by City" value="{{ request.GET.city }}">
-                <input style="border: 1px solid #000000ff;" type="text" name="state" placeholder="Search by State" value="{{ request.GET.state }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="university_city" placeholder="Search by City" value="{{ request.GET.university_city }}">
+                <input style="border: 1px solid #000000ff;" type="text" name="university_state" placeholder="Search by State" value="{{ request.GET.university_state }}">
                 <input style="border: 1px solid #000000ff;" type="text" name="phone" placeholder="Search by Phone Number" value="{{ request.GET.phone }}">
                 <input style="border: 1px solid #000000ff;" type="text" name="gender" placeholder="Search by Gender" value="{{ request.GET.gender }}">
                 <input style="border: 1px solid #000000ff;" type="text" name="passout_year" placeholder="Search by Passout Year" value="{{ request.GET.passout_year }}">
@@ -47,8 +47,8 @@
             <input type="hidden" name="email" value="{{ request.GET.email }}">
             <input type="hidden" name="course" value="{{ request.GET.course }}">
             <input type="hidden" name="university" value="{{ request.GET.university }}">
-            <input type="hidden" name="city" value="{{ request.GET.city }}">
-            <input type="hidden" name="state" value="{{ request.GET.state }}">
+            <input type="hidden" name="university_city" value="{{ request.GET.university_city }}">
+            <input type="hidden" name="university_state" value="{{ request.GET.university_state }}">
             <input type="hidden" name="phone" value="{{ request.GET.phone }}">
             <input type="hidden" name="gender" value="{{ request.GET.gender }}">
             <input type="hidden" name="passout_year" value="{{ request.GET.passout_year }}">
@@ -58,7 +58,7 @@
                     <a href="/admin_home/job_update" target="_blank"><i class="fas fa-plus-circle"></i> Post New Jobs</a>
                     <a href="/admin_home/view_jobs" target="_blank"><i class="fas fa-briefcase"></i> View Posted Jobs</a>
                 </div>
-                <a class="import" href="/admin_home/import_students" target="_blank">Import Students </a>
+                <a class="import" href="/admin_home/import_students" target="_blank"> <i class="fas fa-upload"></i> Import CSV </a>
                 <button class="export-btn" type="submit"><i class="fas fa-download"></i> Export CSV</button>
             </div>
         </form>

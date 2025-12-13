@@ -138,3 +138,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "prem00100101@gmail.com"
 EMAIL_HOST_PASSWORD = "qxtp sglw meqv wagp"
+
+
