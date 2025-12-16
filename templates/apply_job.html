@@ -35,9 +35,11 @@
     <table border="1" class="table-card">
         {% for i in data %}
             <tr><th>Semester</th> <td style="color: #000000ff;">{{i.semester}}</td></tr>
-            <tr><th>Prefered Location</th> <td style="color: #000000ff;">{{i.job_location}}</td></tr>
+            {% if i.job_location == "PAN INDIA" %}
+                <tr><th>Prefered Location</th> <td style="color: #000000ff;">{{i.job_location}}</td></tr>
+            {% endif %}
             {% if i.job_location == "Other" %}
-                <tr><th>Other Location</th> <td style="color: #000000ff;">{{i.other_location}}</td></tr>
+                <tr><th>Prefered Location</th> <td style="color: #000000ff;">{{i.other_location}}</td></tr>
             {% endif %}
             <tr><th>Resume</th> <td style="color: #000000ff;"><a href="{{ i.resume.url }}" target="_blank">View Resume</a></td></tr>
         {% endfor %}

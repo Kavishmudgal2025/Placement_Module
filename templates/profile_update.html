@@ -39,6 +39,7 @@
                 <input type="text" id="tools" name="tools" placeholder="e.g., VS Code, Git, Docker" value="{{info.tools|default:'' }}" required>
             </div>
             
+<!-- Education Details -->
             <div class="section-title">Education Details</div>
 
             <div class="form-row">
@@ -77,14 +78,12 @@
                 </div>
             </div>
 
+<!-- College Details -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="graduation">Graduation College: <span class="astrik">*</span></label>
                     <select id="graduation" name="graduation" required>
-                        <option value="college A" {% if info.graduation_college == "college A" %}selected{% endif %}>College A</option>
-                        <option value="college B" {% if info.graduation_college == "college B" %}selected{% endif %}>College B</option>
-                        <option value="college C" {% if info.graduation_college == "college C" %}selected{% endif %}>College C</option>    
-                        <option value="Other" {% if info.graduation_college == "Other" %}selected{% endif %}>Other</option>
+                        <option value="" {% if info.graduation_college %} selected {% endif %} hidden>{{info.graduation_college| default:'Select College'}}</option>
                     </select>
                 </div>
                 
@@ -98,11 +97,8 @@
                 <div class="form-group">
                     <label for="postGraduation">Post Graduation College:</label>
                     <select id="postGraduation" name="postGraduation">
-                        <option value="NA" selected {% if info.post_graduation_college %}selected{% endif %} >Not Applicable</option>
-                        <option value="college A" {% if info.post_graduation_college == "college A" %}selected{% endif %}>College A</option>
-                        <option value="college B" {% if info.post_graduation_college == "college B" %}selected{% endif %}>College B</option>
-                        <option value="college C" {% if info.post_graduation_college == "college C" %}selected{% endif %}>College C</option>    
-                        <option value="Other" {% if info.post_graduation_college == "Other" %}selected{% endif %}>Other</option>
+                        <option value="" {% if info.post_graduation_college %} selected {% endif %} hidden>{{info.post_graduation_college| default:'Select College'}}</option>
+                    </select>
                     </select>
                 </div>
                 
@@ -231,8 +227,10 @@
         </form>
     </div>
 
-    <script src="{% static 'JS/profile_update.js' %}">
-        
+    <script>
+        const universitiesUrl = "{% static 'Json/universities.json' %}";
     </script>
+
+    <script src="{% static 'JS/profile_update.js' %}"></script>
 </body>
 </html>

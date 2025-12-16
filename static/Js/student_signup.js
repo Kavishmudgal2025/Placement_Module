@@ -13,7 +13,7 @@ fetch(statesUrl)
   .catch(err => console.error("Error loading JSON:", err));
 
 // Load universities from JSON file
-fetch("/static/Json/universities.json")
+fetch(universitiesUrl)
     .then(response => response.json())
     .then(data => {
         const dropdown = document.getElementById("university");

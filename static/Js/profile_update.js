@@ -58,3 +58,24 @@ document.addEventListener("DOMContentLoaded", function () {
 // Also toggle when user changes the selection
 projectSelect.addEventListener("change", toggleProjectDetails);
 
+fetch(universitiesUrl)
+  .then(response => response.json())
+  .then(data => {
+    const dropdown_UG = document.getElementById("graduation");
+    const dropdown_PG = document.getElementById("postGraduation")
+
+    data.forEach(university => {
+
+      let optionUG = document.createElement("option");
+      optionUG.value  = university;
+      optionUG.textContent = university;
+      dropdown_UG.appendChild(optionUG);
+
+      let optionPG = document.createElement("option");
+      optionPG.value  = university;
+      optionPG.textContent = university;
+      dropdown_PG.appendChild(optionPG);
+
+    });
+  })
+.catch(error => console.error("Error loading university list:", error));
