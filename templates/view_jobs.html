@@ -33,14 +33,13 @@
                 <th>Post Date</th>
                 <th>Update Date</th>
                 <th>Application Deadline</th>
-                <!-- <th>Status</th> -->
+                <th>Status</th>
                 <th>Edit Job</th>
                 <th>Applied Students</th>
             </tr>
             {% for job in job_list %}
             <tr>
-                <!-- add for loop for serial number -->
-                <td>{{ forloop.counter }}</td>
+                <td>{{ forloop.counter }}</td>      <!-- add for loop for serial number -->
                 <td>{{ job.title }}</td>
                 <td>{{ job.organization }}</td>
                 <td>{{ job.location }}</td>
@@ -61,13 +60,13 @@
                 <td>{{ job.post_date }}</td>
                 <td>{{job.update_date}}</td>
                 <td>{{ job.application_deadline }}</td>
-                <!-- <td id="active_status" style = "font-style: italic;">
+                <td id="active_status" style = "font-style: italic;">
                     {% if job.active_status == True %}
                         ACTIVE
                     {% else %}
                         INACTIVE
                     {% endif %}
-                </td> -->
+                </td>
                 <td><a href="{% url 'edit_job' job.job_id %}">Edit</a></td>
                 <td><a href="{% url 'applied_student_list' job.job_id %}">View Students</a></td>
             </tr>
