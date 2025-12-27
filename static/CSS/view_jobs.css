@@ -1,6 +1,6 @@
 .job-view-body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #8fb1ec 0%, #8eb7f0 100%);
+    background-color: #8eb7f0;
     margin: 0;
     padding: 20px;
     min-height: 100vh;
@@ -32,7 +32,7 @@
     transform: translateX(-50%);
     width: 60%;
     height: 4px;
-    background: linear-gradient(90deg, #2196f3, #64b5f6);
+    background: linear-gradient(90deg, #1f8ce4, #8eb7f0);
     border-radius: 2px;
 }
 
@@ -46,14 +46,14 @@
     border-radius: 10px;
     font-size: 13px;
     box-shadow:2px 2px 8px black;
-    transition: background-color 0.5s;
+    transition: background-color 0.3s;
 }
 
 .export-btn:hover{
     background-color: #1a237e;
     color: #fafafa;
-    font-size: 12px;
-    margin-bottom: 1.5px;
+    font-size: 12.5px;
+    margin-bottom: 2px;
     box-shadow: none;
 
 }
@@ -100,10 +100,6 @@
 
 .job-table td {
     background: rgba(255,255,255,0.85);
-}
-
-#active_status{
-    
 }
 
 a{
