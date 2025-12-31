@@ -12,6 +12,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from functools import wraps
 from .utils import send_email_for_verification
+from django.utils import timezone
 
 
 #Declare Global Varibales here.
@@ -549,12 +550,16 @@ def job_post_thankyou(request):
     return render(request, "job_post_thankyou.html")
 
 
-@login_required(login_url='/admin_login/')
+@login_required(login_url='/admin_l' \
+'ogin/')
 def view_jobs(request):
-    #return HttpResponse("view jobs here")
+    job_list= Job.objects.all()
+    # today = timezone.now().date()
+
+    # Job.objects.filter(active_status=True, application_deadline__lt=today).update(active_status=False)
+    # job_list = Job.objects.all()
     
-    job_list = Job.objects.all()   
-    return render(request, "view_jobs.html", {"job_list": job_list})
+    return render(request, "view_jobs.html", {"job_list":job_list})
 
 
 @login_required(login_url='/admin_login/')
