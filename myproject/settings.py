@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'placement',
     'phonenumber_field',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,9 @@ EMAIL_HOST_USER = "prem00100101@gmail.com"
 EMAIL_HOST_PASSWORD = "qxtp sglw meqv wagp"
 
 
+CRONJOBS = [
+    ('0 0 * * *', 'your_app.cron.deactivate_expired_jobs'),
+]
 
 
 

@@ -17,7 +17,8 @@ class Student(models.Model):
     university_city = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)   # keep in plain text only for testing!
-    verification_status = models.BooleanField(default=False)
+    verification_status_mail = models.BooleanField(default=False)
+    verification_status_phone = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.sId)

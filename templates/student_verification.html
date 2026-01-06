@@ -36,7 +36,7 @@
         <div class="enter-otp">
             <label for="otp">Enter OTP:</label><br>
             <input type="text" id="otp" name="otp" maxlength="6" required>
-            <button type="submit" class="verify-btn">Verify</button>
+            <button type="submit" class="verify-btn">Verify Email</button>
         </div>
     </form>
 
@@ -46,6 +46,23 @@
     <div class="details">
         <p>Your Phone Number: <strong>{{ student_data.phone }}</strong></p>
     </div>
+
+<!-- SEND PHONE OTP BUTTON -->
+    <div class="otp">
+        <button type="button" onclick="window.location.href='{% url 'send_otp' %}'" class="otp-btn">Send OTP</button>
+    </div>
+<br>
+
+<!-- VERIFY OTP FORM -->
+    <form method="POST" >
+        {% csrf_token %}
+        <div class="enter-otp">
+            <label for="phone_otp">Enter Phone OTP:</label><br>
+            <input type="text" name="phone_otp" maxlength="6" required>
+            <button type="submit" class="verify-btn">Verify Number</button>
+        </div>
+    </form>
+
 </div>
 <script src="{% static 'Js/student_verification.js' %}"></script>
 </body>
