@@ -11,7 +11,7 @@
 
 <div class="greetings">
   <button onclick="location.href='logout/'" id="logout-link"> <strong>Logout</strong></button>
-  <h2 >Welcome, {{ student_data.name|upper }} {% if student_data.verification_status == True %} <span><img class="tick" src="{% static 'check.png' %}" height="40" width="40"></span> {% endif %}</h2>
+  <h2 >Welcome, {{ student_data.name|upper }} {% if student_data.verification_status_mail == True %} <span><img class="tick" src="{% static 'check.png' %}" height="40" width="40"></span> {% endif %}</h2>
 </div>
   
 <div class="update-link">
@@ -122,7 +122,7 @@
 
 <!-- Eligible Jobs Table -->
   <h2  title="Make sure to update your profile before applying for any jobs.">Jobs you are eligible for</h2>
-  {% if student_data.verification_status == False %}
+  {% if student_data.verification_status_mail == False %}
     <h3 title="Verify your account to apply for jobs.">Your account is not verified. Please verify your account to apply for jobs.</h3>
   
   {% elif not updated_data %}

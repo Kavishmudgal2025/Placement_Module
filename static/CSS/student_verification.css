@@ -61,7 +61,7 @@ h2 {
     text-align: left;
 }
 
-#otp {
+.enter-otp input {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;

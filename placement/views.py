@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from functools import wraps
 from .utils import send_email_for_verification
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 
 
 #Declare Global Varibales here.
@@ -104,8 +105,9 @@ def signup(request):
             return redirect("signup")  
     return render(request, "student_signup.html")
 
+# Mail Verification logic
 @student_login_required
-def verify_student(request):
+def verify_student(request):                
     student_id = request.session.get('student_id')
     studentDetails = Student.objects.get(sId=student_id)
 
@@ -115,7 +117,7 @@ def verify_student(request):
         
         if str(entered_otp) == str(actual_otp):
             del request.session['mail_otp']
-            studentDetails.verification_status = True
+            studentDetails.verification_status_mail = True
             studentDetails.save()
             messages.success(request, "Email verified ")
             return redirect('/login/profile/student_verification/')
@@ -125,8 +127,8 @@ def verify_student(request):
     
     return render(request, "student_verification.html", {"student_data":studentDetails} )
 
-
-def send_otp(request):
+# For sending OTP-mail
+def send_otp(request):           
     student= request.session.get('student_id')
     student_data = Student.objects.get(sId=student)
     otp = random.randint(100000,999999)
@@ -550,14 +552,12 @@ def job_post_thankyou(request):
     return render(request, "job_post_thankyou.html")
 
 
-@login_required(login_url='/admin_l' \
-'ogin/')
+@login_required(login_url='/admin_login/')
 def view_jobs(request):
-    job_list= Job.objects.all()
-    # today = timezone.now().date()
 
-    # Job.objects.filter(active_status=True, application_deadline__lt=today).update(active_status=False)
-    # job_list = Job.objects.all()
+    today = timezone.now().date()
+    Job.objects.filter(application_deadline__lt=today, active_status=True).update(active_status=False)
+    job_list= Job.objects.all()
     
     return render(request, "view_jobs.html", {"job_list":job_list})
 
@@ -663,7 +663,7 @@ def edit_job(request, job_id):
         job.eligiblity_college_marks = request.POST.get("min_marks_college")
         job.eligiblity_others = request.POST.get("Other_criteria") or "N/A"
 
-        job.application_deadline = request.POST.get("deadline")
+        job.application_deadline = parse_date(request.POST.get("deadline"))
 
         job.question1 = request.POST.get("question1") or "N/A"
         job.question2 = request.POST.get("question2") or "N/A"
@@ -688,6 +688,12 @@ def edit_job(request, job_id):
         job.type10 = request.POST.get("question10_type") or "N/A"
 
         job.update_date = date.today()
+
+        today = timezone.now().date()
+        if job.application_deadline >= today:
+            job.active_status = True
+        else:
+            job.active_status=False
 
         job.save()
         messages.success(request, "Job Updates Successfully ")
