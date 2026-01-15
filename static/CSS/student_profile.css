@@ -6,11 +6,9 @@ box-sizing: border-box;
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #8fb1ec;
-  background: linear-gradient(135deg, #357cf7 0%,  #689afe 100%);
+  background: linear-gradient(90deg, #2557ac 0%,  #6993e8 100%);
   margin: 0;
   padding: 20px;
-  color: #333;
 }
 
 h2 {
@@ -21,14 +19,31 @@ h2 {
   font-size: 2rem;
 }
 
+#logout-link {
+  position: absolute;
+  font-size: 13px;
+  top: 20px;
+  right: 20px;
+  background-color: crimson;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 1px 1px 5px black;
+  font-weight: 500;
+  transition: background-color 0.5s;
+}
+
+#logout-link:hover{
+  background-color: rgb(192, 0, 38);
+  box-shadow: none;
+  font-size: 12px;
+}
+
 h3{
-  text-align: center;
-  color:red;
-  background-color: #fafafa;
-  padding:10px;
-  border-radius: 3px 35px;
-  margin-bottom: 30px;
-  font-size: 15px;
+  color: brown;
+  font-size: 1rem;
+  font-family: Georgia, Times, 'Times New Roman', serif; 
 }
 
 .tick{
@@ -43,26 +58,26 @@ h4{
   font-size: 1.25rem;
 }
 
-/* Card Container */
-.profile-card {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #f6df0d;
-  padding: 20px;
-  margin: auto;
-  margin-bottom: 30px;
-  max-width: 1000px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+.table-card{
+  background-color: #ededed;
+  margin:10px 40px;
+  padding:30px;
+  border-radius: 10px;
+  border:1px black solid;
+  text-align: center;
+  
 }
-.profile-card:hover {
-  transform: translateY(-5px);
+
+h5{
+  color: brown;
+  font-size: 1rem;
+  font-family: Georgia, Times, 'Times New Roman', serif;
 }
+
 /* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 15px 0;
 }
 th, td {
   padding: 12px 15px;
@@ -92,26 +107,6 @@ a:hover {
   text-align: right;
   margin-bottom: 20px;
   margin-right: 10%;
-}
-#logout-link {
-  position: absolute;
-  font-size: 13px;
-  top: 20px;
-  right: 20px;
-  background-color: crimson;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  box-shadow: 1px 1px 5px black;
-  font-weight: 500;
-  transition: background-color 0.5s;
-}
-
-#logout-link:hover{
-  background-color: rgb(192, 0, 38);
-  box-shadow: none;
-  font-size: 12px;
 }
 
 .btn {
@@ -154,16 +149,4 @@ a:hover {
   }
 }
 
-.empty-spc{
-  margin:50px;
-  padding: 20px;
-  text-align: center;
-}
-.empty-spc p{
-  margin: 30px;
-  padding: 30px;
-  color: rgb(203, 15, 53);
-  font-size: 2rem;
-  font-weight: bold;
-  font-family: 'Baskerville Old Face';
-}
+
