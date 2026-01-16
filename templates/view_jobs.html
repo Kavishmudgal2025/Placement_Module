@@ -10,7 +10,7 @@
 <body class="job-view-body">
 
     {% if messages %}
-    <div style="background-color: black; color: white; padding: 10px; margin: 10px 0; border-radius: 5px;">
+    <div class="messages">
         {% for message in messages %}
             {{ message }}
         {% endfor %}
@@ -60,11 +60,13 @@
                 <td>{{ job.post_date }}</td>
                 <td>{{job.update_date}}</td>
                 <td>{{ job.application_deadline }}</td>
-                <td id="active_status" style = "font-style: italic;">
+                <td id="active_status">
                     {% if job.active_status == True %}
-                        ACTIVE
+                        ✅ 
+                        <p style="font-style: italic;">Active</p>
                     {% else %}
-                        INACTIVE
+                        ❌ 
+                        <p style="font-style: italic;">Inactive</p>
                     {% endif %}
                 </td>
                 <td><a href="{% url 'edit_job' job.job_id %}">Edit</a></td>
@@ -76,5 +78,7 @@
     {% else %}
         <p>No Jobs Available Yet</p>
     {% endif %}
+
+<script src="{% static 'Js/view_jobs.js' %}"></script>
 </body>
 </html>

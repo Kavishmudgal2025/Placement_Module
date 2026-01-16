@@ -1,9 +1,33 @@
-.job-view-body {
+body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background-color: #8eb7f0;
     margin: 0;
     padding: 20px;
     min-height: 100vh;
+}
+ 
+.messages{
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(-40px);
+    width:18%;
+    transition:
+        max-height 0.6s ease,
+        opacity 0.4s ease,
+        transform 0.6s ease;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.3rem;
+    background-color: #63ff5777;
+    color: rgb(0, 105, 0);
+}
+
+/* visible state */
+.messages.show{
+    max-height: 200px;      
+    opacity: 1;
+    transform: translateX(0);
+    padding: 20px;
 }
 
 #posted-jobs {
