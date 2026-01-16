@@ -10,10 +10,31 @@ body {
     color: #333;
 }
 
+.btn {
+    margin:30px;
+    align-self: flex-end;
+}
+
+#href{
+    text-decoration: none;
+    color: #fafafa;
+    background-color: #2370a3;
+    padding:8px 15px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px black;
+}
+
+#href:hover{
+    color: #2370a3;
+    background-color: #fafafa;
+    transition-duration: 0.2s;
+}
+
 h2 {
     color: #000000;
     font-size: 40px;
-    margin-bottom: 20px;
+    margin-top: -20px;
+    margin-bottom: 30px;
 }
 
 /* --- Card Container --- */

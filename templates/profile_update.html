@@ -82,9 +82,13 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="graduation">Graduation College: <span class="astrik">*</span></label>
-                    <select id="graduation" name="graduation" required>
-                        <option value="" {% if info.graduation_college %} selected {% endif %} hidden>{{info.graduation_college| default:'Select College'}}</option>
-                    </select>
+                        <select id="graduation" name="graduation" required>
+                            {% if info.graduation_college %}
+                                <option value="{{ info.graduation_college }}" selected> {{ info.graduation_college }} </option>
+                            {% else %}
+                                <option value="" disabled selected hidden>Select College</option>
+                            {% endif %}
+                        </select>  
                 </div>
                 
                 <div class="form-group">
@@ -98,7 +102,6 @@
                     <label for="postGraduation">Post Graduation College:</label>
                     <select id="postGraduation" name="postGraduation">
                         <option value="" {% if info.post_graduation_college %} selected {% endif %} hidden>{{info.post_graduation_college| default:'Select College'}}</option>
-                    </select>
                     </select>
                 </div>
                 
@@ -159,17 +162,17 @@
                     <option value="no" {% if info.project == "no" %}selected{% endif %}>No</option>
                 </select>
             </div>
+            
             <div id="projectHide" class="dynamic-content">
-            <div class="form-group">
-                <label for="projectDetails" title="Provide the name and a overview of your project">Project Name and Description:</label>
-                <textarea id="projectDetails" name="projectDetails" rows="4" placeholder="Describe your project..." >{{info.project_details|default:'' }}</textarea>
-            </div>
-            
-            
-            <div class="form-group" border="1">
-                <label for="learned_skills">Skills Learned from the Project:</label>
-                <textarea id="learned_skills" name="learned_skills" rows="2" placeholder="List skills learned..." >{{info.skills_learned|default:'' }}</textarea>
-            </div>
+                <div class="form-group">
+                    <label for="projectDetails" title="Provide the name and a overview of your project">Project Name and Description:</label>
+                    <textarea id="projectDetails" name="projectDetails" rows="4" placeholder="Describe your project..." >{{info.project_details|default:'' }}</textarea>
+                </div>
+
+                <div class="form-group" border="1">
+                    <label for="learned_skills">Skills Learned from the Project:</label>
+                    <textarea id="learned_skills" name="learned_skills" rows="2" placeholder="List skills learned..." >{{info.skills_learned|default:'' }}</textarea>
+                </div>
 
             </div>
 

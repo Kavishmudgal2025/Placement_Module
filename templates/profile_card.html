@@ -1,4 +1,23 @@
-<div class="profile-card">
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/profile_card.css' %}">
+    <title>Profile Card</title>
+</head>
+<body>
+    <h2>PROFILE CARD</h2>
+
+    <button onclick="location.href='logout/'" id="logout-link"> <strong>Logout</strong></button>
+    
+    <div class="button-container">
+        <button class="btn" onclick="location.href='update/'"> <strong>Update Profile</strong></button>
+        <button class="btn"><a id="href" href="/login/profile/"><strong>Go Back</strong></a></button>
+    </div>
+
+    <div class="profile-card">
   <table>
     <h4>PERSONAL DETAILS</h4>
       <tr><th>Name</th><td>{{ student_data.name|upper }}</td></tr>
@@ -30,7 +49,7 @@
 
         <tr><th>Graduation College</th><td>{{data.graduation_college}}</td></tr>
         <tr><th>Marks in College</th><td>{{data.graduation_marks}}</td></tr>
-        {% if data.post_graduation_college != "NA" %}
+        {% if data.post_graduation_college != "NA" and data.post_graduation_college != '' %}
           <tr><th>Post Graduation College</th><td>{{data.post_graduation_college}}</td></tr>
           <tr><th>Post Graduation Marks</th><td>{{data.post_graduation_marks}}</td></tr>
         {% endif %}
@@ -96,33 +115,5 @@
     </div>
   {% endif %}
 </div>
-
-
-
-.profile-card {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #f6df0d;
-  padding: 20px;
-  margin: auto;
-  margin-bottom: 30px;
-  max-width: 1000px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
-.profile-card:hover {
-  transform: translateY(-5px);
-}
-.empty-spc{
-  margin:50px;
-  padding: 20px;
-  text-align: center;
-}
-.empty-spc p{
-  margin: 30px;
-  padding: 30px;
-  color: rgb(203, 15, 53);
-  font-size: 2rem;
-  font-weight: bold;
-  font-family: 'Baskerville Old Face';
-}
+</body>
+</html> 

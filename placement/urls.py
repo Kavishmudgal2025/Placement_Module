@@ -25,9 +25,11 @@ urlpatterns = [
     path('admin_home/import_students/student_upload/',views.student_upload, name="student_upload"),
     path('export_students/', views.export_students, name='export_students'),
 
-    path('login/profile/update/', views.updateProfile, name='updateProfile'),
+    path('login/profile/card/', views.profile_card, name="profile_card"),
+    path('login/profile/card/update/', views.updateProfile, name='updateProfile'),
     path('profile/update/', views.updateProfile, name='updateProfile'),
 
+    path('login/profile/card/logout/', views.student_logout, name='logout_student'),
     path('login/profile/logout/', views.student_logout, name='logout_student'),
     path('admin_home/logout/', views.admin_logout, name='logout_admin'),
 

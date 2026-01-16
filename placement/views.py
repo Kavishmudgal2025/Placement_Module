@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
 from .models import Student, StudentProfile , Job, JobApplication, ApplicationStatus
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import never_cache
 from django.contrib.auth import authenticate, login
 import csv,random
 from decimal import Decimal
@@ -151,15 +149,23 @@ def student_profile(request):
 
         for job_post in all_jobs:
             if (studentDetails.passout_year == int(job_post.eligiblity_batch)):
-                if profile_obj:
-                    if (profile_obj.marks10 >= Decimal(job_post.eligiblity_10_marks) and profile_obj.marks12 >= Decimal(job_post.eligiblity_12_marks) and (profile_obj.graduation_marks is None or profile_obj.graduation_marks >= Decimal(job_post.eligiblity_college_marks))):
-                        eligible_jobs.append(job_post)
-        return render(request,'student_profile.html', {"student_data":studentDetails, 
-                                                                        "updated_data":profile,
-                                                                        "job_data":eligible_jobs} )
+                if( job_post.active_status ==True ):
+                    if profile_obj:
+                        if (profile_obj.marks10 >= Decimal(job_post.eligiblity_10_marks) and profile_obj.marks12 >= Decimal(job_post.eligiblity_12_marks) and (profile_obj.graduation_marks is None or profile_obj.graduation_marks >= Decimal(job_post.eligiblity_college_marks))):
+                            eligible_jobs.append(job_post)
+        return render(request,'student_profile.html', {"student_data":studentDetails, "updated_data":profile_obj, "job_data":eligible_jobs} )
     else: 
         
         return render(request,"home_login.html")
+
+@student_login_required
+def profile_card(request):
+    student_id = request.session.get('student_id')
+    if student_id:
+        studentDetails = Student.objects.get (sId = student_id)
+        profile = StudentProfile.objects.filter(student=studentDetails)
+
+    return render(request, "profile_card.html", {"student_data":studentDetails, "updated_data":profile,})
 
 
 def student_logout(request):
@@ -442,7 +448,7 @@ def updateProfile(request):
             profile.resume = request.FILES['cv']
 
         profile.save()
-        return redirect("/login/profile/")
+        return redirect("/login/profile/card/")
         #We should change it to new url when deployed
 
     return render(request, "profile_update.html", {"info" : profile})

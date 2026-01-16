@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 
 def send_email_for_verification(otp, name,recipent_email):
     subject ="[Samatrix] Code for Email Verification"
-    html_message = render_to_string('otp_template.html', {'otp': otp, 'name': name})
+    html_message = render_to_string('email_template.html', {'otp': otp, 'name': name})
     message=f"Your verification code is: {otp}"
     from_email = settings.EMAIL_HOST_USER
     recipent_email= [recipent_email]

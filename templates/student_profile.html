@@ -17,116 +17,21 @@
 <div class="update-link">
     <button onclick="location.href='student_verification/'" class="btn"> <strong>Verify account</strong></button>
     
-    <button onclick="location.href='update/'" class="btn"> <strong>Update Profile</strong></button>
+    <button onclick="location.href='card/'" class="btn"> <strong>View Profile card</strong></button>
 </div>
 
 <!-- Basic Student Data -->
-<div class="profile-card">
-  <table>
-    <h4>PERSONAL DETAILS</h4>
-      <tr><th>Name</th><td>{{ student_data.name|upper }}</td></tr>
-      <tr><th>Student ID</th><td>{{ student_data.sId }}</td></tr>
-      <tr><th>Phone No.</th><td>{{ student_data.phone }}</td></tr>
-      <tr><th>Email</th><td>{{ student_data.email }}</td></tr>
-      <tr><th>Gender</th><td>{{ student_data.gender }}</td></tr>
-  </table>
 
-<!-- Academic Details -->
-  {% if updated_data %}
-    <table>
-      <h4>ACEDEMIN DETAILS</h4>
-      {% for data in updated_data %}
-        <tr><th>Course</th><td>{{ student_data.course }}</td></tr>
-        <tr><th>Specialization</th><td>{{ student_data.specialization }}</td></tr>
-        <tr><th>Current Semester</th><td>{{data.semester}}</td></tr>
-        <tr><th>Passout Year</th><td>{{ student_data.passout_year }}</td></tr>
-        <tr><th>University</th><td>{{ student_data.university }}</td></tr>
-        <tr><th>University City</th><td>{{ student_data.university_city }}</td></tr>
-        <tr><th>University State</th><td>{{ student_data.university_state }}</td></tr>
-        <tr><th>Language</th><td>{{data.language}}</td></tr>
-        <tr><th>Tools</th><td>{{data.tools}}</td></tr>
-
-        <tr><th>Board of class 10</th><td>{{data.board10}}</td></tr>
-        <tr><th>Marks in class 10</th><td>{{data.marks10}}</td></tr>
-        <tr><th>Board of class 12</th><td>{{data.board12}}</td></tr>
-        <tr><th>Marks in class 12</th><td>{{data.marks12}}</td></tr>
-
-        <tr><th>Graduation College</th><td>{{data.graduation_college}}</td></tr>
-        <tr><th>Marks in College</th><td>{{data.graduation_marks}}</td></tr>
-        {% if data.post_graduation_college != "NA" %}
-          <tr><th>Post Graduation College</th><td>{{data.post_graduation_college}}</td></tr>
-          <tr><th>Post Graduation Marks</th><td>{{data.post_graduation_marks}}</td></tr>
-        {% endif %}
-
-        {% endfor %}
-    </table>
-
-<!-- Intership Details -->
-    <table>
-      <h4>INTERNSHIP DETAILS</h4>
-      {% for data in updated_data %}
-        <tr><th>Internship</th><td>{{data.internship}}</td></tr>
-        {% if data.internship == "yes"%}
-          <tr><th>Organization</th><td>{{data.company}}</td></tr>
-          <tr><th>Stipend</th><td>{{data.stipend}}</td></tr>
-          <tr><th>Skills Gained</th><td>{{data.skills_gained}}</td></tr>
-        {% endif %}
-      {% endfor %}
-    </table>
-
-<!-- Project Details -->
-    <table>
-      <h4>PROJECT DETAILS</h4>
-      {% for data in updated_data %}
-        <tr><th>Project</th><td>{{data.project}}</td></tr>
-        {% if data.project == "yes" %}
-          <tr><th>Project Title & Description</th><td>{{data.project_details|linebreaksbr }}</td></tr>
-          <tr><th>Skills Learned during Project</th><td>{{data.skills_learned}}</td></tr>
-        {% endif %}
-      {% endfor %}
-    </table>
-
-<!-- Location Prefrences -->
-    <table>
-      <h4>LOCATION PREFRENCE</h4>
-      {% for data in updated_data %}
-        {% if data.job_location == "PAN INDIA" %}
-          <tr><th>Prefered Location</th><td>{{data.job_location}}</td></tr>
-        {% endif %}
-        {% if data.job_location == "Other" %}
-          <tr><th>Prefered Location</th><td>{{data.other_location}}</td></tr>
-        {% endif %}
-      {% endfor %}
-    </table>
-
-<!-- Social Media & Resume -->
-    <table>
-      <h4>SOCIAL MEDIA & RESUME</h4>
-      {% for data in updated_data %}
-        <tr><th>LinkedIn</th><td><a href="{{data.linkedin}}" target="_blank">{{data.linkedin}}</a></td></tr>
-        <tr><th>GitHub</th><td><a href="{{data.github}}" target="_blank">{{data.github}}</a></td></tr>
-        <tr><th>Resume</th><td>
-            {% if data.resume %}
-              <a href="{{ data.resume.url }}" target="_blank">Download</a>
-            {% else %}
-              No resume uploaded.
-            {% endif %} </td>
-      {% endfor %}
-    </table>
-  {% else %}
-    <div class="empty-spc">
-      <p>You Don't Have a Profile Yet!</p>
-    </div>
-  {% endif %}
-</div>
 
 <!-- Eligible Jobs Table -->
-  <h2  title="Make sure to update your profile before applying for any jobs.">Jobs you are eligible for</h2>
+
+  <h2  title="Make sure to update your profile before applying for any jobs.">Availabe Jobs</h2>
+  <div class="table-card">
   {% if student_data.verification_status_mail == False %}
     <h3 title="Verify your account to apply for jobs.">Your account is not verified. Please verify your account to apply for jobs.</h3>
   
   {% elif not updated_data %}
-    <h3 title="Update your profile to view eligible jobs.">Please update your profile to view eligible jobs.</h3>
+    <h3 title="Update your profile to view eligible jobs.">Please fill the profile card to view eligible jobs.</h3>
 
   {% else %}
     {% if job_data %}
@@ -170,5 +75,6 @@
     <h5 title="Keep your eyes on mail for latest job updates.">No jobs are available for you right now.</h5>
     {% endif %}
   {% endif %}
+  </div>
   </body>
 </html>
